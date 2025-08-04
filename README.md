@@ -2,7 +2,14 @@
 
 A standalone letter-button communicator designed for individuals with Progressive Supranuclear Palsy (PSP) and low-vision users. This device provides tactile feedback and plays mapped MP3 phrases with multi-press cycling capabilities.
 
-![Device Photo](media/photos/device-v1.jpg)
+## 📸 Device Photos & Video
+
+![Tactile Communication Device](media/photos/device-photo.jpeg)
+_The completed tactile communication device with large, accessible buttons_
+
+🎥 **[View Device Demonstration Video](media/videos/device-demo.mov)**
+
+_Watch the device in action - button presses, audio responses, and multi-press functionality_
 
 ## 🎯 Purpose
 
@@ -29,23 +36,25 @@ Built for my mother who has PSP and is nearly blind - she can feel and press tac
 
 ## 📁 Repository Structure
 
-```
+```text
 tactile-comm-device/
 ├── firmware/               # Arduino firmware
 │   └── tactile_comm_device_vs1053/
-├── hardware/              # Wiring diagrams, BOM, enclosure files
+├── hardware/              # Wiring diagrams, documentation, enclosure files
+│   ├── documentation/     # BOM and technical specs
 │   ├── wiring-diagrams/
-│   ├── bom/
 │   └── enclosure/
 ├── audio/                 # Audio file organization and samples
-├── docs/                  # Documentation and guides
-├── media/                 # Photos and videos
+├── docs/                  # Setup and troubleshooting guides
+├── media/                 # Device photos and demonstration videos
+│   ├── photos/
+│   └── videos/
 └── config/               # Sample configuration files
 ```
 
 ## 🚀 Quick Start
 
-1. **Hardware Setup**: See `/hardware/wiring-diagrams/` for connections
+1. **Hardware Setup**: See **/hardware/documentation/bill-of-materials.csv** for complete parts list and **/hardware/wiring-diagrams** for connections.
 2. **Firmware**: Flash `/firmware/tactile_comm_device_vs1053/tactile_comm_device_vs1053.ino`
 3. **Audio Setup**: Format SD card as FAT32, copy audio files to proper folders
 4. **Configuration**: Add `config.csv` to SD card root (see `/config/sample_config.csv`)
