@@ -2,8 +2,8 @@
 
 ## 📹 Available Videos
 
-### Device Demonstration (225MB)
-**File:** `device-demo.mov`
+### Device Demonstration
+**YouTube:** [Watch on YouTube](https://www.youtube.com/watch?v=48gU_H7tQQE)
 **Description:** Complete demonstration of the tactile communication device showing:
 - Button press responsiveness
 - Audio playback quality  
@@ -11,31 +11,22 @@
 - User interaction with large tactile buttons
 - Device functionality for PSP accessibility
 
-## 🔄 Large File Management
+## 🎥 Video Hosting Strategy
 
-This video file is managed separately due to its size (225MB). 
+This project uses **YouTube hosting** for demonstration videos to:
+- ✅ Keep repository size minimal
+- ✅ Provide high-quality streaming
+- ✅ Enable easy sharing and embedding
+- ✅ Offer accessible playback controls
+- ✅ Support multiple resolutions
 
-### To Add the Video to Repository:
+## 📱 Adding New Videos
 
-#### Option 1: Git LFS (Recommended)
-```bash
-# Install Git LFS if not already installed
-git lfs install
-
-# Track video files
-git lfs track "*.mov"
-git add .gitattributes
-
-# Add and commit the video
-git add media/videos/device-demo.mov
-git commit -m "Add device demonstration video via Git LFS"
-git push
-```
-
-#### Option 2: External Hosting
-- Upload to YouTube/Vimeo for public viewing
-- Store in Google Drive/OneDrive for direct download
-- Add download links to main README
+### Recommended Approach: YouTube
+1. **Upload to YouTube** with descriptive title
+2. **Add to playlist** "Tactile Communication Device"
+3. **Update this documentation** with new links
+4. **Reference in main README** if demonstration video
 
 ## 📝 Video Content Guidelines
 

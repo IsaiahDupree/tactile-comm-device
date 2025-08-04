@@ -7,9 +7,9 @@ A standalone letter-button communicator designed for individuals with Progressiv
 ![Tactile Communication Device](media/photos/device-photo.jpeg)
 _The completed tactile communication device with large, accessible buttons_
 
-🎥 **[View Device Demonstration Video](media/videos/device-demo.mov)**
+🎥 **[Watch Device Demonstration on YouTube](https://www.youtube.com/watch?v=48gU_H7tQQE)**
 
-_Watch the device in action - button presses, audio responses, and multi-press functionality_
+_See the device in action - button presses, audio responses, and multi-press functionality_
 
 ## 🎯 Purpose
 
