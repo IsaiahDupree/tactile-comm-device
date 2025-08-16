@@ -1,0 +1,20 @@
+{
+  "version": "1.0.0",
+  "created": "2025-08-16T18:47:00Z",
+  "device_type": "tactile_communication_device",
+  "firmware_version": "M4_v2.0",
+  "total_buttons": 36,
+  "audio_format": "mp3",
+  "configuration": {
+    "priority_mode": "HUMAN_FIRST",
+    "strict_playlists": true,
+    "expanders": 2,
+    "gpio_pins": 4
+  },
+  "statistics": {
+    "total_audio_files": 0,
+    "human_recordings": 0,
+    "generated_audio": 0,
+    "playlists": 2
+  }
+}

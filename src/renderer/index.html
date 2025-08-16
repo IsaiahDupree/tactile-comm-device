@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactile Device Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>Tactile Device Manager</h1>
+                <div class="connection-status">
+                    <div class="status-indicator" id="connectionStatus"></div>
+                    <span id="connectionText">Disconnected</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="section">
+                    <h3>Device Connection</h3>
+                    <div class="form-group">
+                        <label for="serialPorts">Serial Port:</label>
+                        <select id="serialPorts">
+                            <option value="">Select a port...</option>
+                        </select>
+                        <button id="refreshPorts" class="btn btn-secondary">Refresh</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="baudRate">Baud Rate:</label>
+                        <select id="baudRate">
+                            <option value="9600">9600</option>
+                            <option value="57600">57600</option>
+                            <option value="115200" selected>115200</option>
+                            <option value="230400">230400</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button id="connectBtn" class="btn btn-primary">Connect</button>
+                        <button id="disconnectBtn" class="btn btn-secondary" disabled>Disconnect</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Firmware Management</h3>
+                    <div class="form-group">
+                        <label for="boardSelect">Board:</label>
+                        <select id="boardSelect">
+                            <option value="arduino:renesas_uno:unor4wifi">Arduino Uno R4 WiFi</option>
+                            <option value="arduino:avr:uno">Arduino Uno</option>
+                            <option value="arduino:avr:nano">Arduino Nano</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button id="detectBoardsBtn" class="btn btn-secondary">Detect Boards</button>
+                        <button id="uploadFirmwareBtn" class="btn btn-primary" disabled>Upload Firmware</button>
+                    </div>
+                    <div id="uploadProgress" class="progress-container" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Ready</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>SD Card Management</h3>
+                    <div class="form-group">
+                        <button id="selectSdBtn" class="btn btn-secondary">Select SD Directory</button>
+                        <div id="sdPath" class="path-display">No directory selected</div>
+                    </div>
+                    <div class="button-group">
+                        <button id="syncSdBtn" class="btn btn-primary" disabled>Sync to Device</button>
+                        <button id="backupSdBtn" class="btn btn-secondary" disabled>Backup from Device</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Device Testing</h3>
+                    <div class="button-group">
+                        <button id="selfTestBtn" class="btn btn-primary" disabled>Run Self-Test</button>
+                        <button id="playTestBtn" class="btn btn-secondary" disabled>Play Test Audio</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>One-Click Update</h3>
+                    <button id="oneClickUpdateBtn" class="btn btn-success btn-large" disabled>
+                        🚀 Update Device
+                    </button>
+                    <div class="update-steps" id="updateSteps" style="display: none;">
+                        <div class="step" id="step1">1. Flash Firmware</div>
+                        <div class="step" id="step2">2. Sync SD Card</div>
+                        <div class="step" id="step3">3. Run Self-Test</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Panel -->
+            <main class="main-panel">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="console">Console</button>
+                        <button class="tab-button" data-tab="config">Configuration</button>
+                        <button class="tab-button" data-tab="files">File Manager</button>
+                        <button class="tab-button" data-tab="playlists">Playlists</button>
+                    </div>
+
+                    <!-- Console Tab -->
+                    <div class="tab-content active" id="console">
+                        <div class="console-container">
+                            <div class="console-output" id="consoleOutput"></div>
+                            <div class="console-input-container">
+                                <input type="text" id="consoleInput" placeholder="Enter command..." autocomplete="off">
+                                <button id="sendCommandBtn" class="btn btn-primary">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuration Tab -->
+                    <div class="tab-content" id="config">
+                        <div class="config-container">
+                            <h3>Device Configuration</h3>
+                            
+                            <div class="config-section">
+                                <h4>Button Mapping (buttons.csv)</h4>
+                                <div class="config-editor">
+                                    <textarea id="buttonConfigEditor" placeholder="Loading configuration..." rows="10"></textarea>
+                                    <div class="button-group">
+                                        <button id="loadButtonConfig" class="btn btn-secondary">Load from Device</button>
+                                        <button id="saveButtonConfig" class="btn btn-primary">Save to Device</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-section">
+                                <h4>Mode Configuration (mode.cfg)</h4>
+                                <div class="config-editor">
+                                    <div class="form-group">
+                                        <label for="priorityMode">Priority Mode:</label>
+                                        <select id="priorityMode">
+                                            <option value="HUMAN_FIRST">Human First</option>
+                                            <option value="GENERATED_FIRST">Generated First</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="strictPlaylists">Strict Playlists:</label>
+                                        <input type="checkbox" id="strictPlaylists" checked>
+                                    </div>
+                                    <div class="button-group">
+                                        <button id="loadModeConfig" class="btn btn-secondary">Load from Device</button>
+                                        <button id="saveModeConfig" class="btn btn-primary">Save to Device</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Manager Tab -->
+                    <div class="tab-content" id="files">
+                        <div class="file-manager">
+                            <div class="file-explorer">
+                                <div class="explorer-header">
+                                    <h4>SD Card Files</h4>
+                                    <div class="path-breadcrumb" id="currentPath">/</div>
+                                </div>
+                                <div class="file-list" id="fileList">
+                                    <div class="file-item placeholder">Select SD directory to browse files</div>
+                                </div>
+                            </div>
+                            <div class="file-operations">
+                                <h4>File Operations</h4>
+                                <div class="button-group">
+                                    <button id="createFolderBtn" class="btn btn-secondary">Create Folder</button>
+                                    <button id="uploadFileBtn" class="btn btn-secondary">Upload File</button>
+                                    <button id="deleteFileBtn" class="btn btn-danger" disabled>Delete Selected</button>
+                                </div>
+                                <div class="file-info" id="fileInfo">
+                                    <p>Select a file to view details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Playlists Tab -->
+                    <div class="tab-content" id="playlists">
+                        <div class="playlist-manager">
+                            <div class="playlist-list">
+                                <h4>Available Playlists</h4>
+                                <div class="playlist-items" id="playlistItems">
+                                    <div class="playlist-item placeholder">No playlists found</div>
+                                </div>
+                            </div>
+                            <div class="playlist-editor">
+                                <h4>Playlist Editor</h4>
+                                <div class="form-group">
+                                    <label for="playlistKey">Key:</label>
+                                    <input type="text" id="playlistKey" placeholder="e.g., A, Water, Emergency">
+                                </div>
+                                <div class="form-group">
+                                    <label for="playlistType">Type:</label>
+                                    <select id="playlistType">
+                                        <option value="human">Human Recordings</option>
+                                        <option value="generated">Generated Audio</option>
+                                    </select>
+                                </div>
+                                <div class="playlist-tracks">
+                                    <h5>Tracks (in order):</h5>
+                                    <div class="track-list" id="trackList">
+                                        <div class="track-item placeholder">No tracks</div>
+                                    </div>
+                                    <div class="button-group">
+                                        <button id="addTrackBtn" class="btn btn-secondary">Add Track</button>
+                                        <button id="removeTrackBtn" class="btn btn-danger" disabled>Remove Selected</button>
+                                    </div>
+                                </div>
+                                <div class="button-group">
+                                    <button id="loadPlaylistBtn" class="btn btn-secondary">Load Playlist</button>
+                                    <button id="savePlaylistBtn" class="btn btn-primary">Save Playlist</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-item">
+                <span id="deviceStatus">No device connected</span>
+            </div>
+            <div class="status-item">
+                <span id="sdStatus">No SD directory selected</span>
+            </div>
+            <div class="status-item">
+                <span id="operationStatus">Ready</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
