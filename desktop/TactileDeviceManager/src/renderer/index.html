@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactile Device Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1><i class="fas fa-hand-paper"></i> Tactile Device Manager</h1>
+                <div class="status-indicators">
+                    <div class="status-item" id="sd-status">
+                        <i class="fas fa-sd-card"></i>
+                        <span>SD Card: <span id="sd-status-text">Not Connected</span></span>
+                    </div>
+                    <div class="status-item" id="device-status">
+                        <i class="fas fa-microchip"></i>
+                        <span>Device: <span id="device-status-text">Not Connected</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="btn btn-primary" id="connect-btn">
+                    <i class="fas fa-plug"></i> Connect Device
+                </button>
+                <button class="btn btn-secondary" id="select-sd-btn">
+                    <i class="fas fa-folder-open"></i> Select SD Card
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel - Device Layout -->
+            <div class="left-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-th"></i> Device Layout</h2>
+                    <div class="priority-toggle">
+                        <label>Priority Mode:</label>
+                        <select id="priority-mode">
+                            <option value="HUMAN_FIRST">Human First</option>
+                            <option value="GENERATED_FIRST">Generated First</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Device Visual Representation -->
+                <div class="device-container">
+                    <!-- Top Row - Special Buttons -->
+                    <div class="button-row top-row">
+                        <div class="device-button special-button" data-key="Are You?" data-input="pcf0:00">
+                            <span class="button-label">Are You?</span>
+                            <div class="button-status">
+                                <span class="human-count">0</span>/<span class="generated-count">0</span>
+                            </div>
+                        </div>
+                        <div class="device-button special-button" data-key="Yes" data-input="pcf0:01">
+                            <span class="button-label">Yes</span>
+                            <div class="button-status">
+                                <span class="human-count">0</span>/<span class="generated-count">0</span>
+                            </div>
+                        </div>
+                        <div class="device-button special-button" data-key="No" data-input="pcf0:02">
+                            <span class="button-label">No</span>
+                            <div class="button-status">
+                                <span class="human-count">0</span>/<span class="generated-count">0</span>
+                            </div>
+                        </div>
+                        <div class="device-button special-button" data-key="Water" data-input="pcf0:03">
+                            <span class="button-label">Water</span>
+                            <div class="button-status">
+                                <span class="human-count">0</span>/<span class="generated-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Letter Grid - Matching Physical Layout -->
+                    <div class="letter-grid">
+                        <!-- Row 1: A-G -->
+                        <div class="button-row">
+                            <div class="device-button letter-button" data-key="A" data-input="pcf0:04">
+                                <span class="button-label">A</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="B" data-input="pcf0:05">
+                                <span class="button-label">B</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="C" data-input="pcf0:06">
+                                <span class="button-label">C</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="D" data-input="pcf0:07">
+                                <span class="button-label">D</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="E" data-input="pcf0:08">
+                                <span class="button-label">E</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="F" data-input="pcf0:09">
+                                <span class="button-label">F</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="G" data-input="pcf0:10">
+                                <span class="button-label">G</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 2: H-N -->
+                        <div class="button-row">
+                            <div class="device-button letter-button" data-key="H" data-input="pcf0:11">
+                                <span class="button-label">H</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="I" data-input="pcf0:12">
+                                <span class="button-label">I</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="J" data-input="pcf0:13">
+                                <span class="button-label">J</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="K" data-input="pcf0:14">
+                                <span class="button-label">K</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="L" data-input="pcf0:15">
+                                <span class="button-label">L</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="M" data-input="pcf1:00">
+                                <span class="button-label">M</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="N" data-input="pcf1:01">
+                                <span class="button-label">N</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: O-U -->
+                        <div class="button-row">
+                            <div class="device-button letter-button" data-key="O" data-input="pcf1:02">
+                                <span class="button-label">O</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="P" data-input="pcf1:03">
+                                <span class="button-label">P</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="Q" data-input="pcf1:04">
+                                <span class="button-label">Q</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="R" data-input="pcf1:05">
+                                <span class="button-label">R</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="S" data-input="pcf1:06">
+                                <span class="button-label">S</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="T" data-input="pcf1:07">
+                                <span class="button-label">T</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="U" data-input="pcf1:08">
+                                <span class="button-label">U</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: V-Z, -, . -->
+                        <div class="button-row">
+                            <div class="device-button letter-button" data-key="V" data-input="pcf1:09">
+                                <span class="button-label">V</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="W" data-input="pcf1:10">
+                                <span class="button-label">W</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="X" data-input="pcf1:11">
+                                <span class="button-label">X</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="Y" data-input="pcf1:12">
+                                <span class="button-label">Y</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button letter-button" data-key="Z" data-input="pcf1:13">
+                                <span class="button-label">Z</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button special-button" data-key="-" data-input="pcf1:14">
+                                <span class="button-label">-</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                            <div class="device-button special-button" data-key="." data-input="pcf1:15">
+                                <span class="button-label">.</span>
+                                <div class="button-status">
+                                    <span class="human-count">0</span>/<span class="generated-count">0</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel - Button Details -->
+            <div class="right-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-cog"></i> Button Configuration</h2>
+                    <div class="selected-button-info">
+                        <span id="selected-button-text">Select a button to configure</span>
+                    </div>
+                </div>
+
+                <!-- Button Configuration -->
+                <div class="button-config" id="button-config" style="display: none;">
+                    <div class="config-section">
+                        <h3>Hardware Mapping</h3>
+                        <div class="input-group">
+                            <label>Physical Input:</label>
+                            <input type="text" id="button-input" placeholder="e.g., pcf0:15 or gpio:8">
+                        </div>
+                        <div class="input-group">
+                            <label>Button Key:</label>
+                            <input type="text" id="button-key" placeholder="e.g., A, Water, Emergency">
+                        </div>
+                    </div>
+
+                    <div class="config-section">
+                        <h3>Human Recordings</h3>
+                        <div class="audio-list" id="human-audio-list">
+                            <!-- Dynamic content -->
+                        </div>
+                        <button class="btn btn-secondary" id="add-human-audio">
+                            <i class="fas fa-plus"></i> Add Human Recording
+                        </button>
+                    </div>
+
+                    <div class="config-section">
+                        <h3>Generated Audio</h3>
+                        <div class="audio-list" id="generated-audio-list">
+                            <!-- Dynamic content -->
+                        </div>
+                        <button class="btn btn-secondary" id="add-generated-audio">
+                            <i class="fas fa-plus"></i> Add Generated Audio
+                        </button>
+                    </div>
+
+                    <div class="config-actions">
+                        <button class="btn btn-primary" id="save-button-config">
+                            <i class="fas fa-save"></i> Save Configuration
+                        </button>
+                        <button class="btn btn-danger" id="test-button">
+                            <i class="fas fa-play"></i> Test Button
+                        </button>
+                    </div>
+                </div>
+
+                <!-- System Status -->
+                <div class="system-status">
+                    <h3><i class="fas fa-info-circle"></i> System Status</h3>
+                    <div class="status-grid">
+                        <div class="status-card">
+                            <div class="status-icon">
+                                <i class="fas fa-sd-card"></i>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-title">SD Card</div>
+                                <div class="status-value" id="sd-card-status">Not Connected</div>
+                            </div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon">
+                                <i class="fas fa-microchip"></i>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-title">Device</div>
+                                <div class="status-value" id="device-connection-status">Not Connected</div>
+                            </div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon">
+                                <i class="fas fa-music"></i>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-title">Audio Files</div>
+                                <div class="status-value" id="audio-files-count">0 files</div>
+                            </div>
+                        </div>
+                        <div class="status-card">
+                            <div class="status-icon">
+                                <i class="fas fa-th"></i>
+                            </div>
+                            <div class="status-info">
+                                <div class="status-title">Configured Buttons</div>
+                                <div class="status-value" id="configured-buttons-count">0 buttons</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Console Output -->
+        <div class="console-panel">
+            <div class="console-header">
+                <h3><i class="fas fa-terminal"></i> Device Console</h3>
+                <div class="console-controls">
+                    <button class="btn btn-sm" id="clear-console">Clear</button>
+                    <button class="btn btn-sm" id="send-command-btn">Send Command</button>
+                    <input type="text" id="command-input" placeholder="Enter device command...">
+                </div>
+            </div>
+            <div class="console-output" id="console-output">
+                <div class="console-line">Welcome to Tactile Device Manager</div>
+                <div class="console-line">Connect your device and SD card to begin...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Audio Preview -->
+    <div class="modal" id="audio-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Audio Preview</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <audio controls id="audio-preview">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="audio-info">
+                    <p><strong>File:</strong> <span id="audio-filename"></span></p>
+                    <p><strong>Type:</strong> <span id="audio-type"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>
