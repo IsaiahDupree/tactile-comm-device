@@ -54,3 +54,5 @@ Story,T-46 - Protocol versioning/compat,DM_PROTO negotiation and capability bits
 Story,T-47 - Security hardening,Brute-force backoff, SIM_KEY rate-limit, optional HMAC for critical ops,To Do,Medium,,T-32,M8,3
 Story,T-48 - Soak & fault tests,Link drops/dups/NAKs/power-cuts with zero corruption and clean recovery,To Do,Medium,,T-33 T-35 T-36,M8,8
 Story,T-49 - Docs & reference CLI,Protocol spec + tiny Python client for CI/field workflows,To Do,Low,,T-42,M8,3
+
+# For detailed M8 Data Mode task breakdown (T-30..T-49), see docs/tasks/data_mode_infra_tasks.csv
