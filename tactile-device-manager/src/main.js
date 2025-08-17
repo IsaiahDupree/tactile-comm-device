@@ -9,6 +9,11 @@ const { spawn } = require('child_process');
 let mainWindow;
 let serialPort = null;
 let parser = null;
+// Data Mode feature flag and lazy-loaded modules
+const DM_ENABLED = process.env.DM_ENABLE === '1' || process.argv.includes('--dm');
+let dmSession = null;
+let SerialTransport = null;
+let DMSession = null;
 
 // Arduino CLI path (will be auto-detected or bundled)
 let arduinoCliPath = 'arduino-cli';
@@ -91,12 +96,14 @@ ipcMain.handle('connect-device', async (event, portPath, baudRate = 115200) => {
       autoOpen: false
     });
 
-    parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
-
-    // Handle incoming data
-    parser.on('data', (data) => {
-      mainWindow.webContents.send('serial-data', data.trim());
-    });
+    // If Data Mode is enabled, do not use line-based parser; we want raw frames
+    if (!DM_ENABLED) {
+      parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
+      // Handle incoming data (text console mode)
+      parser.on('data', (data) => {
+        mainWindow.webContents.send('serial-data', data.trim());
+      });
+    }
 
     // Handle errors
     serialPort.on('error', (error) => {
@@ -110,6 +117,27 @@ ipcMain.handle('connect-device', async (event, portPath, baudRate = 115200) => {
         else resolve();
       });
     });
+
+    // Initialize Data Mode session if requested
+    if (DM_ENABLED) {
+      if (!SerialTransport) ({ SerialTransport } = require('./lib/datamode/transport-serial'));
+      if (!DMSession) ({ DMSession } = require('./lib/datamode/session'));
+      const transport = new SerialTransport(serialPort);
+      dmSession = new DMSession(transport, {
+        onFrame: (header, payload) => {
+          // Forward decoded frames to renderer
+          mainWindow.webContents.send('dm-frame', {
+            header,
+            payload: Buffer.from(payload).toString('hex')
+          });
+        },
+        onError: (e) => {
+          mainWindow.webContents.send('dm-error', String(e && e.message ? e.message : e));
+        }
+      });
+      await dmSession.begin();
+      mainWindow.webContents.send('dm-status', 'started');
+    }
 
     return { success: true, message: `Connected to ${portPath}` };
   } catch (error) {
@@ -128,6 +156,10 @@ ipcMain.handle('disconnect-device', async () => {
     }
     serialPort = null;
     parser = null;
+    if (dmSession) {
+      try { await dmSession.end(); } catch (_) {}
+      dmSession = null;
+    }
     return { success: true, message: 'Disconnected' };
   } catch (error) {
     return { success: false, message: error.message };
@@ -354,3 +386,31 @@ function calculateCRC32(data) {
 }
 
 console.log('Tactile Device Manager starting...');
+
+// ===== DATA MODE IPC (only when enabled) =====
+if (DM_ENABLED) {
+  // Send a GET_INFO control message
+  ipcMain.handle('dm-get-info', async () => {
+    try {
+      if (!dmSession) throw new Error('DM session not started');
+      await dmSession.getInfo();
+      return { success: true };
+    } catch (e) {
+      return { success: false, message: e.message };
+    }
+  });
+
+  // Generic raw send helper: accepts hex payload and a type byte
+  ipcMain.handle('dm-send', async (event, type, hexPayload = '') => {
+    try {
+      if (!dmSession) throw new Error('DM session not started');
+      const clean = (hexPayload || '').replace(/[^0-9a-fA-F]/g, '');
+      const bytes = Buffer.from(clean, 'hex');
+      // private access to _send for scaffolding; later expose typed verbs
+      await dmSession._send(type & 0xFF, new Uint8Array(bytes));
+      return { success: true };
+    } catch (e) {
+      return { success: false, message: e.message };
+    }
+  });
+}
