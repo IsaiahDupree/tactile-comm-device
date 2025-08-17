@@ -18,7 +18,9 @@ import argparse
 # Configuration
 SD_CARD_PATH = "E:\\"
 RECORDED_WORDS_PATH = r"C:\Users\Isaia\Documents\3D Printing\Projects\Button\Audio\RecordedWords"
-ELEVENLABS_API_KEY = "sk_33095b4fed3a2d88e04c7bf0c3c75768fcb579bc1643a702"
+ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
+if not API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable is required")
 VOICE_ID = "RILOU7YmBhvwJGDGjNmP"  # Clear, understandable voice
 
 # Complete word mapping with proper track naming

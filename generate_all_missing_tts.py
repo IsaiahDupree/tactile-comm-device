@@ -12,7 +12,9 @@ import time
 from pathlib import Path
 
 # ElevenLabs API configuration
-API_KEY = "sk_33095b4fed3a2d88e04c7bf0c3c75768fcb579bc1643a702"  # Replace with your API key
+API_KEY = os.getenv('ELEVENLABS_API_KEY')  # Replace with your API key
+if not API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable is required")
 VOICE_ID = "RILOU7YmBhvwJGDGjNmP"  # Replace with your preferred voice ID
 SD_CARD_PATH = r"E:"
 

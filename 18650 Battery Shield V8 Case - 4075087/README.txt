@@ -1,4 +1,0 @@
-18650 Battery Shield V8 Case by DarthCoffeeBean on Thingiverse: https://www.thingiverse.com/thing:4075087
-
-Summary:
-This is a case for the 18650 battery shield that you can find here.https://www.amazon.co.uk/gp/product/B07S3H1V77/ref=ppx_yo_dt_b_asin_title_o02_s01?ie=UTF8&amp;psc=1Note that this is still a work in progress - the case body fits (very snugly) :)Added a window to the bottom of the case to let you see the led's. Print the LED window with clear or transparent to cover it up or just leave it empty.An untested lid is now included with M2.5 threaded mounting holes for a Pi Zero.Fusion 360 file is attached for anyone wanting to adjust the design to suit their needs.

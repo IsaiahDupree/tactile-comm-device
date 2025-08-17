@@ -9,7 +9,9 @@ import requests
 import json
 
 # ElevenLabs API configuration
-API_KEY = "sk_3cc9cfbe1d68b95ef0b32bd4d0049082097dfc1f769d21b0"  # Your ElevenLabs API key
+API_KEY = os.getenv('ELEVENLABS_API_KEY')  # Your ElevenLabs API key
+if not API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable is required")
 VOICE_ID = "21m00Tcm4TlvDq8ikWAM"  # Rachel voice (clear, professional)
 
 # Audio settings for clear, concise announcements

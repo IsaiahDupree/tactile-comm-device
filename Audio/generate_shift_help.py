@@ -9,7 +9,9 @@ import requests
 from pathlib import Path
 
 # ElevenLabs Configuration
-API_KEY = "sk_33095b4fed3a2d88e04c7bf0c3c75768fcb579bc1643a702"
+API_KEY = os.getenv('ELEVENLABS_API_KEY')
+if not API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable is required")
 VOICE_ID = "RILOU7YmBhvwJGDGjNmP"  # Rilou is clear and natural
 API_URL = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
 

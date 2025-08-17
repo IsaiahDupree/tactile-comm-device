@@ -13,7 +13,9 @@ from pathlib import Path
 import shutil
 
 # ElevenLabs configuration
-ELEVENLABS_API_KEY = "sk_33095b4fed3a2d88e04c7bf0c3c75768fcb579bc1643a702"
+ELEVENLABS_API_KEY = os.getenv('ELEVENLABS_API_KEY')
+if not API_KEY:
+    raise ValueError("ELEVENLABS_API_KEY environment variable is required")
 VOICE_ID = "RILOU7YmBhvwJGDGjNmP"  # RILOU voice
 ELEVENLABS_URL = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
 
