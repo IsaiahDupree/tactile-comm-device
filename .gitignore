@@ -1,3 +1,14 @@
+# API Keys and Secrets
+*.key
+*.pem
+.env
+.env.local
+.env.production
+config/secrets.json
+secrets/
+api_keys.txt
+**/api_key*
+
 # OS Files
 .DS_Store
 Thumbs.db
