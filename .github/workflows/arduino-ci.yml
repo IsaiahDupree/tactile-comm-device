@@ -1,0 +1,103 @@
+name: Arduino CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        board:
+          - fqbn: "arduino:renesas_uno:unor4wifi"
+            platform: "arduino:renesas_uno"
+            name: "Arduino Uno R4 WiFi"
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Arduino CLI
+      uses: arduino/setup-arduino-cli@v2
+      
+    - name: Update core index
+      run: arduino-cli core update-index
+      
+    - name: Install platform
+      run: arduino-cli core install ${{ matrix.board.platform }}
+      
+    - name: Install required libraries
+      run: |
+        arduino-cli lib install "Adafruit VS1053 Library"
+        arduino-cli lib install "Adafruit PCF8574"
+        arduino-cli lib install "Adafruit BusIO"
+        
+    - name: Compile firmware
+      run: |
+        arduino-cli compile \
+          --fqbn ${{ matrix.board.fqbn }} \
+          --warnings all \
+          --verbose \
+          firmware/tactile_comm_device_vs1053/
+          
+    - name: Check sketch size
+      run: |
+        arduino-cli compile \
+          --fqbn ${{ matrix.board.fqbn }} \
+          --output-dir /tmp/build \
+          firmware/tactile_comm_device_vs1053/
+        ls -la /tmp/build/
+
+  documentation:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Check documentation links
+      run: |
+        # Check for broken internal links in markdown files
+        find . -name "*.md" -exec grep -l "](/" {} \; | head -5
+        
+    - name: Validate configuration files
+      run: |
+        # Check CSV format
+        if [ -f "config/sample_config.csv" ]; then
+          echo "Validating sample config CSV format..."
+          head -5 config/sample_config.csv
+        fi
+        
+    - name: Check BOM format
+      run: |
+        if [ -f "hardware/bom/bom.csv" ]; then
+          echo "Validating BOM CSV format..."
+          head -3 hardware/bom/bom.csv
+        fi
+
+  file-structure:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Verify required files exist
+      run: |
+        echo "Checking for required files..."
+        test -f README.md || (echo "README.md missing" && exit 1)
+        test -f LICENSE || (echo "LICENSE missing" && exit 1)
+        test -f firmware/tactile_comm_device_vs1053/tactile_comm_device_vs1053.ino || (echo "Main firmware file missing" && exit 1)
+        test -f hardware/bom/bom.csv || (echo "BOM file missing" && exit 1)
+        test -f docs/setup-guide.md || (echo "Setup guide missing" && exit 1)
+        test -f docs/mapping-guide.md || (echo "Mapping guide missing" && exit 1)
+        echo "All required files found!"
+        
+    - name: Check directory structure
+      run: |
+        echo "Project structure:"
+        tree -L 3 -I 'node_modules|.git' || ls -la

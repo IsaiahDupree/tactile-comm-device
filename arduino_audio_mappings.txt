@@ -1,0 +1,57 @@
+// Generated audioMappings based on actual SD card content
+AudioMapping audioMappings[] = {
+  // A: REC=1-3(Alari,Amer,Amory), TTS=4-6(Arabic Show,Attention,Awesome)
+  {"A", /*recFolder*/5,/*recBase*/1,/*recCount*/3, /*ttsFolder*/5,/*ttsBase*/4,/*ttsCount*/3, "Alari"},
+  // B: TTS=1-6(Unknown,Unknown,Unknown,Unknown,Unknown,Unknown)
+  {"B", /*recFolder*/6,/*recBase*/0,/*recCount*/0, /*ttsFolder*/6,/*ttsBase*/1,/*ttsCount*/6, "Unknown"},
+  // C: TTS=1-7(Unknown,Unknown,Unknown,Unknown,Unknown,Unknown,Unknown)
+  {"C", /*recFolder*/7,/*recBase*/0,/*recCount*/0, /*ttsFolder*/7,/*ttsBase*/1,/*ttsCount*/7, "Unknown"},
+  // D: REC=1(Daddy), TTS=2-6(Deen,Doctor,Door,Down,Unknown)
+  {"D", /*recFolder*/8,/*recBase*/1,/*recCount*/1, /*ttsFolder*/8,/*ttsBase*/2,/*ttsCount*/5, "Daddy"},
+  // E: TTS=1(Unknown)
+  {"E", /*recFolder*/9,/*recBase*/0,/*recCount*/0, /*ttsFolder*/9,/*ttsBase*/1,/*ttsCount*/1, "Unknown"},
+  // F: TTS=1-3(Unknown,Unknown,Unknown)
+  {"F", /*recFolder*/10,/*recBase*/0,/*recCount*/0, /*ttsFolder*/10,/*ttsBase*/1,/*ttsCount*/3, "Unknown"},
+  // G: REC=1(Good Morning), TTS=2-3(Garage,Go)
+  {"G", /*recFolder*/11,/*recBase*/1,/*recCount*/1, /*ttsFolder*/11,/*ttsBase*/2,/*ttsCount*/2, "Good Mornin"},
+  // H: REC=1(Hello How are You), TTS=2-7(Happy,Heartburn,Hot,Hungry,Unknown,Unknown)
+  {"H", /*recFolder*/12,/*recBase*/1,/*recCount*/1, /*ttsFolder*/12,/*ttsBase*/2,/*ttsCount*/6, "Hello How a"},
+  // I: TTS=1-3(Unknown,Unknown,Unknown)
+  {"I", /*recFolder*/13,/*recBase*/0,/*recCount*/0, /*ttsFolder*/13,/*ttsBase*/1,/*ttsCount*/3, "Unknown"},
+  // J: TTS=1(Unknown)
+  {"J", /*recFolder*/14,/*recBase*/0,/*recCount*/0, /*ttsFolder*/14,/*ttsBase*/1,/*ttsCount*/1, "Unknown"},
+  // K: REC=1-2(Kiyah,Kyan), TTS=3-5(Kaiser,Kleenex,Kitchen)
+  {"K", /*recFolder*/15,/*recBase*/1,/*recCount*/2, /*ttsFolder*/15,/*ttsBase*/3,/*ttsCount*/3, "Kiyah"},
+  // L: REC=1-2(I Love You,Lee), TTS=3-6(Light Down,Light Up,Look,Unknown)
+  {"L", /*recFolder*/16,/*recBase*/1,/*recCount*/2, /*ttsFolder*/16,/*ttsBase*/3,/*ttsCount*/4, "I Love You"},
+  // M: TTS=1-6(Unknown,Unknown,Unknown,Unknown,Unknown,Unknown)
+  {"M", /*recFolder*/17,/*recBase*/0,/*recCount*/0, /*ttsFolder*/17,/*ttsBase*/1,/*ttsCount*/6, "Unknown"},
+  // N: REC=1-3(Nada,Nadowie,Noah), TTS=4-5(No,Net)
+  {"N", /*recFolder*/18,/*recBase*/1,/*recCount*/3, /*ttsFolder*/18,/*ttsBase*/4,/*ttsCount*/2, "Nada"},
+  // O: TTS=1-2(Unknown,Unknown)
+  {"O", /*recFolder*/19,/*recBase*/0,/*recCount*/0, /*ttsFolder*/19,/*ttsBase*/1,/*ttsCount*/2, "Unknown"},
+  // P: TTS=1-4(Unknown,Unknown,Unknown,Unknown)
+  {"P", /*recFolder*/20,/*recBase*/0,/*recCount*/0, /*ttsFolder*/20,/*ttsBase*/1,/*ttsCount*/4, "Unknown"},
+  // Q: TTS=1(Unknown)
+  {"Q", /*recFolder*/21,/*recBase*/0,/*recCount*/0, /*ttsFolder*/21,/*ttsBase*/1,/*ttsCount*/1, "Unknown"},
+  // R: TTS=1-3(Unknown,Unknown,Unknown)
+  {"R", /*recFolder*/22,/*recBase*/0,/*recCount*/0, /*ttsFolder*/22,/*ttsBase*/1,/*ttsCount*/3, "Unknown"},
+  // S: REC=1(Susu), TTS=2-10(Sad,Scarf,Shoes,Sinemet,Sleep,Socks,Stop,Space,Unknown)
+  {"S", /*recFolder*/23,/*recBase*/1,/*recCount*/1, /*ttsFolder*/23,/*ttsBase*/2,/*ttsCount*/9, "Susu"},
+  // T: TTS=1-4(Unknown,Unknown,Unknown,Unknown)
+  {"T", /*recFolder*/24,/*recBase*/0,/*recCount*/0, /*ttsFolder*/24,/*ttsBase*/1,/*ttsCount*/4, "Unknown"},
+  // U: REC=1(Urgent Care), TTS=2-3(Up,Under)
+  {"U", /*recFolder*/25,/*recBase*/1,/*recCount*/1, /*ttsFolder*/25,/*ttsBase*/2,/*ttsCount*/2, "Urgent Care"},
+  // V: TTS=1(Unknown)
+  {"V", /*recFolder*/26,/*recBase*/0,/*recCount*/0, /*ttsFolder*/26,/*ttsBase*/1,/*ttsCount*/1, "Unknown"},
+  // W: REC=1-2(Walker,Wheelchair), TTS=3-6(Walk,Water,Window,Work)
+  {"W", /*recFolder*/27,/*recBase*/1,/*recCount*/2, /*ttsFolder*/27,/*ttsBase*/3,/*ttsCount*/4, "Walker"},
+  // X: TTS=1(Unknown)
+  {"X", /*recFolder*/28,/*recBase*/0,/*recCount*/0, /*ttsFolder*/28,/*ttsBase*/1,/*ttsCount*/1, "Unknown"},
+  // Y: TTS=1-2(Unknown,Unknown)
+  {"Y", /*recFolder*/29,/*recBase*/0,/*recCount*/0, /*ttsFolder*/29,/*ttsBase*/1,/*ttsCount*/2, "Unknown"},
+  // Z: TTS=1(Unknown)
+  {"Z", /*recFolder*/30,/*recBase*/0,/*recCount*/0, /*ttsFolder*/30,/*ttsBase*/1,/*ttsCount*/1, "Unknown"}
+};
+
+const uint8_t AUDIO_MAPPINGS_COUNT = sizeof(audioMappings) / sizeof(audioMappings[0]);

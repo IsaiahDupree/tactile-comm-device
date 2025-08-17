@@ -1,0 +1,4 @@
+18650+Battery+Shield+V8+Case diymore.cc h2040 by sebibv on Thingiverse: https://www.thingiverse.com/thing:5138913
+
+Summary:
+I decided to modify the initial project because my board is a little bit different.Please see if yours has the USB perfectly centered. This is shifted by 1.5 mm.For sure, the rest of the holes are different.I attached also the fusion file. Be careful...the transparent part is not fitting anymore, and also the led view hole is not perfectly on the position...you can move it more close to the USB A on the length axis...if not, you can see also like this all the leds.I'm not so good on fusion so please recheck if you want!

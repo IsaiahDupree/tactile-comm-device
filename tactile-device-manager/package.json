@@ -1,0 +1,35 @@
+{
+  "name": "tactile-device-manager",
+  "version": "1.0.0",
+  "description": "Desktop application for managing tactile communication devices",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "tactile",
+    "communication",
+    "arduino",
+    "accessibility"
+  ],
+  "author": "Tactile Communication Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/tactile-comm-device.git"
+  },
+  "devDependencies": {
+    "electron": "^37.2.1",
+    "electron-builder": "^22.14.13"
+  },
+  "dependencies": {
+    "@serialport/parser-readline": "^13.0.0",
+    "axios": "^1.10.0",
+    "fs-extra": "^11.3.0",
+    "path-extra": "^4.3.0",
+    "serialport": "^13.0.0"
+  }
+}

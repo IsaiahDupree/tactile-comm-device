@@ -1,0 +1,25 @@
+# Playlist mapping: Label -> Press Count -> Audio File
+# Format: label,press,bank,path,text
+# This file defines what audio plays for each button press
+
+# Example entries (customize based on your audio files):
+A,1,TTS,/01/001.mp3,Letter A
+A,2,TTS,/01/002.mp3,Apple
+A,3,REC,/101/001.mp3,Custom A recording
+
+B,1,TTS,/02/001.mp3,Letter B
+B,2,TTS,/02/002.mp3,Ball
+
+C,1,TTS,/03/001.mp3,Letter C
+C,2,TTS,/03/002.mp3,Cat
+
+# Period button for system functions
+.,1,TTS,/33/001.mp3,Period
+.,2,TTS,/33/002.mp3,Stop
+.,3,TTS,/33/003.mp3,System
+
+# Add more mappings as needed...
+# Each label can have multiple press counts (1, 2, 3, etc.)
+# Bank can be "TTS" for generated audio or "REC" for recordings
+# Path should point to actual MP3 files on SD card
+# Text is for console logging/debugging

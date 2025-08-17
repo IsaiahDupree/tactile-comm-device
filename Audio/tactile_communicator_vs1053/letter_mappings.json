@@ -1,0 +1,40 @@
+{
+  "special_buttons": {
+    "YES": ["Yes"],
+    "NO": ["No"],
+    "WATER": ["Water"],
+    "AUX": ["Hello How are You"]
+  },
+  "letters": {
+    "A": ["Amer", "Alari", "Apple", "Arabic Show"],
+    "B": ["Bathroom", "Bye", "Bed", "Breathe", "blanket"],
+    "C": ["Chair", "car", "Cucumber"],
+    "D": ["Deen", "Daddy", "Doctor", "Door"],
+    "E": [],
+    "F": ["FaceTime", "funny"],
+    "G": ["Good Morning", "Go"],
+    "H": ["How are you", "Heartburn"],
+    "I": ["Inside"],
+    "J": [],
+    "K": ["Kiyah", "Kyan", "Kleenex", "Kaiser"],
+    "L": ["Lee", "I love you", "light down", "light up"],
+    "M": ["Mohammad", "Medicine", "Medical"],
+    "N": ["Nada", "Nadowie", "Noah"],
+    "O": ["Outside"],
+    "P": ["Pain", "Phone"],
+    "Q": [],
+    "R": ["Room"],
+    "S": ["Scarf", "Susu", "Sinemet"],
+    "T": ["TV"],
+    "U": ["Urgent Care"],
+    "V": [],
+    "W": ["Water", "Walker", "wheelchair", "walk"],
+    "X": [],
+    "Y": [],
+    "Z": []
+  },
+  "punctuation": {
+    "SPACE": [" "],
+    "PERIOD": ["."]
+  }
+}

@@ -1,0 +1,70 @@
+# SD Card Audio Mapping - WITH RECORDED WORDS PRIORITY
+# Generated: Tactile Communication Device
+
+## RECORDED WORDS (Priority Files):
+These are pre-recorded personal audio files that take precedence:
+
+### Folder 01 - Special Buttons
+004.mp3 - Hello How are You [RECORDED]
+
+### Folder 02 - Letter A  
+001.mp3 - Amer [RECORDED]
+002.mp3 - Alari [RECORDED]
+003.mp3 - Apple [Generated]
+004.mp3 - Arabic Show [Generated]
+005.mp3 - Amory [RECORDED - Extra]
+
+### Folder 03 - Letter B
+001.mp3 - Bathroom [Generated]
+002.mp3 - Bye [RECORDED]
+003.mp3 - Bed [Generated]
+004.mp3 - Breathe [Generated]
+005.mp3 - blanket [Generated]
+
+### Folder 05 - Letter D
+001.mp3 - Deen [RECORDED]
+002.mp3 - Daddy [RECORDED]
+003.mp3 - Doctor [Generated]
+004.mp3 - Door [Generated]
+
+### Folder 08 - Letter G
+001.mp3 - Good Morning [RECORDED]
+002.mp3 - Go [Generated]
+
+### Folder 12 - Letter K
+001.mp3 - Kiyah [RECORDED]
+002.mp3 - Kyan [RECORDED]
+003.mp3 - Kleenex [Generated]
+004.mp3 - Kaiser [Generated]
+
+### Folder 13 - Letter L
+001.mp3 - Lee [RECORDED]
+002.mp3 - I love you [RECORDED]
+003.mp3 - light down [Generated]
+004.mp3 - light up [Generated]
+
+### Folder 15 - Letter N
+001.mp3 - Nada [Generated]
+002.mp3 - Nadowie [RECORDED]
+003.mp3 - Noah [RECORDED]
+
+### Folder 20 - Letter S
+001.mp3 - Scarf [Generated]
+002.mp3 - Susu [RECORDED]
+003.mp3 - Sinemet [Generated]
+
+### Folder 22 - Letter U
+001.mp3 - Urgent Care [RECORDED]
+
+### Folder 24 - Letter W
+001.mp3 - Water [Generated]
+002.mp3 - Walker [RECORDED]
+003.mp3 - wheelchair [RECORDED]
+004.mp3 - walk [Generated]
+
+## Notes:
+- [RECORDED] files are personal recordings (priority)
+- [Generated] files are ElevenLabs TTS
+- Recorded words provide personal, familiar voices
+- Generated words ensure complete coverage
+- Arduino code plays tracks in order: 1st press = 001.mp3, 2nd press = 002.mp3, etc.

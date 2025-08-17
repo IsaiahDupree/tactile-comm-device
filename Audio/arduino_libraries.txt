@@ -1,0 +1,82 @@
+Arduino Libraries Required for Tactile Communication Device
+==========================================================
+
+Install these libraries through the Arduino IDE Library Manager:
+
+1. **Adafruit_PCF8575** (by Adafruit)
+   - Version: Latest
+   - Provides I2C port expander support for 32 buttons
+   - Dependency: Adafruit_BusIO
+
+2. **Adafruit VS1053 Library** (by Adafruit) 🎵 NEW!
+   - Version: Latest  
+   - Controls the VS1053 codec for superior audio quality
+   - Much better audio than DFPlayer Mini
+   - Hardware interrupt support for background playback
+
+3. **DFRobotDFPlayerMini** (by DFRobot) - OPTIONAL
+   - Version: Latest  
+   - Only needed if using DFPlayer Mini version
+   - Use VS1053 version for better quality
+
+3. **SD** (by Arduino, SparkFun)
+   - Version: Latest (usually pre-installed)
+   - Manages SD card file operations
+   - Required for configuration storage
+
+4. **SPI** (by Arduino)
+   - Version: Latest (usually pre-installed)
+   - Required for SD card communication
+
+5. **Wire** (by Arduino)
+   - Version: Latest (usually pre-installed)
+   - I2C communication for PCF8575 expanders
+
+6. **SoftwareSerial** (by Arduino)
+   - Version: Latest (usually pre-installed)
+   - Serial communication with DFPlayer Mini
+
+Installation Instructions:
+-------------------------
+1. Open Arduino IDE
+2. Go to Tools → Manage Libraries
+3. Search for each library name
+4. Click "Install" on the latest version
+5. Install any dependencies when prompted
+
+Hardware Connections:
+--------------------
+PCF8575 #0 (0x20):
+- VCC → 5V
+- GND → GND  
+- SDA → A4 (Uno) or SDA pin
+- SCL → A5 (Uno) or SCL pin
+
+PCF8575 #1 (0x21):
+- VCC → 5V
+- GND → GND
+- SDA → A4 (Uno) or SDA pin  
+- SCL → A5 (Uno) or SCL pin
+
+VS1053 Shield/Breakout: 🎵 RECOMMENDED
+- 5V → Arduino 5V
+- GND → Arduino GND
+- MOSI → Pin 11 (SPI)
+- MISO → Pin 12 (SPI)
+- SCK → Pin 13 (SPI)
+- SHIELD_CS → Pin 7
+- SHIELD_DCS → Pin 6  
+- DREQ → Pin 3
+- CARDCS → Pin 4 (SD card)
+- Audio Output → Speaker/Headphones
+
+DFPlayer Mini (Alternative):
+- VCC → 5V
+- GND → GND
+- RX → Pin 10 (Arduino TX)
+- TX → Pin 11 (Arduino RX)
+- SPK_1 → Speaker +
+- SPK_2 → Speaker -
+
+Note: If using Arduino Nano 33 IoT or other boards with native I2C,
+you may need to use Wire1 instead of Wire. The code handles both cases.

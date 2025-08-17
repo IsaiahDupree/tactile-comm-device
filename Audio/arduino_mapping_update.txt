@@ -1,0 +1,46 @@
+// Updated audioMappings with expanded vocabulary
+// Each button now supports pressing as many times as there are words
+
+AudioMapping audioMappings[] = {
+  // Special Buttons (Essential communication)
+  {"YES", 1, 4, false, "yes"},        // 1=Yes, 2=No, 3=Water, 4=Help
+  
+  // System Functions
+  {"SHIFT", 4, 2, false, "Shift"},    // 1=Shift, 2=Device Help
+  
+  // Letter Buttons A-Z (with expanded vocabulary)
+  {"A", 5, 5, true, "apple"},  // A: 1=Apple(TTS), 2=Amer(REC), 3=Alari(REC), 4=Arabic(TTS), 5=Amory(REC)
+  {"B", 6, 4, true, "ball"},  // B: 1=Ball(TTS), 2=Bye(REC), 3=Bathroom(TTS), 4=Bed(TTS)
+  {"C", 7, 3, false, "cat"},  // C: 1=Cat(TTS), 2=Chair(TTS), 3=Car(TTS)
+  {"D", 8, 4, true, "dog"},  // D: 1=Dog(TTS), 2=Deen(REC), 3=Daddy(REC), 4=Doctor(TTS)
+  {"E", 9, 1, false, "elephant"},  // E: 1=Elephant(TTS)
+  {"F", 10, 2, false, "fish"},  // F: 1=Fish(TTS), 2=FaceTime(TTS)
+  {"G", 11, 2, false, "go"},  // G: 1=Go(TTS), 2=Good Morning(TTS)
+  {"H", 12, 3, false, "house"},  // H: 1=House(TTS), 2=Hello(TTS), 3=How are you(TTS)
+  {"I", 13, 2, false, "ice"},  // I: 1=Ice(TTS), 2=Inside(TTS)
+  {"J", 14, 1, false, "jump"},  // J: 1=Jump(TTS)
+  {"K", 15, 4, true, "key"},  // K: 1=Key(TTS), 2=Kiyah(REC), 3=Kyan(REC), 4=Kleenex(TTS)
+  {"L", 16, 4, true, "love"},  // L: 1=Love(TTS), 2=Lee(REC), 3=I love you(REC), 4=Light(TTS)
+  {"M", 17, 3, false, "moon"},  // M: 1=Moon(TTS), 2=Medicine(TTS), 3=Mohammad(TTS)
+  {"N", 18, 3, true, "net"},  // N: 1=Net(TTS), 2=Nadowie(REC), 3=Noah(REC)
+  {"O", 19, 2, false, "orange"},  // O: 1=Orange(TTS), 2=Outside(TTS)
+  {"P", 20, 3, false, "purple"},  // P: 1=Purple(TTS), 2=Phone(TTS), 3=Pain(TTS)
+  {"Q", 21, 1, false, "queen"},  // Q: 1=Queen(TTS)
+  {"R", 22, 2, false, "red"},  // R: 1=Red(TTS), 2=Room(TTS)
+  {"S", 23, 3, true, "sun"},  // S: 1=Sun(TTS), 2=Susu(REC), 3=Scarf(TTS)
+  {"T", 24, 2, false, "tree"},  // T: 1=Tree(TTS), 2=TV(TTS)
+  {"U", 25, 2, false, "up"},  // U: 1=Up(TTS), 2=Urgent Care(TTS)
+  {"V", 26, 1, false, "van"},  // V: 1=Van(TTS)
+  {"W", 27, 4, true, "water"},  // W: 1=Water(TTS), 2=Walker(REC), 3=Wheelchair(REC), 4=Walk(TTS)
+  {"X", 28, 1, false, "x-ray"},  // X: 1=X-ray(TTS)
+  {"Y", 29, 1, false, "yellow"},  // Y: 1=Yellow(TTS)
+  {"Z", 30, 1, false, "zebra"},  // Z: 1=Zebra(TTS)
+  
+  // Punctuation
+  {"SPACE", 31, 1, false, "Space"},   // 1=Space
+  {"PERIOD", 32, 1, false, "Period"}, // 1=Period
+  {"SHIFT", 33, 2, false, "Shift"}    // 1=Shift, 2=Device Help
+};
+
+// Updated array size
+const uint8_t AUDIO_MAPPING_COUNT = sizeof(audioMappings) / sizeof(audioMappings[0]);

@@ -1,0 +1,560 @@
+{
+  "labels": {
+    "W": {
+      "total": 4,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Walk",
+          "Walker",
+          "Water",
+          "Wheelchair"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Walk",
+          "Water"
+        ],
+        "have": [
+          "Walker",
+          "Wheelchair"
+        ]
+      }
+    },
+    "B": {
+      "total": 7,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Bagel",
+          "Ball",
+          "Bathroom",
+          "Bed",
+          "Blanket",
+          "Breathe",
+          "Bye"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Bagel",
+          "Ball",
+          "Bathroom",
+          "Bed",
+          "Blanket",
+          "Breathe"
+        ],
+        "have": [
+          "Bye"
+        ]
+      }
+    },
+    "D": {
+      "total": 6,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Daddy",
+          "Deen",
+          "Doctor",
+          "Dog",
+          "Door",
+          "Down"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Doctor",
+          "Dog",
+          "Door",
+          "Down"
+        ],
+        "have": [
+          "Daddy",
+          "Deen"
+        ]
+      }
+    },
+    "M": {
+      "total": 6,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Mad",
+          "Medical",
+          "Medicine",
+          "Meditate",
+          "Mohammad",
+          "Moon"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Mad",
+          "Medical",
+          "Medicine",
+          "Meditate",
+          "Mohammad",
+          "Moon"
+        ],
+        "have": []
+      }
+    },
+    "E": {
+      "total": 1,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Elephant"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Elephant"
+        ],
+        "have": []
+      }
+    },
+    "H": {
+      "total": 7,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Happy",
+          "Heartburn",
+          "Hello",
+          "Hot",
+          "House",
+          "How are you",
+          "Hungry"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Happy",
+          "Heartburn",
+          "Hello",
+          "Hot",
+          "House",
+          "How are you",
+          "Hungry"
+        ],
+        "have": []
+      }
+    },
+    "Q": {
+      "total": 1,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Queen"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Queen"
+        ],
+        "have": []
+      }
+    },
+    "X": {
+      "total": 1,
+      "generated": {
+        "missing": [],
+        "have": [
+          "X-ray"
+        ]
+      },
+      "human": {
+        "missing": [
+          "X-ray"
+        ],
+        "have": []
+      }
+    },
+    "F": {
+      "total": 3,
+      "generated": {
+        "missing": [],
+        "have": [
+          "FaceTime",
+          "Fish",
+          "Funny"
+        ]
+      },
+      "human": {
+        "missing": [
+          "FaceTime",
+          "Fish",
+          "Funny"
+        ],
+        "have": []
+      }
+    },
+    "U": {
+      "total": 2,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Up",
+          "Urgent Care"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Up"
+        ],
+        "have": [
+          "Urgent Care"
+        ]
+      }
+    },
+    "T": {
+      "total": 4,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Togamet",
+          "Tree",
+          "TV",
+          "Tylenol"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Togamet",
+          "Tree",
+          "TV",
+          "Tylenol"
+        ],
+        "have": []
+      }
+    },
+    "N": {
+      "total": 5,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Nada",
+          "Nadowie",
+          "Net",
+          "No",
+          "Noah"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Nada",
+          "Net",
+          "No"
+        ],
+        "have": [
+          "Nadowie",
+          "Noah"
+        ]
+      }
+    },
+    "V": {
+      "total": 1,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Van"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Van"
+        ],
+        "have": []
+      }
+    },
+    "P": {
+      "total": 4,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Pain",
+          "Period",
+          "Phone",
+          "Purple"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Pain",
+          "Period",
+          "Phone",
+          "Purple"
+        ],
+        "have": []
+      }
+    },
+    "I": {
+      "total": 3,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Ice",
+          "Inside",
+          "iPad"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Ice",
+          "Inside",
+          "iPad"
+        ],
+        "have": []
+      }
+    },
+    "O": {
+      "total": 2,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Orange",
+          "Outside"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Orange",
+          "Outside"
+        ],
+        "have": []
+      }
+    },
+    "C": {
+      "total": 7,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Call",
+          "Car",
+          "Cat",
+          "Chair",
+          "Coffee",
+          "Cold",
+          "Cucumber"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Call",
+          "Car",
+          "Cat",
+          "Chair",
+          "Coffee",
+          "Cold",
+          "Cucumber"
+        ],
+        "have": []
+      }
+    },
+    "Y": {
+      "total": 2,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Yes",
+          "Yellow"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Yes",
+          "Yellow"
+        ],
+        "have": []
+      }
+    },
+    "L": {
+      "total": 6,
+      "generated": {
+        "missing": [
+          "I love you",
+          "Lee",
+          "Light",
+          "Light Down",
+          "Light Up",
+          "Love"
+        ],
+        "have": []
+      },
+      "human": {
+        "missing": [
+          "I love you",
+          "Lee",
+          "Light",
+          "Light Down",
+          "Light Up",
+          "Love"
+        ],
+        "have": []
+      }
+    },
+    "G": {
+      "total": 3,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Garage",
+          "Go",
+          "Good Morning"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Garage",
+          "Go"
+        ],
+        "have": [
+          "Good Morning"
+        ]
+      }
+    },
+    "R": {
+      "total": 3,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Red",
+          "Rest",
+          "Room"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Red",
+          "Rest",
+          "Room"
+        ],
+        "have": []
+      }
+    },
+    "J": {
+      "total": 1,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Jump"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Jump"
+        ],
+        "have": []
+      }
+    },
+    "S": {
+      "total": 10,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Sad",
+          "Scarf",
+          "Shoes",
+          "Sinemet",
+          "Sleep",
+          "Socks",
+          "Space",
+          "Stop",
+          "Sun",
+          "Susu"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Sad",
+          "Scarf",
+          "Shoes",
+          "Sinemet",
+          "Sleep",
+          "Socks",
+          "Space",
+          "Stop",
+          "Sun"
+        ],
+        "have": [
+          "Susu"
+        ]
+      }
+    },
+    "Z": {
+      "total": 1,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Zebra"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Zebra"
+        ],
+        "have": []
+      }
+    },
+    "K": {
+      "total": 5,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Kaiser",
+          "Key",
+          "Kiyah",
+          "Kleenex",
+          "Kyan"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Kaiser",
+          "Key",
+          "Kleenex"
+        ],
+        "have": [
+          "Kiyah",
+          "Kyan"
+        ]
+      }
+    },
+    "A": {
+      "total": 6,
+      "generated": {
+        "missing": [],
+        "have": [
+          "Alari",
+          "Amer",
+          "Amory",
+          "Apple",
+          "Arabic",
+          "Arabic Show"
+        ]
+      },
+      "human": {
+        "missing": [
+          "Apple",
+          "Arabic",
+          "Arabic Show"
+        ],
+        "have": [
+          "Alari",
+          "Amer",
+          "Amory"
+        ]
+      }
+    }
+  },
+  "summary": {
+    "wanted": 101,
+    "generatedHave": 95,
+    "humanHave": 15
+  },
+  "generatedRoot": "E:\\audio\\generated",
+  "recordedRoot": "E:\\audio\\human"
+}

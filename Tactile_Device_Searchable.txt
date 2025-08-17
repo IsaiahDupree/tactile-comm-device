@@ -1,0 +1,51 @@
+🔍 TACTILE DEVICE - SEARCHABLE WORD LIST
+
+📱 COPY & PASTE FRIENDLY FORMAT
+
+🔘 SPECIAL BUTTONS:
+YES: Yes
+NO: No
+WATER: Water
+SHIFT: Personal Greeting → Instructions → Word List
+
+🔤 ALL WORDS BY BUTTON:
+
+Button A: Apple, Amer, Alari, Arabic, Amory
+Button B: Ball, Bye, Bathroom, Bed
+Button C: Cat, Chair, Car
+Button D: Dog, Deen, Daddy, Doctor
+Button E: Elephant
+Button F: Fish, FaceTime
+Button G: Go, Good Morning
+Button H: House, Hello, How are you
+Button I: Ice, Inside
+Button J: Jump
+Button K: Key, Kiyah, Kyan, Kleenex
+Button L: Love, Lee, I love you, Light
+Button M: Moon, Medicine, Mohammad
+Button N: Net, Nadowie, Noah
+Button O: Orange, Outside
+Button P: Purple, Phone, Pain
+Button Q: Queen
+Button R: Red, Room
+Button S: Sun, Susu, Scarf
+Button T: Tree, TV
+Button U: Up, Urgent Care
+Button V: Van
+Button W: Water, Walker, Wheelchair, Walk
+Button X: X-ray
+Button Y: Yellow
+Button Z: Zebra
+
+🔍 FIND A WORD? Use Ctrl+F to search!
+
+💡 USAGE TIPS:
+• Press button 1x for first word
+• Press multiple times to cycle through words
+• Wait 0.5 seconds after pressing
+• SHIFT button 3x = hear all words spoken
+
+📊 DEVICE STATS:
+✅ 74 total words available
+✅ 30 buttons (26 letters + 4 special)
+✅ Mix of personal recordings + text-to-speech

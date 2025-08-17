@@ -1,0 +1,80 @@
+# OS Files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Build artifacts
+.build/
+build/
+cmake-build-*/
+*.o
+*.obj
+*.elf
+*.bin
+*.hex
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+*.sublime-*
+
+# Arduino IDE
+*.ino.bak
+*.orig
+
+# Audio files (keep only samples/documentation)
+# Uncomment if you want to exclude large audio files:
+# audio/**/*.mp3
+# audio/**/*.wav
+# !audio/**/001.mp3  # Keep first samples
+
+# Large media files
+*.mov
+*.avi
+*.mp4
+media/**/*.mp4
+media/**/*.mov
+
+# CAD and 3D model files (large files)
+*.scdoc
+*.stp
+*.step
+*.stl
+*.STL
+BigBoxWithSwitch.*
+Button_files/**/*
+momentary-push-button-switch-4.snapshot.3/**/*
+Yellow\ Top\ STP.stp
+# Keep only essential 3D print models
+!hardware/essential-models/*.stl
+
+# Documentation build
+_site/
+.jekyll-metadata
+
+# Node.js (if using any web tools)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python (if using any scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+
+# Temporary files
+*.tmp
+*.temp
+~$*
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# SD card content backups
+sd_backup/
+*.img

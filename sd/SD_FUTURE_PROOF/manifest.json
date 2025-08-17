@@ -1,0 +1,377 @@
+{
+  "schema": "tcd-playlists@1",
+  "version": "1.0.0",
+  "created": "2025-01-15",
+  "description": "Future-proof tactile communication device configuration",
+  "priority": "HUMAN_FIRST",
+  "strict_playlists": true,
+  "hardware": {
+    "pcf8575_count": 3,
+    "gpio_pins": [
+      8,
+      9,
+      2,
+      5
+    ],
+    "total_capacity": 52
+  },
+  "keys": [
+    {
+      "key": ".",
+      "human_playlist": "mappings/playlists/._human.m3u",
+      "generated_playlist": "mappings/playlists/._generated.m3u",
+      "human_dir": "audio/human/.",
+      "generated_dir": "audio/generated/."
+    },
+    {
+      "key": "A",
+      "human_playlist": "mappings/playlists/A_human.m3u",
+      "generated_playlist": "mappings/playlists/A_generated.m3u",
+      "human_dir": "audio/human/A",
+      "generated_dir": "audio/generated/A"
+    },
+    {
+      "key": "B",
+      "human_playlist": "mappings/playlists/B_human.m3u",
+      "generated_playlist": "mappings/playlists/B_generated.m3u",
+      "human_dir": "audio/human/B",
+      "generated_dir": "audio/generated/B"
+    },
+    {
+      "key": "C",
+      "human_playlist": "mappings/playlists/C_human.m3u",
+      "generated_playlist": "mappings/playlists/C_generated.m3u",
+      "human_dir": "audio/human/C",
+      "generated_dir": "audio/generated/C"
+    },
+    {
+      "key": "Come",
+      "human_playlist": "mappings/playlists/Come_human.m3u",
+      "generated_playlist": "mappings/playlists/Come_generated.m3u",
+      "human_dir": "audio/human/Come",
+      "generated_dir": "audio/generated/Come"
+    },
+    {
+      "key": "D",
+      "human_playlist": "mappings/playlists/D_human.m3u",
+      "generated_playlist": "mappings/playlists/D_generated.m3u",
+      "human_dir": "audio/human/D",
+      "generated_dir": "audio/generated/D"
+    },
+    {
+      "key": "E",
+      "human_playlist": "mappings/playlists/E_human.m3u",
+      "generated_playlist": "mappings/playlists/E_generated.m3u",
+      "human_dir": "audio/human/E",
+      "generated_dir": "audio/generated/E"
+    },
+    {
+      "key": "Emergency",
+      "human_playlist": "mappings/playlists/Emergency_human.m3u",
+      "generated_playlist": "mappings/playlists/Emergency_generated.m3u",
+      "human_dir": "audio/human/Emergency",
+      "generated_dir": "audio/generated/Emergency"
+    },
+    {
+      "key": "F",
+      "human_playlist": "mappings/playlists/F_human.m3u",
+      "generated_playlist": "mappings/playlists/F_generated.m3u",
+      "human_dir": "audio/human/F",
+      "generated_dir": "audio/generated/F"
+    },
+    {
+      "key": "G",
+      "human_playlist": "mappings/playlists/G_human.m3u",
+      "generated_playlist": "mappings/playlists/G_generated.m3u",
+      "human_dir": "audio/human/G",
+      "generated_dir": "audio/generated/G"
+    },
+    {
+      "key": "Go",
+      "human_playlist": "mappings/playlists/Go_human.m3u",
+      "generated_playlist": "mappings/playlists/Go_generated.m3u",
+      "human_dir": "audio/human/Go",
+      "generated_dir": "audio/generated/Go"
+    },
+    {
+      "key": "H",
+      "human_playlist": "mappings/playlists/H_human.m3u",
+      "generated_playlist": "mappings/playlists/H_generated.m3u",
+      "human_dir": "audio/human/H",
+      "generated_dir": "audio/generated/H"
+    },
+    {
+      "key": "Happy",
+      "human_playlist": "mappings/playlists/Happy_human.m3u",
+      "generated_playlist": "mappings/playlists/Happy_generated.m3u",
+      "human_dir": "audio/human/Happy",
+      "generated_dir": "audio/generated/Happy"
+    },
+    {
+      "key": "Help",
+      "human_playlist": "mappings/playlists/Help_human.m3u",
+      "generated_playlist": "mappings/playlists/Help_generated.m3u",
+      "human_dir": "audio/human/Help",
+      "generated_dir": "audio/generated/Help"
+    },
+    {
+      "key": "Home",
+      "human_playlist": "mappings/playlists/Home_human.m3u",
+      "generated_playlist": "mappings/playlists/Home_generated.m3u",
+      "human_dir": "audio/human/Home",
+      "generated_dir": "audio/generated/Home"
+    },
+    {
+      "key": "Hungry",
+      "human_playlist": "mappings/playlists/Hungry_human.m3u",
+      "generated_playlist": "mappings/playlists/Hungry_generated.m3u",
+      "human_dir": "audio/human/Hungry",
+      "generated_dir": "audio/generated/Hungry"
+    },
+    {
+      "key": "I",
+      "human_playlist": "mappings/playlists/I_human.m3u",
+      "generated_playlist": "mappings/playlists/I_generated.m3u",
+      "human_dir": "audio/human/I",
+      "generated_dir": "audio/generated/I"
+    },
+    {
+      "key": "J",
+      "human_playlist": "mappings/playlists/J_human.m3u",
+      "generated_playlist": "mappings/playlists/J_generated.m3u",
+      "human_dir": "audio/human/J",
+      "generated_dir": "audio/generated/J"
+    },
+    {
+      "key": "K",
+      "human_playlist": "mappings/playlists/K_human.m3u",
+      "generated_playlist": "mappings/playlists/K_generated.m3u",
+      "human_dir": "audio/human/K",
+      "generated_dir": "audio/generated/K"
+    },
+    {
+      "key": "Like",
+      "human_playlist": "mappings/playlists/Like_human.m3u",
+      "generated_playlist": "mappings/playlists/Like_generated.m3u",
+      "human_dir": "audio/human/Like",
+      "generated_dir": "audio/generated/Like"
+    },
+    {
+      "key": "Love",
+      "human_playlist": "mappings/playlists/Love_human.m3u",
+      "generated_playlist": "mappings/playlists/Love_generated.m3u",
+      "human_dir": "audio/human/Love",
+      "generated_dir": "audio/generated/Love"
+    },
+    {
+      "key": "M",
+      "human_playlist": "mappings/playlists/M_human.m3u",
+      "generated_playlist": "mappings/playlists/M_generated.m3u",
+      "human_dir": "audio/human/M",
+      "generated_dir": "audio/generated/M"
+    },
+    {
+      "key": "More",
+      "human_playlist": "mappings/playlists/More_human.m3u",
+      "generated_playlist": "mappings/playlists/More_generated.m3u",
+      "human_dir": "audio/human/More",
+      "generated_dir": "audio/generated/More"
+    },
+    {
+      "key": "N",
+      "human_playlist": "mappings/playlists/N_human.m3u",
+      "generated_playlist": "mappings/playlists/N_generated.m3u",
+      "human_dir": "audio/human/N",
+      "generated_dir": "audio/generated/N"
+    },
+    {
+      "key": "Need",
+      "human_playlist": "mappings/playlists/Need_human.m3u",
+      "generated_playlist": "mappings/playlists/Need_generated.m3u",
+      "human_dir": "audio/human/Need",
+      "generated_dir": "audio/generated/Need"
+    },
+    {
+      "key": "No",
+      "human_playlist": "mappings/playlists/No_human.m3u",
+      "generated_playlist": "mappings/playlists/No_generated.m3u",
+      "human_dir": "audio/human/No",
+      "generated_dir": "audio/generated/No"
+    },
+    {
+      "key": "O",
+      "human_playlist": "mappings/playlists/O_human.m3u",
+      "generated_playlist": "mappings/playlists/O_generated.m3u",
+      "human_dir": "audio/human/O",
+      "generated_dir": "audio/generated/O"
+    },
+    {
+      "key": "P",
+      "human_playlist": "mappings/playlists/P_human.m3u",
+      "generated_playlist": "mappings/playlists/P_generated.m3u",
+      "human_dir": "audio/human/P",
+      "generated_dir": "audio/generated/P"
+    },
+    {
+      "key": "Please",
+      "human_playlist": "mappings/playlists/Please_human.m3u",
+      "generated_playlist": "mappings/playlists/Please_generated.m3u",
+      "human_dir": "audio/human/Please",
+      "generated_dir": "audio/generated/Please"
+    },
+    {
+      "key": "Q",
+      "human_playlist": "mappings/playlists/Q_human.m3u",
+      "generated_playlist": "mappings/playlists/Q_generated.m3u",
+      "human_dir": "audio/human/Q",
+      "generated_dir": "audio/generated/Q"
+    },
+    {
+      "key": "R",
+      "human_playlist": "mappings/playlists/R_human.m3u",
+      "generated_playlist": "mappings/playlists/R_generated.m3u",
+      "human_dir": "audio/human/R",
+      "generated_dir": "audio/generated/R"
+    },
+    {
+      "key": "S",
+      "human_playlist": "mappings/playlists/S_human.m3u",
+      "generated_playlist": "mappings/playlists/S_generated.m3u",
+      "human_dir": "audio/human/S",
+      "generated_dir": "audio/generated/S"
+    },
+    {
+      "key": "SPACE",
+      "human_playlist": "mappings/playlists/SPACE_human.m3u",
+      "generated_playlist": "mappings/playlists/SPACE_generated.m3u",
+      "human_dir": "audio/human/SPACE",
+      "generated_dir": "audio/generated/SPACE"
+    },
+    {
+      "key": "Sad",
+      "human_playlist": "mappings/playlists/Sad_human.m3u",
+      "generated_playlist": "mappings/playlists/Sad_generated.m3u",
+      "human_dir": "audio/human/Sad",
+      "generated_dir": "audio/generated/Sad"
+    },
+    {
+      "key": "School",
+      "human_playlist": "mappings/playlists/School_human.m3u",
+      "generated_playlist": "mappings/playlists/School_generated.m3u",
+      "human_dir": "audio/human/School",
+      "generated_dir": "audio/generated/School"
+    },
+    {
+      "key": "Sick",
+      "human_playlist": "mappings/playlists/Sick_human.m3u",
+      "generated_playlist": "mappings/playlists/Sick_generated.m3u",
+      "human_dir": "audio/human/Sick",
+      "generated_dir": "audio/generated/Sick"
+    },
+    {
+      "key": "Stop",
+      "human_playlist": "mappings/playlists/Stop_human.m3u",
+      "generated_playlist": "mappings/playlists/Stop_generated.m3u",
+      "human_dir": "audio/human/Stop",
+      "generated_dir": "audio/generated/Stop"
+    },
+    {
+      "key": "T",
+      "human_playlist": "mappings/playlists/T_human.m3u",
+      "generated_playlist": "mappings/playlists/T_generated.m3u",
+      "human_dir": "audio/human/T",
+      "generated_dir": "audio/generated/T"
+    },
+    {
+      "key": "Thank",
+      "human_playlist": "mappings/playlists/Thank_human.m3u",
+      "generated_playlist": "mappings/playlists/Thank_generated.m3u",
+      "human_dir": "audio/human/Thank",
+      "generated_dir": "audio/generated/Thank"
+    },
+    {
+      "key": "Thirsty",
+      "human_playlist": "mappings/playlists/Thirsty_human.m3u",
+      "generated_playlist": "mappings/playlists/Thirsty_generated.m3u",
+      "human_dir": "audio/human/Thirsty",
+      "generated_dir": "audio/generated/Thirsty"
+    },
+    {
+      "key": "Tired",
+      "human_playlist": "mappings/playlists/Tired_human.m3u",
+      "generated_playlist": "mappings/playlists/Tired_generated.m3u",
+      "human_dir": "audio/human/Tired",
+      "generated_dir": "audio/generated/Tired"
+    },
+    {
+      "key": "U",
+      "human_playlist": "mappings/playlists/U_human.m3u",
+      "generated_playlist": "mappings/playlists/U_generated.m3u",
+      "human_dir": "audio/human/U",
+      "generated_dir": "audio/generated/U"
+    },
+    {
+      "key": "V",
+      "human_playlist": "mappings/playlists/V_human.m3u",
+      "generated_playlist": "mappings/playlists/V_generated.m3u",
+      "human_dir": "audio/human/V",
+      "generated_dir": "audio/generated/V"
+    },
+    {
+      "key": "W",
+      "human_playlist": "mappings/playlists/W_human.m3u",
+      "generated_playlist": "mappings/playlists/W_generated.m3u",
+      "human_dir": "audio/human/W",
+      "generated_dir": "audio/generated/W"
+    },
+    {
+      "key": "Want",
+      "human_playlist": "mappings/playlists/Want_human.m3u",
+      "generated_playlist": "mappings/playlists/Want_generated.m3u",
+      "human_dir": "audio/human/Want",
+      "generated_dir": "audio/generated/Want"
+    },
+    {
+      "key": "Water",
+      "human_playlist": "mappings/playlists/Water_human.m3u",
+      "generated_playlist": "mappings/playlists/Water_generated.m3u",
+      "human_dir": "audio/human/Water",
+      "generated_dir": "audio/generated/Water"
+    },
+    {
+      "key": "Work",
+      "human_playlist": "mappings/playlists/Work_human.m3u",
+      "generated_playlist": "mappings/playlists/Work_generated.m3u",
+      "human_dir": "audio/human/Work",
+      "generated_dir": "audio/generated/Work"
+    },
+    {
+      "key": "X",
+      "human_playlist": "mappings/playlists/X_human.m3u",
+      "generated_playlist": "mappings/playlists/X_generated.m3u",
+      "human_dir": "audio/human/X",
+      "generated_dir": "audio/generated/X"
+    },
+    {
+      "key": "Y",
+      "human_playlist": "mappings/playlists/Y_human.m3u",
+      "generated_playlist": "mappings/playlists/Y_generated.m3u",
+      "human_dir": "audio/human/Y",
+      "generated_dir": "audio/generated/Y"
+    },
+    {
+      "key": "Yes",
+      "human_playlist": "mappings/playlists/Yes_human.m3u",
+      "generated_playlist": "mappings/playlists/Yes_generated.m3u",
+      "human_dir": "audio/human/Yes",
+      "generated_dir": "audio/generated/Yes"
+    },
+    {
+      "key": "Z",
+      "human_playlist": "mappings/playlists/Z_human.m3u",
+      "generated_playlist": "mappings/playlists/Z_generated.m3u",
+      "human_dir": "audio/human/Z",
+      "generated_dir": "audio/generated/Z"
+    }
+  ]
+}

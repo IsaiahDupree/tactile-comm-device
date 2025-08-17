@@ -1,0 +1,35 @@
+Issue Type,Summary,Description,Status,Priority,Blocks,Blocked By,Epic Link,Story Points
+Epic,M0 - Baseline & utilities,Phase 0 baseline with computed constants and utility functions,Done,High,,,M0,
+Story,T-00 - Verify utility sweep to 48 + EXTRA_COUNT,Ensure all arrays/loops use TOTAL_BUTTONS = NUM_PCF*16 + EXTRA_COUNT. Sweep initializeHardwareMapping handlePress handleMultiPress printMap testAllButtons sanityCheckAudio timers/counters,Done,High,T-02,,M0,3
+Epic,M1 - SD config (strict) + hardware-agnostic routing,Implement SD-based configuration with hardware-agnostic button routing,In Progress,High,M2,,M1,
+Story,T-01 - Branch & config gate,Branch feature/sd-playlists-3xpand-generalized. Parse STRICT_PLAYLISTS from /config/mode.cfg (default 0 if missing),Done,High,T-03 T-05,,M1,2
+Story,T-02 - PCF array generalization (3 chips),PCF_ADDR[] = {0x20 0x21 0x22} pcf[] last_state[]. Edge detect per chip; extras start at NUM_PCF*16,Done,High,T-04 T-13,T-00,M1,5
+Story,T-03 - /config/buttons.csv parser,Load #INPUT KEY rows; support pcfN:PP and gpio:X. Map inputId -> key,In Progress,High,T-04,T-01,M1,3
+Story,T-04 - Hardware-agnostic routing,onPhysicalPress(inputId) -> keyForInput -> playback,To Do,High,M1,T-03,M1,5
+Story,T-05 - /config/mode.cfg parser,Parse PRIORITY=... STRICT_PLAYLISTS=0|1,Done,High,T-06 T-10 T-17,T-01,M1,2
+Epic,M2 - Playlist engine (m3u) + cursors,Implement M3U playlist parsing and playback cursors,To Do,High,M4,,M2,
+Story,T-06 - m3u reader (strict),Read /mappings/playlists/<KEY>_human.m3u and _generated.m3u. Trim ignore # SD-root-relative paths; UTF-8 (no BOM),To Do,High,T-07 T-08,T-05,M2,5
+Story,T-07 - Playlist cache & invalidation,Per-key cache {human generated loaded}; lazy load on first use; CFG_RELOAD will flush,To Do,High,T-09 T-13 T-17,T-06,M2,3
+Story,T-08 - Strict bank enforcement,If STRICT_PLAYLISTS=1 and both lists empty → key disabled (log once). No directory scanning fallback,To Do,High,M2,T-06,M2,2
+Story,T-09 - Per-key cursors,Track hIdx/gIdx with wrap; advance only after successful startPlayingFile. Optional debounce flush,To Do,High,T-13,T-07,M2,3
+Epic,M3 - Priority mode (+ PERIOD triple-press) with persistence,Implement priority mode with triple-press toggle and persistence,Done,High,,,M3,
+Story,T-10 - Priority enum + boot load,HUMAN_FIRST|GENERATED_FIRST global,Done,High,T-12 T-13,T-05,M3,2
+Story,T-11 - PERIOD triple-press detector,~1200 ms window count presses only for KEY=PERIOD,Done,High,T-12,T-04,M3,3
+Story,T-12 - Persist priority to mode.cfg + announce,On toggle: write PRIORITY=... back to SD; play announcement clip,Done,High,M3,T-10 T-11,M3,3
+Story,T-13 - Playback selector integration,Selection: try preferred bank → fallback bank; wrap; stop/reset VS1053 if needed then play,In Progress,High,M2,T-02 T-07 T-09 T-10,M2,5
+Epic,M4 - Update path (serial FS protocol staging/rollback reload),Implement over-the-air update system with atomic swaps,To Do,High,M5,,M4,
+Story,T-14 - Serial FS: protocol skeleton,Implement FS_BEGIN/FS_PUT/FS_DATA/FS_DONE/FS_COMMIT/FS_ABORT/CFG_RELOAD,To Do,High,T-15 T-16,,M4,8
+Story,T-15 - Staging & atomic swap,Write to /_staging verify CRC32 then rename into place; optional /_rollback,To Do,High,T-22,T-14,M4,5
+Story,T-16 - Maintenance mode,During update: ignore presses; stop audio; resume after FS_COMMIT/ABORT,To Do,High,M4,T-14,M4,2
+Story,T-17 - CFG_RELOAD command,Re-parse mode.cfg/buttons.csv; flush playlist caches; keep audio stopped,To Do,High,M4,T-07 T-05,M4,3
+Epic,M5 - Desktop app (flash + SD sync + self-test),Build desktop application for device management,To Do,Medium,M6,,M5,
+Story,T-18 - Desktop: device discovery + flash,Bundle Arduino CLI; auto-detect board/port; stream logs; allow .hex direct upload,To Do,Medium,T-20,M4,M5,8
+Story,T-19 - Desktop: SD sync over serial FS,Implement client side of protocol; per-file CRC; resume by file; manifest summary,To Do,Medium,T-20,M4,M5,8
+Story,T-20 - Desktop: self-test,After sync ask device to play a known short clip; show pass/fail,To Do,Medium,M5,T-18 T-19,M5,3
+Epic,M6 - Acceptance fault-injection and resilience,Comprehensive testing and fault tolerance validation,To Do,Medium,M7,,M6,
+Story,T-21 - Fault injection: missing playlists,Remove one/both playlists; verify strict behavior & logs,To Do,Medium,M6,M2,M6,3
+Story,T-22 - Fault injection: power-loss on update,Cut power during FS_DATA and during FS_COMMIT; verify rollback,To Do,Medium,M6,M4,M6,5
+Story,T-23 - Performance & loop timing,Ensure main loop feeds VS1053; log average loop time; ≤ ~20 ms,To Do,Medium,M6,M2,M6,3
+Epic,M7 - Docs & release packaging,Final documentation and release preparation,To Do,Low,,,M7,
+Story,T-24 - Docs: Operator & Developer guides,Operator: SD layout adding audio editing playlists flipping priority. Dev: protocol spec file formats,To Do,Low,T-25,M5,M7,5
+Story,T-25 - Release packaging,Version stamp into /manifest.json; tag repo; produce SD starter pack,To Do,Low,M7,M5,M7,3

@@ -1,0 +1,54 @@
+{
+  "name": "tactile-device-manager",
+  "version": "1.0.0",
+  "description": "Desktop manager for Future-Proof Tactile Communication Device",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac",
+    "build-linux": "electron-builder --linux"
+  },
+  "keywords": [
+    "tactile",
+    "communication",
+    "accessibility",
+    "audio",
+    "device-manager"
+  ],
+  "author": "Tactile Communication Device Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^22.0.0",
+    "electron-builder": "^24.0.0"
+  },
+  "dependencies": {
+    "serialport": "^10.5.0",
+    "node-hid": "^2.1.2"
+  },
+  "build": {
+    "appId": "com.tactiledevice.manager",
+    "productName": "Tactile Device Manager",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  }
+}

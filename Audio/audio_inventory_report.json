@@ -1,0 +1,561 @@
+{
+  "summary": {
+    "wanted": 101,
+    "humanHave": 17,
+    "generatedHave": 0
+  },
+  "recordedRoot": "C:\\Users\\Isaia\\Documents\\3D Printing\\Projects\\Button\\Audio\\RecordedWords",
+  "labels": {
+    "E": {
+      "total": 1,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Elephant"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Elephant"
+        ]
+      }
+    },
+    "A": {
+      "total": 6,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Alari",
+          "Amer",
+          "Amory",
+          "Apple",
+          "Arabic",
+          "Arabic Show"
+        ]
+      },
+      "human": {
+        "have": [
+          "Alari",
+          "Amer",
+          "Amory"
+        ],
+        "missing": [
+          "Apple",
+          "Arabic",
+          "Arabic Show"
+        ]
+      }
+    },
+    "P": {
+      "total": 4,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Pain",
+          "Period",
+          "Phone",
+          "Purple"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Pain",
+          "Period",
+          "Phone",
+          "Purple"
+        ]
+      }
+    },
+    "L": {
+      "total": 6,
+      "generated": {
+        "have": [],
+        "missing": [
+          "I love you",
+          "Lee",
+          "Light",
+          "Light Down",
+          "Light Up",
+          "Love"
+        ]
+      },
+      "human": {
+        "have": [
+          "I love you",
+          "Lee"
+        ],
+        "missing": [
+          "Light",
+          "Light Down",
+          "Light Up",
+          "Love"
+        ]
+      }
+    },
+    "T": {
+      "total": 4,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Togamet",
+          "Tree",
+          "TV",
+          "Tylenol"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Togamet",
+          "Tree",
+          "TV",
+          "Tylenol"
+        ]
+      }
+    },
+    "U": {
+      "total": 2,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Up",
+          "Urgent Care"
+        ]
+      },
+      "human": {
+        "have": [
+          "Urgent Care"
+        ],
+        "missing": [
+          "Up"
+        ]
+      }
+    },
+    "O": {
+      "total": 2,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Orange",
+          "Outside"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Orange",
+          "Outside"
+        ]
+      }
+    },
+    "N": {
+      "total": 5,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Nada",
+          "Nadowie",
+          "Net",
+          "No",
+          "Noah"
+        ]
+      },
+      "human": {
+        "have": [
+          "Nadowie",
+          "Noah"
+        ],
+        "missing": [
+          "Nada",
+          "Net",
+          "No"
+        ]
+      }
+    },
+    "F": {
+      "total": 3,
+      "generated": {
+        "have": [],
+        "missing": [
+          "FaceTime",
+          "Fish",
+          "Funny"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "FaceTime",
+          "Fish",
+          "Funny"
+        ]
+      }
+    },
+    "C": {
+      "total": 7,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Call",
+          "Car",
+          "Cat",
+          "Chair",
+          "Coffee",
+          "Cold",
+          "Cucumber"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Call",
+          "Car",
+          "Cat",
+          "Chair",
+          "Coffee",
+          "Cold",
+          "Cucumber"
+        ]
+      }
+    },
+    "D": {
+      "total": 6,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Daddy",
+          "Deen",
+          "Doctor",
+          "Dog",
+          "Door",
+          "Down"
+        ]
+      },
+      "human": {
+        "have": [
+          "Daddy",
+          "Deen"
+        ],
+        "missing": [
+          "Doctor",
+          "Dog",
+          "Door",
+          "Down"
+        ]
+      }
+    },
+    "Z": {
+      "total": 1,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Zebra"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Zebra"
+        ]
+      }
+    },
+    "I": {
+      "total": 3,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Ice",
+          "Inside",
+          "iPad"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Ice",
+          "Inside",
+          "iPad"
+        ]
+      }
+    },
+    "V": {
+      "total": 1,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Van"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Van"
+        ]
+      }
+    },
+    "J": {
+      "total": 1,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Jump"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Jump"
+        ]
+      }
+    },
+    "Y": {
+      "total": 2,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Yes",
+          "Yellow"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Yes",
+          "Yellow"
+        ]
+      }
+    },
+    "H": {
+      "total": 7,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Happy",
+          "Heartburn",
+          "Hello",
+          "Hot",
+          "House",
+          "How are you",
+          "Hungry"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Happy",
+          "Heartburn",
+          "Hello",
+          "Hot",
+          "House",
+          "How are you",
+          "Hungry"
+        ]
+      }
+    },
+    "W": {
+      "total": 4,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Walk",
+          "Walker",
+          "Water",
+          "Wheelchair"
+        ]
+      },
+      "human": {
+        "have": [
+          "Walker",
+          "Wheelchair"
+        ],
+        "missing": [
+          "Walk",
+          "Water"
+        ]
+      }
+    },
+    "S": {
+      "total": 10,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Sad",
+          "Scarf",
+          "Shoes",
+          "Sinemet",
+          "Sleep",
+          "Socks",
+          "Space",
+          "Stop",
+          "Sun",
+          "Susu"
+        ]
+      },
+      "human": {
+        "have": [
+          "Susu"
+        ],
+        "missing": [
+          "Sad",
+          "Scarf",
+          "Shoes",
+          "Sinemet",
+          "Sleep",
+          "Socks",
+          "Space",
+          "Stop",
+          "Sun"
+        ]
+      }
+    },
+    "Q": {
+      "total": 1,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Queen"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Queen"
+        ]
+      }
+    },
+    "G": {
+      "total": 3,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Garage",
+          "Go",
+          "Good Morning"
+        ]
+      },
+      "human": {
+        "have": [
+          "Good Morning"
+        ],
+        "missing": [
+          "Garage",
+          "Go"
+        ]
+      }
+    },
+    "R": {
+      "total": 3,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Red",
+          "Rest",
+          "Room"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Red",
+          "Rest",
+          "Room"
+        ]
+      }
+    },
+    "M": {
+      "total": 6,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Mad",
+          "Medical",
+          "Medicine",
+          "Meditate",
+          "Mohammad",
+          "Moon"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "Mad",
+          "Medical",
+          "Medicine",
+          "Meditate",
+          "Mohammad",
+          "Moon"
+        ]
+      }
+    },
+    "X": {
+      "total": 1,
+      "generated": {
+        "have": [],
+        "missing": [
+          "X-ray"
+        ]
+      },
+      "human": {
+        "have": [],
+        "missing": [
+          "X-ray"
+        ]
+      }
+    },
+    "K": {
+      "total": 5,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Kaiser",
+          "Key",
+          "Kiyah",
+          "Kleenex",
+          "Kyan"
+        ]
+      },
+      "human": {
+        "have": [
+          "Kiyah",
+          "Kyan"
+        ],
+        "missing": [
+          "Kaiser",
+          "Key",
+          "Kleenex"
+        ]
+      }
+    },
+    "B": {
+      "total": 7,
+      "generated": {
+        "have": [],
+        "missing": [
+          "Bagel",
+          "Ball",
+          "Bathroom",
+          "Bed",
+          "Blanket",
+          "Breathe",
+          "Bye"
+        ]
+      },
+      "human": {
+        "have": [
+          "Bye"
+        ],
+        "missing": [
+          "Bagel",
+          "Ball",
+          "Bathroom",
+          "Bed",
+          "Blanket",
+          "Breathe"
+        ]
+      }
+    }
+  },
+  "generatedRoot": "C:\\Users\\Isaia\\Documents\\3D Printing\\Projects\\Button\\Audio\\11labs"
+}

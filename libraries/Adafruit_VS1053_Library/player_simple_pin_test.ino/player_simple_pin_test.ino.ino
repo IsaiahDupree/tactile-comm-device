@@ -1,0 +1,27 @@
+#include <SPI.h>
+#include "Adafruit_VS1053.h"
+
+#define RESET  9
+#define CS     10
+#define DCS    8
+#define DREQ   3
+#define CARDCS 4
+
+Adafruit_VS1053 player = Adafruit_VS1053(RESET, CS, DCS, DREQ);
+
+void setup() {
+  Serial.begin(9600);
+  while (!Serial);
+  delay(1000);
+  
+  Serial.println("Looking for VS1053...");
+  if (!player.begin()) {
+    Serial.println("VS1053 not found.");
+  } else {
+    Serial.println("VS1053 successfully initialized!");
+  }
+}
+
+void loop() {
+  // Nothing
+}

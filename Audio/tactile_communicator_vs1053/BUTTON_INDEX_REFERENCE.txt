@@ -1,0 +1,72 @@
+TACTILE COMMUNICATION DEVICE - BUTTON INDEX REFERENCE
+============================================================
+
+Physical Button Index -> Letter -> Audio Folder -> Words
+------------------------------------------------------------
+
+Button  2 -> K      (Folder 11) -> Kaiser, Key, Kiyah, Kleenex, Kyan
+           🎤 Recorded: Kiyah, Kyan
+
+Button  3 -> A      (Folder 01) -> Alari, Amer, Amory, Apple, Arabic, Arabic Show
+           🎤 Recorded: Alari, Amer, Amory
+
+Button  5 -> P      (Folder 16) -> Pain, Period, Phone, Purple
+
+Button  6 -> C      (Folder 03) -> Call, Car, Cat, Chair, Coffee, Cold, Cucumber
+
+Button  7 -> R      (Folder 18) -> Red, Rest, Room
+
+Button  8 -> I      (Folder 09) -> Ice, Inside, iPad
+
+Button  9 -> J      (Folder 10) -> Jump
+
+Button 10 -> Q      (Folder 17) -> Queen
+
+Button 11 -> W      (Folder 23) -> Walk, Walker, Water, Wheelchair
+           🎤 Recorded: Walker, Wheelchair
+
+Button 13 -> V      (Folder 22) -> Van
+
+Button 14 -> X      (Folder 24) -> X-ray
+
+Button 15 -> PERIOD (Folder 33) -> Period, Mode switching
+Button 16 -> N      (Folder 14) -> Nada, Nadowie, Net, No, Noah
+           🎤 Recorded: Nadowie, Noah
+
+Button 17 -> G      (Folder 07) -> Garage, Go, Good Morning
+           🎤 Recorded: Good Morning
+
+Button 18 -> F      (Folder 06) -> FaceTime, Fish, Funny
+
+Button 21 -> U      (Folder 21) -> Up, Urgent Care
+           🎤 Recorded: Urgent Care
+
+Button 22 -> T      (Folder 20) -> Togamet, Tree, TV, Tylenol
+
+Button 23 -> M      (Folder 13) -> Mad, Medical, Medicine, Meditate, Mohammad, Moon
+
+Button 24 -> E      (Folder 05) -> Elephant
+
+Button 27 -> SPACE  (Folder 35) -> Space
+Button 28 -> Z      (Folder 26) -> Zebra
+
+Button 29 -> S      (Folder 19) -> Sad, Scarf, Shoes, Sinemet, Sleep, Socks, Space, Stop, Sun, Susu
+           🎤 Recorded: Susu
+
+Button 30 -> D      (Folder 04) -> Daddy, Deen, Doctor, Dog, Door, Down
+           🎤 Recorded: Daddy
+
+Button 31 -> Y      (Folder 25) -> Yes, Yellow
+
+Button 32 -> B      (Folder 02) -> Bagel, Ball, Bathroom, Bed, Blanket, Breathe, Bye
+
+Button 33 -> H      (Folder 08) -> Happy, Heartburn, Hello, Hot, House, How are you, Hungry
+           🎤 Recorded: Hello, How are you
+
+Button 35 -> O      (Folder 15) -> Orange, Outside
+
+
+PRIORITY SYSTEM:
+- HUMAN_FIRST: Personal recordings play first, then TTS
+- GENERATED_FIRST: TTS plays first, then personal recordings
+- Switch modes: Triple-press Period button within 1.2 seconds

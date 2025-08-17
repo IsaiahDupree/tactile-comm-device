@@ -1,0 +1,214 @@
+===============================================================================
+🎯 TACTILE COMMUNICATION DEVICE - COMPLETE REFERENCE
+===============================================================================
+
+🎵 PRIORITY MODE SYSTEM
+===============================================================================
+Your device now has dual priority modes for flexible communication:
+
+• HUMAN_FIRST (Personal Voice First) - Prioritizes your personal recordings
+• GENERATED_FIRST (Computer Voice First) - Prioritizes TTS audio
+
+Switch modes: Press the Period (.) button 3 times quickly within 1.2 seconds
+Audio feedback: Device announces "Personal voice first" or "Computer voice first"
+Persistence: Your mode preference is saved and remembered across power cycles
+
+📱 HOW TO USE
+===============================================================================
+• Single Press: Play the primary word for each button
+• Multiple Presses: Cycle through additional words (if available)
+• Priority Modes: Triple-press Period button to switch between personal/computer voice
+• SHIFT Button: Press for help and device instructions
+
+🔤 LETTER BUTTON MAPPINGS
+===============================================================================
+
+A - Folder 05 (6 words) [HAS PERSONAL RECORDINGS]
+   1. Alari [Personal]
+   2. Angry [TTS]
+   3. Apple [TTS]
+   4. Awesome [TTS]
+   5. Azilect [TTS]
+   6. Azra [TTS]
+
+B - Folder 06 (7 words) [TTS ONLY]
+   1. Bagel [TTS]
+   2. Bathroom [TTS]
+   3. Bed [TTS]
+   4. Blue [TTS]
+   5. Book [TTS]
+   6. Bottle [TTS]
+   7. Bread [TTS]
+
+C - Folder 07 (7 words) [TTS ONLY]
+   1. Call [TTS]
+   2. Car [TTS]
+   3. Chair [TTS]
+   4. Cold [TTS]
+   5. Come [TTS]
+   6. Computer [TTS]
+   7. Cup [TTS]
+
+D - Folder 08 (6 words) [HAS PERSONAL RECORDINGS]
+   1. Daddy [Personal]
+   2. Dance [TTS]
+   3. Doctor [TTS]
+   4. Door [TTS]
+   5. Down [TTS]
+   6. Drink [TTS]
+
+E - Folder 09 (1 word) [TTS ONLY]
+   1. Elephant [TTS]
+
+F - Folder 10 (3 words) [TTS ONLY]
+   1. FaceTime [TTS]
+   2. Food [TTS]
+   3. Friend [TTS]
+
+G - Folder 11 (3 words) [TTS ONLY]
+   1. Garage [TTS]
+   2. Go [TTS]
+   3. Good [TTS]
+
+H - Folder 12 (7 words) [TTS ONLY]
+   1. Happy [TTS]
+   2. Help [TTS]
+   3. Home [TTS]
+   4. Hot [TTS]
+   5. House [TTS]
+   6. Hungry [TTS]
+   7. Hurt [TTS]
+
+I - Folder 13 (3 words) [TTS ONLY]
+   1. Ice [TTS]
+   2. Inside [TTS]
+   3. iPad [TTS]
+
+J - Folder 14 (1 word) [TTS ONLY]
+   1. Jump [TTS]
+
+K - Folder 15 (5 words) [TTS ONLY]
+   1. Kaiser [TTS]
+   2. Key [TTS]
+   3. Kitchen [TTS]
+   4. Knee [TTS]
+   5. Know [TTS]
+
+L - Folder 16 (6 words) [HAS PERSONAL RECORDINGS]
+   1. I love you [Personal]
+   2. Light [TTS]
+   3. Listen [TTS]
+   4. Look [TTS]
+   5. Loud [TTS]
+   6. Love [TTS]
+
+M - Folder 17 (6 words) [TTS ONLY]
+   1. Mad [TTS]
+   2. Medical [TTS]
+   3. Medicine [TTS]
+   4. Meditate [TTS]
+   5. Mohammad [TTS]
+   6. Moon [TTS]
+
+N - Folder 18 (5 words) [HAS PERSONAL RECORDINGS]
+   1. Nada [Personal]
+   2. Nadowie [Personal]
+   3. Net [TTS]
+   4. No [TTS]
+   5. Noah [Personal]
+
+O - Folder 19 (2 words) [TTS ONLY]
+   1. Orange [TTS]
+   2. Outside [TTS]
+
+P - Folder 20 (4 words) [TTS ONLY]
+   1. Pain [TTS]
+   2. Period [TTS]
+   3. Phone [TTS]
+   4. Purple [TTS]
+
+Q - Folder 21 (1 word) [TTS ONLY]
+   1. Queen [TTS]
+
+R - Folder 22 (3 words) [TTS ONLY]
+   1. Red [TTS]
+   2. Rest [TTS]
+   3. Room [TTS]
+
+S - Folder 23 (10 words) [HAS PERSONAL RECORDINGS]
+   1. Sad [TTS]
+   2. Scarf [TTS]
+   3. Shoes [TTS]
+   4. Sinemet [TTS]
+   5. Sleep [TTS]
+   6. Socks [TTS]
+   7. Space [TTS]
+   8. Stop [TTS]
+   9. Sun [TTS]
+   10. Susu [Personal]
+
+T - Folder 24 (4 words) [TTS ONLY]
+   1. Togamet [TTS]
+   2. Thank you [TTS]
+   3. Thirsty [TTS]
+   4. Tired [TTS]
+
+U - Folder 25 (2 words) [TTS ONLY]
+   1. Up [TTS]
+   2. Under [TTS]
+
+V - Folder 26 (1 word) [TTS ONLY]
+   1. Van [TTS]
+
+W - Folder 27 (4 words) [TTS ONLY]
+   1. Walk [TTS]
+   2. Water [TTS]
+   3. Window [TTS]
+   4. Work [TTS]
+
+X - Folder 28 (1 word) [TTS ONLY]
+   1. X-ray [TTS]
+
+Y - Folder 29 (2 words) [TTS ONLY]
+   1. Yes [TTS]
+   2. Yellow [TTS]
+
+Z - Folder 30 (1 word) [TTS ONLY]
+   1. Zebra [TTS]
+
+🎛️ SPECIAL BUTTONS
+===============================================================================
+
+SPACE - Space symbol
+   Uses S button folder (track 7)
+
+PERIOD (.) - Period symbol + Priority Mode Toggle
+   Uses P button folder (track 2)
+   Triple-press: Switches priority modes
+
+SHIFT - Help system
+   Folder 33: Personal greeting, instructions, detailed help
+
+🎯 PRIORITY MODE DETAILS
+===============================================================================
+
+HUMAN_FIRST (Personal Voice First):
+   • Buttons with Personal Recordings (A, D, L, N, S): Plays personal recordings
+   • Buttons with TTS Only (all others): Plays TTS audio
+
+GENERATED_FIRST (Computer Voice First):
+   • All Buttons: Plays TTS versions
+
+📊 SYSTEM STATISTICS
+===============================================================================
+• Total Buttons: 26 letter buttons + 3 special buttons
+• Total Words: 120+ vocabulary words
+• Personal Recordings: 5 buttons (A, D, L, N, S) with personal audio
+• TTS Audio: All buttons have TTS versions
+• Priority Modes: 2 modes with intelligent switching
+• Audio Announcements: ElevenLabs quality mode switching feedback
+
+===============================================================================
+Tactile Communication Device - Enhanced with Priority Mode System
+Generated: 2025-08-13 | Arduino UNO R4 WiFi Compatible
+===============================================================================

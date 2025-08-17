@@ -1,0 +1,56 @@
+label,press,bank,path,text
+A,1,TTS,/01/001.mp3,Letter A
+A,2,REC,/101/001.mp3,Letter A Recording
+B,1,TTS,/02/001.mp3,Letter B
+B,2,REC,/102/001.mp3,Letter B Recording
+C,1,TTS,/03/001.mp3,Letter C
+C,2,REC,/103/001.mp3,Letter C Recording
+D,1,TTS,/04/001.mp3,Letter D
+D,2,REC,/104/001.mp3,Letter D Recording
+E,1,TTS,/05/001.mp3,Letter E
+E,2,REC,/105/001.mp3,Letter E Recording
+F,1,TTS,/06/001.mp3,Letter F
+F,2,REC,/106/001.mp3,Letter F Recording
+G,1,TTS,/07/001.mp3,Letter G
+G,2,REC,/107/001.mp3,Letter G Recording
+H,1,TTS,/08/001.mp3,Letter H
+H,2,REC,/108/001.mp3,Letter H Recording
+I,1,TTS,/09/001.mp3,Letter I
+I,2,REC,/109/001.mp3,Letter I Recording
+J,1,TTS,/10/001.mp3,Letter J
+J,2,REC,/110/001.mp3,Letter J Recording
+K,1,TTS,/11/001.mp3,Letter K
+K,2,REC,/111/001.mp3,Letter K Recording
+M,1,TTS,/13/001.mp3,Letter M
+M,2,REC,/113/001.mp3,Letter M Recording
+N,1,TTS,/14/001.mp3,Letter N
+N,2,REC,/114/001.mp3,Letter N Recording
+O,1,TTS,/15/001.mp3,Letter O
+O,2,REC,/115/001.mp3,Letter O Recording
+P,1,TTS,/16/001.mp3,Letter P
+P,2,REC,/116/001.mp3,Letter P Recording
+Q,1,TTS,/17/001.mp3,Letter Q
+Q,2,REC,/117/001.mp3,Letter Q Recording
+R,1,TTS,/18/001.mp3,Letter R
+R,2,REC,/118/001.mp3,Letter R Recording
+S,1,TTS,/19/001.mp3,Letter S
+S,2,REC,/119/001.mp3,Letter S Recording
+T,1,TTS,/20/001.mp3,Letter T
+T,2,REC,/120/001.mp3,Letter T Recording
+U,1,TTS,/21/001.mp3,Letter U
+U,2,REC,/121/001.mp3,Letter U Recording
+V,1,TTS,/22/001.mp3,Letter V
+V,2,REC,/122/001.mp3,Letter V Recording
+W,1,TTS,/23/001.mp3,Letter W
+W,2,REC,/123/001.mp3,Letter W Recording
+X,1,TTS,/24/001.mp3,Letter X
+X,2,REC,/124/001.mp3,Letter X Recording
+Y,1,TTS,/25/001.mp3,Letter Y
+Y,2,REC,/125/001.mp3,Letter Y Recording
+Z,1,TTS,/26/001.mp3,Letter Z
+Z,2,REC,/126/001.mp3,Letter Z Recording
+_,1,TTS,/27/001.mp3,Space
+_,2,REC,/127/001.mp3,Space Recording
+.,1,TTS,/33/004.mp3,Human First Mode
+.,2,TTS,/33/005.mp3,Generated First Mode
+.,3,TTS,/33/006.mp3,Period

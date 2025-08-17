@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactile Communication Device - Complete Reference</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-left: 5px solid #3498db;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 5px;
+        }
+        .priority-mode {
+            background-color: #e8f6f3;
+            border: 2px solid #16a085;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .button-card {
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #ffffff;
+        }
+        .button-letter {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e74c3c;
+            display: inline-block;
+            width: 40px;
+            text-align: center;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+        .personal-recording {
+            background-color: #d5f4e6;
+            border-left: 4px solid #27ae60;
+        }
+        .tts-only {
+            background-color: #fdf2e9;
+            border-left: 4px solid #f39c12;
+        }
+        .word-list {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+        .word {
+            display: inline-block;
+            background-color: #ecf0f1;
+            padding: 3px 8px;
+            margin: 2px;
+            border-radius: 4px;
+            border: 1px solid #bdc3c7;
+        }
+        .personal-word {
+            background-color: #d5f4e6;
+            border-color: #27ae60;
+            font-weight: bold;
+        }
+        .tts-word {
+            background-color: #fdf2e9;
+            border-color: #f39c12;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            border: 2px solid #2196f3;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .special-buttons {
+            background-color: #f3e5f5;
+            border: 2px solid #9c27b0;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #bdc3c7;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+        .mode-human {
+            background-color: #d5f4e6;
+            font-weight: bold;
+        }
+        .mode-generated {
+            background-color: #fdf2e9;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Tactile Communication Device - Complete Reference</h1>
+        
+        <div class="priority-mode">
+            <h2>🎵 Priority Mode System</h2>
+            <p><strong>Your device now has dual priority modes for flexible communication:</strong></p>
+            <ul>
+                <li><span class="mode-human">HUMAN_FIRST (Personal Voice First)</span> - Prioritizes your personal recordings</li>
+                <li><span class="mode-generated">GENERATED_FIRST (Computer Voice First)</span> - Prioritizes TTS audio</li>
+            </ul>
+            <p><strong>Switch modes:</strong> Press the <strong>Period (.) button 3 times quickly</strong> within 1.2 seconds</p>
+            <p><strong>Audio feedback:</strong> Device announces "Personal voice first" or "Computer voice first"</p>
+            <p><strong>Persistence:</strong> Your mode preference is saved and remembered across power cycles</p>
+        </div>
+
+        <div class="instructions">
+            <h2>📱 How to Use</h2>
+            <ul>
+                <li><strong>Single Press:</strong> Play the primary word for each button</li>
+                <li><strong>Multiple Presses:</strong> Cycle through additional words (if available)</li>
+                <li><strong>Priority Modes:</strong> Triple-press Period button to switch between personal/computer voice</li>
+                <li><strong>SHIFT Button:</strong> Press for help and device instructions</li>
+            </ul>
+        </div>
+
+        <h2>🔤 Letter Button Mappings</h2>
+        
+        <div class="button-grid">
+            <div class="button-card personal-recording">
+                <div class="button-letter">A</div>
+                <strong>Folder 05 - 6 words</strong><br>
+                <div class="word-list">
+                    <span class="word personal-word">1. Alari [Personal]</span>
+                    <span class="word tts-word">2. Angry [TTS]</span>
+                    <span class="word tts-word">3. Apple [TTS]</span>
+                    <span class="word tts-word">4. Awesome [TTS]</span>
+                    <span class="word tts-word">5. Azilect [TTS]</span>
+                    <span class="word tts-word">6. Azra [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">B</div>
+                <strong>Folder 06 - 7 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Bagel [TTS]</span>
+                    <span class="word tts-word">2. Bathroom [TTS]</span>
+                    <span class="word tts-word">3. Bed [TTS]</span>
+                    <span class="word tts-word">4. Blue [TTS]</span>
+                    <span class="word tts-word">5. Book [TTS]</span>
+                    <span class="word tts-word">6. Bottle [TTS]</span>
+                    <span class="word tts-word">7. Bread [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">C</div>
+                <strong>Folder 07 - 7 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Call [TTS]</span>
+                    <span class="word tts-word">2. Car [TTS]</span>
+                    <span class="word tts-word">3. Chair [TTS]</span>
+                    <span class="word tts-word">4. Cold [TTS]</span>
+                    <span class="word tts-word">5. Come [TTS]</span>
+                    <span class="word tts-word">6. Computer [TTS]</span>
+                    <span class="word tts-word">7. Cup [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card personal-recording">
+                <div class="button-letter">D</div>
+                <strong>Folder 08 - 6 words</strong><br>
+                <div class="word-list">
+                    <span class="word personal-word">1. Daddy [Personal]</span>
+                    <span class="word tts-word">2. Dance [TTS]</span>
+                    <span class="word tts-word">3. Doctor [TTS]</span>
+                    <span class="word tts-word">4. Door [TTS]</span>
+                    <span class="word tts-word">5. Down [TTS]</span>
+                    <span class="word tts-word">6. Drink [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">E</div>
+                <strong>Folder 09 - 1 word</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Elephant [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">F</div>
+                <strong>Folder 10 - 3 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. FaceTime [TTS]</span>
+                    <span class="word tts-word">2. Food [TTS]</span>
+                    <span class="word tts-word">3. Friend [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">G</div>
+                <strong>Folder 11 - 3 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Garage [TTS]</span>
+                    <span class="word tts-word">2. Go [TTS]</span>
+                    <span class="word tts-word">3. Good [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">H</div>
+                <strong>Folder 12 - 7 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Happy [TTS]</span>
+                    <span class="word tts-word">2. Help [TTS]</span>
+                    <span class="word tts-word">3. Home [TTS]</span>
+                    <span class="word tts-word">4. Hot [TTS]</span>
+                    <span class="word tts-word">5. House [TTS]</span>
+                    <span class="word tts-word">6. Hungry [TTS]</span>
+                    <span class="word tts-word">7. Hurt [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">I</div>
+                <strong>Folder 13 - 3 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Ice [TTS]</span>
+                    <span class="word tts-word">2. Inside [TTS]</span>
+                    <span class="word tts-word">3. iPad [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">J</div>
+                <strong>Folder 14 - 1 word</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Jump [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">K</div>
+                <strong>Folder 15 - 5 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Kaiser [TTS]</span>
+                    <span class="word tts-word">2. Key [TTS]</span>
+                    <span class="word tts-word">3. Kitchen [TTS]</span>
+                    <span class="word tts-word">4. Knee [TTS]</span>
+                    <span class="word tts-word">5. Know [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card personal-recording">
+                <div class="button-letter">L</div>
+                <strong>Folder 16 - 6 words</strong><br>
+                <div class="word-list">
+                    <span class="word personal-word">1. I love you [Personal]</span>
+                    <span class="word tts-word">2. Light [TTS]</span>
+                    <span class="word tts-word">3. Listen [TTS]</span>
+                    <span class="word tts-word">4. Look [TTS]</span>
+                    <span class="word tts-word">5. Loud [TTS]</span>
+                    <span class="word tts-word">6. Love [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">M</div>
+                <strong>Folder 17 - 6 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Mad [TTS]</span>
+                    <span class="word tts-word">2. Medical [TTS]</span>
+                    <span class="word tts-word">3. Medicine [TTS]</span>
+                    <span class="word tts-word">4. Meditate [TTS]</span>
+                    <span class="word tts-word">5. Mohammad [TTS]</span>
+                    <span class="word tts-word">6. Moon [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card personal-recording">
+                <div class="button-letter">N</div>
+                <strong>Folder 18 - 5 words</strong><br>
+                <div class="word-list">
+                    <span class="word personal-word">1. Nada [Personal]</span>
+                    <span class="word personal-word">2. Nadowie [Personal]</span>
+                    <span class="word tts-word">3. Net [TTS]</span>
+                    <span class="word tts-word">4. No [TTS]</span>
+                    <span class="word personal-word">5. Noah [Personal]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">O</div>
+                <strong>Folder 19 - 2 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Orange [TTS]</span>
+                    <span class="word tts-word">2. Outside [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">P</div>
+                <strong>Folder 20 - 4 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Pain [TTS]</span>
+                    <span class="word tts-word">2. Period [TTS]</span>
+                    <span class="word tts-word">3. Phone [TTS]</span>
+                    <span class="word tts-word">4. Purple [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">Q</div>
+                <strong>Folder 21 - 1 word</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Queen [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">R</div>
+                <strong>Folder 22 - 3 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Red [TTS]</span>
+                    <span class="word tts-word">2. Rest [TTS]</span>
+                    <span class="word tts-word">3. Room [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">S</div>
+                <strong>Folder 23 - 10 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Sad [TTS]</span>
+                    <span class="word tts-word">2. Scarf [TTS]</span>
+                    <span class="word tts-word">3. Shoes [TTS]</span>
+                    <span class="word tts-word">4. Sinemet [TTS]</span>
+                    <span class="word tts-word">5. Sleep [TTS]</span>
+                    <span class="word tts-word">6. Socks [TTS]</span>
+                    <span class="word tts-word">7. Space [TTS]</span>
+                    <span class="word tts-word">8. Stop [TTS]</span>
+                    <span class="word tts-word">9. Sun [TTS]</span>
+                    <span class="word personal-word">10. Susu [Personal]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">T</div>
+                <strong>Folder 24 - 4 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Togamet [TTS]</span>
+                    <span class="word tts-word">2. Thank you [TTS]</span>
+                    <span class="word tts-word">3. Thirsty [TTS]</span>
+                    <span class="word tts-word">4. Tired [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">U</div>
+                <strong>Folder 25 - 2 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Up [TTS]</span>
+                    <span class="word tts-word">2. Under [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">V</div>
+                <strong>Folder 26 - 1 word</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Van [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">W</div>
+                <strong>Folder 27 - 4 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Walk [TTS]</span>
+                    <span class="word tts-word">2. Water [TTS]</span>
+                    <span class="word tts-word">3. Window [TTS]</span>
+                    <span class="word tts-word">4. Work [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">X</div>
+                <strong>Folder 28 - 1 word</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. X-ray [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">Y</div>
+                <strong>Folder 29 - 2 words</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Yes [TTS]</span>
+                    <span class="word tts-word">2. Yellow [TTS]</span>
+                </div>
+            </div>
+
+            <div class="button-card tts-only">
+                <div class="button-letter">Z</div>
+                <strong>Folder 30 - 1 word</strong><br>
+                <div class="word-list">
+                    <span class="word tts-word">1. Zebra [TTS]</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="special-buttons">
+            <h2>🎛️ Special Buttons</h2>
+            <table>
+                <tr>
+                    <th>Button</th>
+                    <th>Function</th>
+                    <th>Audio Files</th>
+                </tr>
+                <tr>
+                    <td><strong>SPACE</strong></td>
+                    <td>Space symbol</td>
+                    <td>Uses S button folder (track 7)</td>
+                </tr>
+                <tr>
+                    <td><strong>PERIOD (.)</strong></td>
+                    <td>Period symbol + Priority Mode Toggle</td>
+                    <td>Uses P button folder (track 2)<br><strong>Triple-press:</strong> Switches priority modes</td>
+                </tr>
+                <tr>
+                    <td><strong>SHIFT</strong></td>
+                    <td>Help system</td>
+                    <td>Folder 33: Personal greeting, instructions, detailed help</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="priority-mode">
+            <h2>🎯 Priority Mode Details</h2>
+            <table>
+                <tr>
+                    <th>Mode</th>
+                    <th>Description</th>
+                    <th>Buttons with Personal Recordings</th>
+                    <th>Buttons with TTS Only</th>
+                </tr>
+                <tr>
+                    <td class="mode-human">HUMAN_FIRST</td>
+                    <td>Personal Voice First</td>
+                    <td>Plays personal recordings (A, D, L, N, S)</td>
+                    <td>Plays TTS audio (all others)</td>
+                </tr>
+                <tr>
+                    <td class="mode-generated">GENERATED_FIRST</td>
+                    <td>Computer Voice First</td>
+                    <td>Plays TTS versions</td>
+                    <td>Plays TTS audio</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="instructions">
+            <h2>📊 System Statistics</h2>
+            <ul>
+                <li><strong>Total Buttons:</strong> 26 letter buttons + 3 special buttons</li>
+                <li><strong>Total Words:</strong> 120+ vocabulary words</li>
+                <li><strong>Personal Recordings:</strong> 5 buttons (A, D, L, N, S) with personal audio</li>
+                <li><strong>TTS Audio:</strong> All buttons have TTS versions</li>
+                <li><strong>Priority Modes:</strong> 2 modes with intelligent switching</li>
+                <li><strong>Audio Announcements:</strong> ElevenLabs quality mode switching feedback</li>
+            </ul>
+        </div>
+
+        <p style="text-align: center; margin-top: 30px; color: #7f8c8d;">
+            <strong>Tactile Communication Device - Enhanced with Priority Mode System</strong><br>
+            Generated: 2025-08-13 | Arduino UNO R4 WiFi Compatible
+        </p>
+    </div>
+</body>
+</html>

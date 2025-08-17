@@ -1,0 +1,224 @@
+TACTILE COMMUNICATION DEVICE - COMPLETE REFERENCE
+==================================================
+
+PRIORITY MODE SYSTEM
+====================
+Your device now has dual priority modes for flexible communication:
+
+HUMAN_FIRST (Personal Voice First) - Prioritizes your personal recordings
+GENERATED_FIRST (Computer Voice First) - Prioritizes TTS audio
+
+How to Switch Modes:
+- Press the Period (.) button 3 times quickly within 1.2 seconds
+- Device announces "Personal voice first" or "Computer voice first"
+- Your mode preference is saved and remembered across power cycles
+
+HOW TO USE THE DEVICE
+=====================
+Single Press: Play the primary word for each button
+Multiple Presses: Cycle through additional words (if available)
+Priority Modes: Triple-press Period button to switch between personal/computer voice
+SHIFT Button: Press for help and device instructions
+
+COMPLETE LETTER BUTTON MAPPINGS
+================================
+
+Button A - Folder 05 (6 words) [HAS PERSONAL RECORDINGS]
+    1. Alari [Personal Recording]
+    2. Angry [Text-to-Speech]
+    3. Apple [Text-to-Speech]
+    4. Awesome [Text-to-Speech]
+    5. Azilect [Text-to-Speech]
+    6. Azra [Text-to-Speech]
+
+Button B - Folder 06 (7 words) [TEXT-TO-SPEECH ONLY]
+    1. Bagel
+    2. Bathroom
+    3. Bed
+    4. Blue
+    5. Book
+    6. Bottle
+    7. Bread
+
+Button C - Folder 07 (7 words) [TEXT-TO-SPEECH ONLY]
+    1. Call
+    2. Car
+    3. Chair
+    4. Cold
+    5. Come
+    6. Computer
+    7. Cup
+
+Button D - Folder 08 (6 words) [HAS PERSONAL RECORDINGS]
+    1. Daddy [Personal Recording]
+    2. Dance [Text-to-Speech]
+    3. Doctor [Text-to-Speech]
+    4. Door [Text-to-Speech]
+    5. Down [Text-to-Speech]
+    6. Drink [Text-to-Speech]
+
+Button E - Folder 09 (1 word) [TEXT-TO-SPEECH ONLY]
+    1. Elephant
+
+Button F - Folder 10 (3 words) [TEXT-TO-SPEECH ONLY]
+    1. FaceTime
+    2. Food
+    3. Friend
+
+Button G - Folder 11 (3 words) [TEXT-TO-SPEECH ONLY]
+    1. Garage
+    2. Go
+    3. Good
+
+Button H - Folder 12 (7 words) [TEXT-TO-SPEECH ONLY]
+    1. Happy
+    2. Help
+    3. Home
+    4. Hot
+    5. House
+    6. Hungry
+    7. Hurt
+
+Button I - Folder 13 (3 words) [TEXT-TO-SPEECH ONLY]
+    1. Ice
+    2. Inside
+    3. iPad
+
+Button J - Folder 14 (1 word) [TEXT-TO-SPEECH ONLY]
+    1. Jump
+
+Button K - Folder 15 (5 words) [TEXT-TO-SPEECH ONLY]
+    1. Kaiser
+    2. Key
+    3. Kitchen
+    4. Knee
+    5. Know
+
+Button L - Folder 16 (6 words) [HAS PERSONAL RECORDINGS]
+    1. I love you [Personal Recording]
+    2. Light [Text-to-Speech]
+    3. Listen [Text-to-Speech]
+    4. Look [Text-to-Speech]
+    5. Loud [Text-to-Speech]
+    6. Love [Text-to-Speech]
+
+Button M - Folder 17 (6 words) [TEXT-TO-SPEECH ONLY]
+    1. Mad
+    2. Medical
+    3. Medicine
+    4. Meditate
+    5. Mohammad
+    6. Moon
+
+Button N - Folder 18 (5 words) [HAS PERSONAL RECORDINGS]
+    1. Nada [Personal Recording]
+    2. Nadowie [Personal Recording]
+    3. Net [Text-to-Speech]
+    4. No [Text-to-Speech]
+    5. Noah [Personal Recording]
+
+Button O - Folder 19 (2 words) [TEXT-TO-SPEECH ONLY]
+    1. Orange
+    2. Outside
+
+Button P - Folder 20 (4 words) [TEXT-TO-SPEECH ONLY]
+    1. Pain
+    2. Period
+    3. Phone
+    4. Purple
+
+Button Q - Folder 21 (1 word) [TEXT-TO-SPEECH ONLY]
+    1. Queen
+
+Button R - Folder 22 (3 words) [TEXT-TO-SPEECH ONLY]
+    1. Red
+    2. Rest
+    3. Room
+
+Button S - Folder 23 (10 words) [HAS PERSONAL RECORDINGS]
+    1. Sad [Text-to-Speech]
+    2. Scarf [Text-to-Speech]
+    3. Shoes [Text-to-Speech]
+    4. Sinemet [Text-to-Speech]
+    5. Sleep [Text-to-Speech]
+    6. Socks [Text-to-Speech]
+    7. Space [Text-to-Speech]
+    8. Stop [Text-to-Speech]
+    9. Sun [Text-to-Speech]
+    10. Susu [Personal Recording]
+
+Button T - Folder 24 (4 words) [TEXT-TO-SPEECH ONLY]
+    1. Togamet
+    2. Thank you
+    3. Thirsty
+    4. Tired
+
+Button U - Folder 25 (2 words) [TEXT-TO-SPEECH ONLY]
+    1. Up
+    2. Under
+
+Button V - Folder 26 (1 word) [TEXT-TO-SPEECH ONLY]
+    1. Van
+
+Button W - Folder 27 (4 words) [TEXT-TO-SPEECH ONLY]
+    1. Walk
+    2. Water
+    3. Window
+    4. Work
+
+Button X - Folder 28 (1 word) [TEXT-TO-SPEECH ONLY]
+    1. X-ray
+
+Button Y - Folder 29 (2 words) [TEXT-TO-SPEECH ONLY]
+    1. Yes
+    2. Yellow
+
+Button Z - Folder 30 (1 word) [TEXT-TO-SPEECH ONLY]
+    1. Zebra
+
+SPECIAL BUTTONS
+===============
+
+SPACE Button
+- Function: Space symbol
+- Uses S button folder (track 7)
+
+PERIOD (.) Button
+- Function: Period symbol + Priority Mode Toggle
+- Uses P button folder (track 2)
+- Special Feature: Triple-press switches priority modes
+
+SHIFT Button
+- Function: Help system
+- Folder 33: Personal greeting, instructions, detailed help
+
+PRIORITY MODE OPERATION
+=======================
+
+HUMAN_FIRST Mode (Personal Voice First):
+- Buttons with Personal Recordings (A, D, L, N, S): Plays personal recordings first
+- Buttons with TTS Only (all others): Plays text-to-speech audio
+
+GENERATED_FIRST Mode (Computer Voice First):
+- All Buttons: Plays text-to-speech versions
+
+SYSTEM STATISTICS
+=================
+Total Buttons: 26 letter buttons + 3 special buttons
+Total Words: 120+ vocabulary words
+Personal Recordings: 5 buttons (A, D, L, N, S) with personal audio
+TTS Audio: All buttons have text-to-speech versions
+Priority Modes: 2 modes with intelligent switching
+Audio Announcements: ElevenLabs quality mode switching feedback
+
+TECHNICAL SPECIFICATIONS
+========================
+Compatible with: Arduino UNO R4 WiFi
+Audio Codec: VS1053
+Storage: SD Card with organized folder structure
+I/O Expansion: PCF8575 I2C port expanders
+Audio Quality: ElevenLabs TTS + Personal recordings
+Memory: EEPROM for persistent settings
+
+Generated: August 13, 2025
+Tactile Communication Device - Enhanced with Priority Mode System

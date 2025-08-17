@@ -1,0 +1,88 @@
+folder,track,text,bank
+05,001,Alari [REC],REC
+05,002,Amer,TTS
+05,003,Apple,TTS
+05,004,Arabic Show,TTS
+06,001,Bagel,TTS
+06,002,Bathroom,TTS
+06,003,Bed,TTS
+06,004,Blanket,TTS
+06,005,Breathe,TTS
+06,006,Bye,TTS
+07,001,Call,TTS
+07,002,Car,TTS
+07,003,Chair,TTS
+07,004,Coffee,TTS
+07,005,Cold,TTS
+08,001,Daddy [REC],REC
+08,002,Deen,TTS
+08,003,Doctor,TTS
+08,004,Door,TTS
+08,005,Down,TTS
+09,001,Eleven,TTS
+10,001,FaceTime,TTS
+10,002,Funny,TTS
+11,001,Garage,TTS
+11,002,Go,TTS
+11,003,Good Morning,TTS
+12,001,Happy,TTS
+12,002,Heartburn,TTS
+12,003,Hot,TTS
+12,004,How are you,TTS
+12,005,Hungry,TTS
+13,001,Inside,TTS
+13,002,iPad,TTS
+14,001,Juice,TTS
+15,001,Kaiser,TTS
+15,002,Kiyah,TTS
+15,003,Kleenex,TTS
+15,004,Kyan,TTS
+16,001,I love you [REC],REC
+16,002,Lee,TTS
+16,003,Light Down,TTS
+16,004,Light Up,TTS
+17,001,Mad,TTS
+17,002,Medical,TTS
+17,003,Medicine,TTS
+17,004,Meditate,TTS
+17,005,Mohammad,TTS
+18,001,Nada [REC],REC
+18,002,Nadowie [REC],REC
+18,003,Noah [REC],REC
+18,004,No,TTS
+19,001,Orange,TTS
+19,002,Outside,TTS
+20,001,Pain,TTS
+20,002,Period,TTS
+20,003,Phone,TTS
+20,004,Purple,TTS
+21,001,Queen,TTS
+22,001,Red,TTS
+22,002,Rest,TTS
+22,003,Room,TTS
+23,001,Susu [REC],REC
+23,002,Sad,TTS
+23,003,Scarf,TTS
+23,004,Shoes,TTS
+23,005,Sinemet,TTS
+23,006,Sleep,TTS
+23,007,Socks,TTS
+23,008,Stop,TTS
+23,009,Space,TTS
+24,001,TV,TTS
+24,002,Togamet,TTS
+24,003,Tylenol,TTS
+25,001,Up,TTS
+25,002,Urgent Care,TTS
+26,001,Violet,TTS
+27,001,Walk,TTS
+27,002,Walker,TTS
+27,003,Water,TTS
+27,004,Wheelchair,TTS
+28,001,X-ray,TTS
+29,001,Yes,TTS
+29,002,Yellow,TTS
+30,001,Zebra,TTS
+33,001,Shift,TTS
+33,002,Instructions,TTS
+33,003,Help,TTS

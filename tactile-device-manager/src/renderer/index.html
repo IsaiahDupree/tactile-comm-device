@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tactile Device Manager</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>Tactile Device Manager</h1>
+                <div class="connection-status">
+                    <div class="status-indicator" id="connectionStatus"></div>
+                    <span id="connectionText">Disconnected</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="section">
+                    <h3>Device Connection</h3>
+                    <div class="form-group">
+                        <label for="serialPorts">Serial Port:</label>
+                        <select id="serialPorts">
+                            <option value="">Select a port...</option>
+                        </select>
+                        <button id="refreshPorts" class="btn btn-secondary">Refresh</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="baudRate">Baud Rate:</label>
+                        <select id="baudRate">
+                            <option value="9600">9600</option>
+                            <option value="57600">57600</option>
+                            <option value="115200" selected>115200</option>
+                            <option value="230400">230400</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button id="connectBtn" class="btn btn-primary">Connect</button>
+                        <button id="disconnectBtn" class="btn btn-secondary" disabled>Disconnect</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Firmware Management</h3>
+                    <div class="form-group">
+                        <label for="boardSelect">Board:</label>
+                        <select id="boardSelect">
+                            <option value="arduino:renesas_uno:unor4wifi">Arduino Uno R4 WiFi</option>
+                            <option value="arduino:avr:uno">Arduino Uno</option>
+                            <option value="arduino:avr:nano">Arduino Nano</option>
+                        </select>
+                    </div>
+                    <div class="button-group">
+                        <button id="detectBoardsBtn" class="btn btn-secondary">Detect Boards</button>
+                        <button id="uploadFirmwareBtn" class="btn btn-primary" disabled>Upload Firmware</button>
+                    </div>
+                    <div id="uploadProgress" class="progress-container" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="progress-text" id="progressText">Ready</div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>SD Card Management</h3>
+                    <div class="form-group">
+                        <button id="selectSdBtn" class="btn btn-secondary">Select SD Directory</button>
+                        <div id="sdPath" class="path-display">No directory selected</div>
+                    </div>
+                    <div class="button-group">
+                        <button id="syncSdBtn" class="btn btn-primary" disabled>Sync to Device</button>
+                        <button id="backupSdBtn" class="btn btn-secondary" disabled>Backup from Device</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Device Testing</h3>
+                    <div class="button-group">
+                        <button id="selfTestBtn" class="btn btn-primary" disabled>Run Self-Test</button>
+                        <button id="playTestBtn" class="btn btn-secondary" disabled>Play Test Audio</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>One-Click Update</h3>
+                    <button id="oneClickUpdateBtn" class="btn btn-success btn-large" disabled>
+                        🚀 Update Device
+                    </button>
+                    <div class="update-steps" id="updateSteps" style="display: none;">
+                        <div class="step" id="step1">1. Flash Firmware</div>
+                        <div class="step" id="step2">2. Sync SD Card</div>
+                        <div class="step" id="step3">3. Run Self-Test</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Panel -->
+            <main class="main-panel">
+                <div class="tab-container">
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="device-layout">Device Layout</button>
+                        <button class="tab-button" data-tab="console">Console</button>
+                        <button class="tab-button" data-tab="config">Configuration</button>
+                        <button class="tab-button" data-tab="files">File Manager</button>
+                        <button class="tab-button" data-tab="playlists">Playlists</button>
+                    </div>
+
+                    <!-- Device Layout Tab -->
+                    <div class="tab-content active" id="device-layout">
+                        <div class="device-layout-container">
+                            <div class="device-status-bar">
+                                <div class="status-section">
+                                    <h3>Device Status</h3>
+                                    <div class="status-indicators">
+                                        <div class="status-item">
+                                            <span class="status-dot" id="deviceStatusDot"></span>
+                                            <span id="deviceStatusText">Disconnected</span>
+                                        </div>
+                                        <div class="status-item">
+                                            <span class="status-dot" id="sdStatusDot"></span>
+                                            <span id="sdStatusText">No SD Card</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="audio-counts">
+                                    <div class="count-item human-count">
+                                        <span class="count-label">Human Audio Files</span>
+                                        <span class="count-value" id="humanAudioCount">0</span>
+                                    </div>
+                                    <div class="count-item generated-count">
+                                        <span class="count-label">Generated Audio Files</span>
+                                        <span class="count-value" id="generatedAudioCount">0</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="device-layout">
+                                <!-- Top Row - Special Buttons -->
+                                <div class="button-row top-row">
+                                    <div class="device-button special-button" data-key="Are You?">
+                                        <span class="button-label">Are You?</span>
+                                        <div class="audio-indicators">
+                                            <span class="human-indicator">0</span>
+                                            <span class="generated-indicator">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-button special-button" data-key="Yes">
+                                        <span class="button-label">Yes</span>
+                                        <div class="audio-indicators">
+                                            <span class="human-indicator">0</span>
+                                            <span class="generated-indicator">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-button special-button" data-key="No">
+                                        <span class="button-label">No</span>
+                                        <div class="audio-indicators">
+                                            <span class="human-indicator">0</span>
+                                            <span class="generated-indicator">0</span>
+                                        </div>
+                                    </div>
+                                    <div class="device-button special-button" data-key="Water">
+                                        <span class="button-label">Water</span>
+                                        <div class="audio-indicators">
+                                            <span class="human-indicator">0</span>
+                                            <span class="generated-indicator">0</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Alphabet Grid -->
+                                <div class="alphabet-grid">
+                                    <!-- Row 1: A-G -->
+                                    <div class="button-row">
+                                        <div class="device-button letter-button" data-key="A">
+                                            <span class="button-label">A</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="B">
+                                            <span class="button-label">B</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="C">
+                                            <span class="button-label">C</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="D">
+                                            <span class="button-label">D</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="E">
+                                            <span class="button-label">E</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="F">
+                                            <span class="button-label">F</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="G">
+                                            <span class="button-label">G</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 2: H-N -->
+                                    <div class="button-row">
+                                        <div class="device-button letter-button" data-key="H">
+                                            <span class="button-label">H</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="I">
+                                            <span class="button-label">I</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="J">
+                                            <span class="button-label">J</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="K">
+                                            <span class="button-label">K</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="L">
+                                            <span class="button-label">L</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="M">
+                                            <span class="button-label">M</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="N">
+                                            <span class="button-label">N</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 3: O-U -->
+                                    <div class="button-row">
+                                        <div class="device-button letter-button" data-key="O">
+                                            <span class="button-label">O</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="P">
+                                            <span class="button-label">P</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="Q">
+                                            <span class="button-label">Q</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="R">
+                                            <span class="button-label">R</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="S">
+                                            <span class="button-label">S</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="T">
+                                            <span class="button-label">T</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="U">
+                                            <span class="button-label">U</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Row 4: V-Z and special characters -->
+                                    <div class="button-row">
+                                        <div class="device-button letter-button" data-key="V">
+                                            <span class="button-label">V</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="W">
+                                            <span class="button-label">W</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="X">
+                                            <span class="button-label">X</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="Y">
+                                            <span class="button-label">Y</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button letter-button" data-key="Z">
+                                            <span class="button-label">Z</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button special-button" data-key="_">
+                                            <span class="button-label">_</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                        <div class="device-button special-button" data-key=".">
+                                            <span class="button-label">.</span>
+                                            <div class="audio-indicators">
+                                                <span class="human-indicator">0</span>
+                                                <span class="generated-indicator">0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Word Mapping Panel -->
+                            <div class="mapping-panel" id="mappingPanel" style="display: none;">
+                                <div class="mapping-header">
+                                    <h3>Word Mappings for <span id="selectedKey"></span></h3>
+                                    <button class="btn btn-secondary" id="closeMappingPanel">✕</button>
+                                </div>
+                                
+                                <div class="mapping-content">
+                                    <div class="mapping-section human-section">
+                                        <h4>🧡 Human Recordings</h4>
+                                        <div class="word-list" id="humanWordList">
+                                            <div class="no-words">No human recordings</div>
+                                        </div>
+                                        <div class="add-word-section">
+                                            <input type="text" id="newHumanWord" placeholder="Enter word or phrase...">
+                                            <button class="btn btn-primary" id="addHumanWord">Add Human</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="mapping-section generated-section">
+                                        <h4>🔵 Generated Audio</h4>
+                                        <div class="word-list" id="generatedWordList">
+                                            <div class="no-words">No generated audio</div>
+                                        </div>
+                                        <div class="add-word-section">
+                                            <input type="text" id="newGeneratedWord" placeholder="Enter word or phrase...">
+                                            <button class="btn btn-primary" id="addGeneratedWord">Add Generated</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mapping-actions">
+                                    <button class="btn btn-success" id="saveMappings">💾 Save Mappings</button>
+                                    <button class="btn btn-secondary" id="testAudio">🔊 Test Audio</button>
+                                    <button class="btn btn-danger" id="clearAllMappings">🗑️ Clear All</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Console Tab -->
+                    <div class="tab-content" id="console">
+                        <div class="console-container">
+                            <div class="console-output" id="consoleOutput"></div>
+                            <div class="console-input-container">
+                                <input type="text" id="consoleInput" placeholder="Enter command..." autocomplete="off">
+                                <button id="sendCommandBtn" class="btn btn-primary">Send</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuration Tab -->
+                    <div class="tab-content" id="config">
+                        <div class="config-container">
+                            <h3>Device Configuration</h3>
+                            
+                            <div class="config-section">
+                                <h4>Button Mapping (buttons.csv)</h4>
+                                <div class="config-editor">
+                                    <textarea id="buttonConfigEditor" placeholder="Loading configuration..." rows="10"></textarea>
+                                    <div class="button-group">
+                                        <button id="loadButtonConfig" class="btn btn-secondary">Load from Device</button>
+                                        <button id="saveButtonConfig" class="btn btn-primary">Save to Device</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="config-section">
+                                <h4>Mode Configuration (mode.cfg)</h4>
+                                <div class="config-editor">
+                                    <div class="form-group">
+                                        <label for="priorityMode">Priority Mode:</label>
+                                        <select id="priorityMode">
+                                            <option value="HUMAN_FIRST">Human First</option>
+                                            <option value="GENERATED_FIRST">Generated First</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="strictPlaylists">Strict Playlists:</label>
+                                        <input type="checkbox" id="strictPlaylists" checked>
+                                    </div>
+                                    <div class="button-group">
+                                        <button id="loadModeConfig" class="btn btn-secondary">Load from Device</button>
+                                        <button id="saveModeConfig" class="btn btn-primary">Save to Device</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- File Manager Tab -->
+                    <div class="tab-content" id="files">
+                        <div class="file-manager">
+                            <div class="file-explorer">
+                                <div class="explorer-header">
+                                    <h4>SD Card Files</h4>
+                                    <div class="path-breadcrumb" id="currentPath">/</div>
+                                </div>
+                                <div class="file-list" id="fileList">
+                                    <div class="file-item placeholder">Select SD directory to browse files</div>
+                                </div>
+                            </div>
+                            <div class="file-operations">
+                                <h4>File Operations</h4>
+                                <div class="button-group">
+                                    <button id="createFolderBtn" class="btn btn-secondary">Create Folder</button>
+                                    <button id="uploadFileBtn" class="btn btn-secondary">Upload File</button>
+                                    <button id="deleteFileBtn" class="btn btn-danger" disabled>Delete Selected</button>
+                                </div>
+                                <div class="file-info" id="fileInfo">
+                                    <p>Select a file to view details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Playlists Tab -->
+                    <div class="tab-content" id="playlists">
+                        <div class="playlist-manager">
+                            <div class="playlist-list">
+                                <h4>Available Playlists</h4>
+                                <div class="playlist-items" id="playlistItems">
+                                    <div class="playlist-item placeholder">No playlists found</div>
+                                </div>
+                            </div>
+                            <div class="playlist-editor">
+                                <h4>Playlist Editor</h4>
+                                <div class="form-group">
+                                    <label for="playlistKey">Key:</label>
+                                    <input type="text" id="playlistKey" placeholder="e.g., A, Water, Emergency">
+                                </div>
+                                <div class="form-group">
+                                    <label for="playlistType">Type:</label>
+                                    <select id="playlistType">
+                                        <option value="human">Human Recordings</option>
+                                        <option value="generated">Generated Audio</option>
+                                    </select>
+                                </div>
+                                <div class="playlist-tracks">
+                                    <h5>Tracks (in order):</h5>
+                                    <div class="track-list" id="trackList">
+                                        <div class="track-item placeholder">No tracks</div>
+                                    </div>
+                                    <div class="button-group">
+                                        <button id="addTrackBtn" class="btn btn-secondary">Add Track</button>
+                                        <button id="removeTrackBtn" class="btn btn-danger" disabled>Remove Selected</button>
+                                    </div>
+                                </div>
+                                <div class="button-group">
+                                    <button id="loadPlaylistBtn" class="btn btn-secondary">Load Playlist</button>
+                                    <button id="savePlaylistBtn" class="btn btn-primary">Save Playlist</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-item">
+                <span id="deviceStatus">No device connected</span>
+            </div>
+            <div class="status-item">
+                <span id="sdStatus">No SD directory selected</span>
+            </div>
+            <div class="status-item">
+                <span id="operationStatus">Ready</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html>

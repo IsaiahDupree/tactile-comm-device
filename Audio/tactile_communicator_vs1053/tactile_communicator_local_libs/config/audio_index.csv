@@ -1,0 +1,19 @@
+# Audio index for text logging (optional)
+# Format: path,text_description
+# This file provides human-readable descriptions for audio files
+
+/01/001.mp3,Letter A
+/01/002.mp3,Apple
+/02/001.mp3,Letter B
+/02/002.mp3,Ball
+/03/001.mp3,Letter C
+/03/002.mp3,Cat
+/33/001.mp3,Period
+/33/002.mp3,Stop
+/33/003.mp3,System
+/33/004.mp3,Human First Mode
+/33/005.mp3,Generated First Mode
+
+# Add more audio file descriptions as needed
+# This file is optional and used for console logging
+# The text descriptions help identify what audio is playing
