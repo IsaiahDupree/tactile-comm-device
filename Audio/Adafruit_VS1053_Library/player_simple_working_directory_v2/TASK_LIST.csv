@@ -33,3 +33,24 @@ Story,T-23 - Performance & loop timing,Ensure main loop feeds VS1053; log averag
 Epic,M7 - Docs & release packaging,Final documentation and release preparation,To Do,Low,,,M7,
 Story,T-24 - Docs: Operator & Developer guides,Operator: SD layout adding audio editing playlists flipping priority. Dev: protocol spec file formats,To Do,Low,T-25,M5,M7,5
 Story,T-25 - Release packaging,Version stamp into /manifest.json; tag repo; produce SD starter pack,To Do,Low,M7,M5,M7,3
+Epic,M8 - Data Mode V2 (binary, resumable, secure),Binary framed protocol with auth, resumable uploads, journaling, atomic commit/rollback, telemetry,To Do,High,,,M8,
+Story,T-30 - DM protocol framing (binary),COBS/SLIP or length-prefix frame with header {ver,flags,seq,ack,type,win,len}, CRC32 trailer; ACK/NACK windowing,To Do,High,T-31 T-33 T-46,,M8,5
+Story,T-31 - Transport abstraction,ITransport interface + Serial adapter; decouple framing from transport so WS/TCP can plug in later,To Do,High,T-33,T-30,M8,3
+Story,T-32 - Auth + session handshake,Token from mode.cfg + nonce challenge; single-client guard; HMAC option; session states,To Do,High,T-33,T-30 T-31,M8,5
+Story,T-33 - Flow control & backpressure,Windowed ACKs; adaptive chunk sizing based on loop timing and RX watermark,To Do,High,T-34,T-30 T-31 T-32,M8,5
+Story,T-34 - Resumable upload,.part files with offset resume (FS_RESUME); per-file size/CRC tracking,To Do,High,T-35,T-33,M8,5
+Story,T-35 - Transaction journal & crash recovery,/.journal append-only; boot-time scan to roll-forward/abort safely,To Do,High,T-36,T-34,M8,5
+Story,T-36 - Atomic commit + verify,Size/CRC verify then rename-swap with backup tree; fsync barriers; cleanups,To Do,High,T-37,T-35,M8,8
+Story,T-37 - Rollback command,ROLLBACK_LAST restores from last backup and clears journal,To Do,Medium,,T-36,M8,3
+Story,T-38 - Path safety + quota,Normalize paths; whitelist roots; reject .. and absolute; free-space/quota checks,To Do,High,T-34,T-30,M8,3
+Story,T-39 - Peripherals control API,Volume/beep/LED/I2C scan/SD_FREE/READ_BUTTONS verbs for diagnostics,To Do,Medium,T-45,,M8,3
+Story,T-40 - Health & telemetry,GET_INFO (firmware, proto, caps) + STREAM_LOGS ring buffer streaming,To Do,Medium,,T-30 M3,M8,3
+Story,T-41 - Watchdogs & timeouts,Session and frame timeouts; heartbeat; maintenance LED state and safe escape,To Do,Medium,,T-30,M8,3
+Story,T-42 - Desktop robust updater,Retries, backoff, resume, progress and hash verification in client,To Do,Medium,T-48,T-33 T-34,M8,5
+Story,T-43 - Desktop multi-transport,Abstraction for Serial now and WS/TCP later with seamless fallback,To Do,Medium,,T-31,M8,3
+Story,T-44 - Desktop token storage,OS keychain storage + rotation flow for the auth token,To Do,Low,,T-32,M8,2
+Story,T-45 - Desktop diagnostics suite,One-click health report combining GET_INFO, SD_FREE, I2C_SCAN, button matrix,To Do,Low,,T-39 T-40,M8,3
+Story,T-46 - Protocol versioning/compat,DM_PROTO negotiation and capability bits; graceful declines,To Do,Medium,,T-30,M8,3
+Story,T-47 - Security hardening,Brute-force backoff, SIM_KEY rate-limit, optional HMAC for critical ops,To Do,Medium,,T-32,M8,3
+Story,T-48 - Soak & fault tests,Link drops/dups/NAKs/power-cuts with zero corruption and clean recovery,To Do,Medium,,T-33 T-35 T-36,M8,8
+Story,T-49 - Docs & reference CLI,Protocol spec + tiny Python client for CI/field workflows,To Do,Low,,T-42,M8,3
