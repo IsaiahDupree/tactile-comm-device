@@ -1,0 +1,69 @@
+task_id,milestone,description,priority,status
+T-00,M0,Verify utility sweep to all buttons (NUM_PCF×16 + EXTRA_COUNT),medium,pending
+T-01,M0,Branch & config gate (enable strict mode defaults),medium,pending
+T-02,M1,PCF8575 generalized array (adds 0x22),medium,pending
+T-03,M1,Parse /config/buttons.csv (input→KEY),medium,pending
+T-04,M1,Hardware-agnostic routing (onPhysicalPress→KEY),medium,pending
+T-05,M1,Parse /config/mode.cfg,medium,pending
+T-51,M1,Special keys mapping (YES/NO/WATER/SHIFT/SPACE/PERIOD),high,pending
+T-06,M2,M3U reader: mappings/playlists/<KEY>_{human,generated}.m3u,medium,pending
+T-07,M2,Playlist cache & invalidation,medium,pending
+T-08,M2,Strict bank enforcement (no folder scan in strict mode),medium,pending
+T-09,M2,Per-key cursors (wrap),medium,pending
+T-13,M2,Playback selector integration (priority→bank→track),high,pending
+T-50,M2,Strict SD structure validator (boot & reload),high,pending
+T-04A,M2,Simulate presses over comms (SIM_KEY/SIM_INPUT/PLAY_KEY/STOP),medium,pending
+T-09A,M2,Desktop UI: "virtual press" & quick test,medium,pending
+T-10,M3,Priority enum + boot load,medium,pending
+T-11,M3,PERIOD triple-press detector (1.2 s),medium,pending
+T-12,M3,Persist priority to mode.cfg + mode announcement audio,medium,pending
+T-52,M3,Unified multi-press engine (per-key windows),high,pending
+T-53,M3,SHIFT x2/x3/x4 prompts,high,pending
+T-54,M3,Total word-mapping counter & speech (for SHIFT ×4),high,pending
+T-55,M3,VS1053 robust stop/reset & volume profiles,high,pending
+T-56,M3,LED/Buzzer status patterns,high,pending
+T-12A,M3,TEST_PLAY confirmations (start/finish events),medium,pending
+T-14A,M4,Data Mode session (ENTER_DATA/EXIT_DATA),medium,pending
+T-15A,M4,CRC + size verification (staging writes),medium,pending
+T-16A,M4,Maintenance mode gating (ignore presses during update),medium,pending
+T-15B,M4,Atomic swap + optional rollback,medium,pending
+T-17A,M4,CFG_RELOAD (reload mode/buttons & flush caches),medium,pending
+T-57,M4,Allowed file types & size caps (.mp3 only),high,pending
+T-58,M4,Boot-time staging cleanup & recovery,high,pending
+T-18,M5,Flash via Arduino CLI,medium,pending
+T-19A,M5,SD sync client (Data Mode protocol),medium,pending
+T-20,M5,Post-sync TEST_PLAY,medium,pending
+T-59,M5,Quick-phrases row + counts in UI,high,pending
+T-60,M5,Secure token rotation UI,high,pending
+T-61,M5,Wi-Fi transport adapter (optional),high,pending
+T-21A,M6,Fault injection (mid-DATA & mid-COMMIT power loss),medium,pending
+T-22,M6,Strict gaps & missing playlist tests,medium,pending
+T-23,M6,Loop timing & I²C/audio perf,medium,pending
+T-26,M6,Golden SD + scripted E2E tests,medium,pending
+T-62,M6,Golden SD content for prompts & tests,high,pending
+T-63,M6,Error codes & structured logs,high,pending
+T-27,M6,Desktop strict-mode validator,medium,pending
+T-28,M6,Audio underrun stress,medium,pending
+T-29,M6,Priority persistence & override tests,medium,pending
+T-30,Data,Protocol framing (binary + CRC + seq window),medium,pending
+T-31,Data,Transport abstraction (Serial now; WS/TCP later),medium,pending
+T-32,Data,Auth + session handshake (token + nonce),medium,pending
+T-33,Data,Flow control & backpressure (adaptive chunking),medium,pending
+T-34,Data,Resumable upload (offset resume),medium,pending
+T-35,Data,Transaction journal & crash recovery,medium,pending
+T-36,Data,Atomic commit + verify (SHA/CRC),medium,pending
+T-37,Data,Rollback command,medium,pending
+T-38,Data,Path safety + quota checks,medium,pending
+T-39,Data,Peripherals control API (volume, LED, I²C scan, SD free, read buttons),medium,pending
+T-40,Data,Health & telemetry (GET_INFO, STREAM_LOGS),medium,pending
+T-41,Data,Watchdogs & timeouts + safe escape,medium,pending
+T-42,Data,Desktop robust updater client,medium,pending
+T-43,Data,Desktop multi-transport support,medium,pending
+T-44,Data,Desktop token storage (OS keychain),medium,pending
+T-45,Data,Desktop diagnostics suite,medium,pending
+T-46,Data,Protocol versioning & compatibility,medium,pending
+T-47,Data,Security hardening pass,medium,pending
+T-48,Data,Soak & fault tests,medium,pending
+T-49,Data,Protocol docs & reference CLI,medium,pending
+T-24,M7,Operator & Developer docs,medium,pending
+T-25,M7,Release packaging (firmware HEX, starter SD pack, installer),medium,pending

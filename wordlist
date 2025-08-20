@@ -1,0 +1,316 @@
+{
+  "letters": {
+    "A": {
+      "human": [
+        "Alari",
+        "Amer",
+        "Amory"
+      ],
+      "generated": [
+        "Alari",
+        "Amer",
+        "Amory",
+        "Apple",
+        "Arabic",
+        "Arabic Show"
+      ]
+    },
+    "B": {
+      "human": [
+        "Bye"
+      ],
+      "generated": [
+        "Bagel",
+        "Ball",
+        "Bathroom",
+        "Bed",
+        "Blanket",
+        "Breathe",
+        "Bye"
+      ]
+    },
+    "C": {
+      "human": [],
+      "generated": [
+        "Call",
+        "Car",
+        "Cat",
+        "Chair",
+        "Coffee",
+        "Cold",
+        "Cucumber"
+      ]
+    },
+    "D": {
+      "human": [
+        "Daddy",
+        "Deen"
+      ],
+      "generated": [
+        "Daddy",
+        "Deen",
+        "Doctor",
+        "Dog",
+        "Door",
+        "Down"
+      ]
+    },
+    "E": {
+      "human": [],
+      "generated": [
+        "Elephant"
+      ]
+    },
+    "F": {
+      "human": [],
+      "generated": [
+        "FaceTime",
+        "Fish",
+        "Funny"
+      ]
+    },
+    "G": {
+      "human": [
+        "Good Morning"
+      ],
+      "generated": [
+        "Garage",
+        "Go",
+        "Good Morning"
+      ]
+    },
+    "H": {
+      "human": [
+        "Hello How are You"
+      ],
+      "generated": [
+        "Happy",
+        "Heartburn",
+        "Hello",
+        "Hot",
+        "House",
+        "How are you",
+        "Hungry"
+      ]
+    },
+    "I": {
+      "human": [],
+      "generated": [
+        "Ice",
+        "Inside",
+        "iPad"
+      ]
+    },
+    "J": {
+      "human": [],
+      "generated": [
+        "Jump"
+      ]
+    },
+    "K": {
+      "human": [
+        "Kiyah",
+        "Kyan"
+      ],
+      "generated": [
+        "Kaiser",
+        "Key",
+        "Kiyah",
+        "Kleenex",
+        "Kyan"
+      ]
+    },
+    "L": {
+      "human": [
+        "I love you",
+        "Lee"
+      ],
+      "generated": [
+        "I love you",
+        "Lee",
+        "Light",
+        "Light Down",
+        "Light Up",
+        "Love"
+      ]
+    },
+    "M": {
+      "human": [],
+      "generated": [
+        "Mad",
+        "Medical",
+        "Medicine",
+        "Meditate",
+        "Mohammad",
+        "Moon"
+      ]
+    },
+    "N": {
+      "human": [
+        "Nada",
+        "Nadowie",
+        "Noah"
+      ],
+      "generated": [
+        "Nada",
+        "Nadowie",
+        "Net",
+        "No",
+        "Noah"
+      ]
+    },
+    "O": {
+      "human": [],
+      "generated": [
+        "Orange",
+        "Outside"
+      ]
+    },
+    "P": {
+      "human": [],
+      "generated": [
+        "Pain",
+        "Period",
+        "Phone",
+        "Purple",
+        "Human first mode",
+        "Generated first mode"
+      ]
+    },
+    "Q": {
+      "human": [],
+      "generated": [
+        "Queen"
+      ]
+    },
+    "R": {
+      "human": [],
+      "generated": [
+        "Red",
+        "Rest",
+        "Room"
+      ]
+    },
+    "S": {
+      "human": [
+        "Susu"
+      ],
+      "generated": [
+        "Sad",
+        "Scarf",
+        "Shoes",
+        "Sinemet",
+        "Sleep",
+        "Socks",
+        "Space",
+        "Stop",
+        "Sun",
+        "Susu"
+      ]
+    },
+    "T": {
+      "human": [],
+      "generated": [
+        "Togamet",
+        "Tree",
+        "TV",
+        "Tylenol"
+      ]
+    },
+    "U": {
+      "human": [
+        "Urgent Care"
+      ],
+      "generated": [
+        "Up",
+        "Urgent Care"
+      ]
+    },
+    "V": {
+      "human": [],
+      "generated": [
+        "Van"
+      ]
+    },
+    "W": {
+      "human": [
+        "Walker",
+        "Wheelchair"
+      ],
+      "generated": [
+        "Walk",
+        "Walker",
+        "Water",
+        "Wheelchair"
+      ]
+    },
+    "X": {
+      "human": [],
+      "generated": [
+        "X-ray"
+      ]
+    },
+    "Y": {
+      "human": [],
+      "generated": [
+        "Yes",
+        "Yellow"
+      ]
+    },
+    "Z": {
+      "human": [],
+      "generated": [
+        "Zebra"
+      ]
+    }
+  },
+  "phrases": {
+    "SPACE": {
+      "human": [],
+      "generated": [
+        "Space"
+      ]
+    },
+    "PERIOD": {
+      "human": [],
+      "generated": [
+        "Period",
+        "Human first mode",
+        "Generated first mode"
+      ]
+    },
+    "YES": {
+      "human": [],
+      "generated": [
+        "Yes",
+        "Correct",
+        "Right"
+      ]
+    },
+    "NO": {
+      "human": [],
+      "generated": [
+        "No",
+        "Wrong",
+        "Incorrect"
+      ]
+    },
+    "WATER": {
+      "human": [],
+      "generated": [
+        "Water"
+      ]
+    },
+    "Shift": {
+      "human": [
+        "Hello How are You"
+      ],
+      "generated": [
+        "Shift button. Press Shift three times for instructions.",
+        "Welcome to your Tactile Communication Device. The device has four special buttons: Yes, No, Water, and Shift. It also has 26 letter buttons, from A to Z. Each button supports multiple presses to cycle through different words. Press once for the first word, twice for the second, and so on. The device uses text-to-speech and personal recordings stored locally, so it works offline. It runs on rechargeable batteries and charges with a USB-C cable. Press Shift three times to hear these instructions again. Press Shift four times to hear the full word list. Use the Period button, pressed four times, to toggle between Human first mode and Generated first mode.",
+        "Instructions. This device speaks words when you press buttons. Letters A through Z each have several words. Press the same letter more than once to move forward through its words. Special buttons include Yes, No, Water, and Shift. Use the Period button, pressed four times, to switch between Human first mode and Generated first mode. In Human first mode, the device will play your recordings first, when available. In Generated first mode, the device will prefer synthesized speech. Press Shift three times any time to hear these instructions again. Press Shift four times to hear the full word list mapping.",
+        "Full word list mapping. I will speak slowly and clearly, with short pauses so you can follow along comfortably. If you need me to repeat, press Shift four times again at any time. Now, the letters. A: Alari. Amer. Amory. Apple. Arabic. Arabic Show. Take a breath. B: Bagel. Ball. Bathroom. Bed. Blanket. Breathe. Bye. Small pause. C: Call. Car. Cat. Chair. Coffee. Cold. Cucumber. D: Daddy. Deen. Doctor. Dog. Door. Down. E: Elephant. Pause. F: FaceTime. Fish. Funny. G: Garage. Go. Good Morning. H: Happy. Heartburn. Hello. Hot. House. How are you. Hungry. Take a breath. I: Ice. Inside. iPad. J: Jump. K: Kaiser. Key. Kiyah. Kleenex. Kyan. L: I love you. Lee. Light. Light Down. Light Up. Love. Slow and steady. M: Mad. Medical. Medicine. Meditate. Mohammad. Moon. N: Nada. Nadowie. Net. No. Noah. O: Orange. Outside. P: Pain. Period. Phone. Purple. Also, under Period there are two mode announcements: Human first mode, and Generated first mode. Q: Queen. R: Red. Rest. Room. S: Sad. Scarf. Shoes. Sinemet. Sleep. Socks. Space. Stop. Sun. Susu. Take a breath. T: Togamet. Tree. T V. Tylenol. U: Up. Urgent Care. V: Van. W: Walk. Walker. Water. Wheelchair. X: X-ray. Y: Yes. Yellow. Z: Zebra. End of list. Reminder. Press the same letter more than once to move forward through its words. If you hear the wrong word, wait a moment and press again to step to the next choice. Use the Period button, pressed four times, to toggle between Human first mode and Generated first mode. In Human first mode, your personal recordings will play first when available. In Generated first mode, synthesized speech will play first. Safety note. Keep the device volume comfortable for the listener; the device starts at the loudest setting. To repeat this full mapping at any time, press Shift four times again."
+      ]
+    }
+  }
+}

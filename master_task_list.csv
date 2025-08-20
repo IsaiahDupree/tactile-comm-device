@@ -1,0 +1,69 @@
+Milestone,Category,TaskID,Description
+M0,Baseline & Utilities,T-00,Verify utility sweep to all buttons (NUM_PCF×16 + EXTRA_COUNT)
+M0,Baseline & Utilities,T-01,Branch & config gate (enable strict mode defaults)
+M1,Inputs & Routing,T-02,PCF8575 generalized array (adds 0x22)
+M1,Inputs & Routing,T-03,Parse /config/buttons.csv (input→KEY)
+M1,Inputs & Routing,T-04,Hardware-agnostic routing (onPhysicalPress→KEY)
+M1,Inputs & Routing,T-05,Parse /config/mode.cfg
+M1,Inputs & Routing,T-51,Special keys mapping (YES/NO/WATER/SHIFT/SPACE/PERIOD)
+M2,Playlists & Selection,T-06,"M3U reader: mappings/playlists/<KEY>_{human,generated}.m3u"
+M2,Playlists & Selection,T-07,Playlist cache & invalidation
+M2,Playlists & Selection,T-08,Strict bank enforcement (no folder scan in strict mode)
+M2,Playlists & Selection,T-09,Per-key cursors (wrap)
+M2,Playlists & Selection,T-13,Playback selector integration (priority→bank→track)
+M2,Playlists & Selection,T-50,Strict SD structure validator (boot & reload)
+M2A,Simulated Testing,T-04A,Simulate presses over comms (SIM_KEY/SIM_INPUT/PLAY_KEY/STOP)
+M2A,Simulated Testing,T-09A,Desktop UI: “virtual press” & quick test
+M3,Priority & Special Behaviors,T-10,Priority enum + boot load
+M3,Priority & Special Behaviors,T-11,PERIOD triple-press detector (1.2 s)
+M3,Priority & Special Behaviors,T-12,Persist priority to mode.cfg + mode announcement audio
+M3,Priority & Special Behaviors,T-52,Unified multi-press engine (per-key windows)
+M3,Priority & Special Behaviors,T-53,SHIFT x2/x3/x4 prompts
+M3,Priority & Special Behaviors,T-54,Total word-mapping counter & speech (for SHIFT ×4)
+M3,Priority & Special Behaviors,T-55,VS1053 robust stop/reset & volume profiles
+M3,Priority & Special Behaviors,T-56,LED/Buzzer status patterns
+M3,Priority & Special Behaviors,T-12A,TEST_PLAY confirmations (start/finish events)
+M4,Data Mode & SD Writer,T-14A,Data Mode session (ENTER_DATA/EXIT_DATA)
+M4,Data Mode & SD Writer,T-15A,CRC + size verification (staging writes)
+M4,Data Mode & SD Writer,T-16A,Maintenance mode gating (ignore presses during update)
+M4,Data Mode & SD Writer,T-15B,Atomic swap + optional rollback
+M4,Data Mode & SD Writer,T-17A,CFG_RELOAD (reload mode/buttons & flush caches)
+M4,Data Mode & SD Writer,T-57,Allowed file types & size caps (.mp3 only)
+M4,Data Mode & SD Writer,T-58,Boot-time staging cleanup & recovery
+M5,Desktop App,T-18,Flash via Arduino CLI
+M5,Desktop App,T-19A,SD sync client (Data Mode protocol)
+M5,Desktop App,T-20,Post-sync TEST_PLAY
+M5,Desktop App,T-59,Quick-phrases row + counts in UI
+M5,Desktop App,T-60,Secure token rotation UI
+M5,Desktop App,T-61,Wi-Fi transport adapter (optional)
+M6,"Acceptance, Faults, Performance",T-21A,Fault injection (mid-DATA & mid-COMMIT power loss)
+M6,"Acceptance, Faults, Performance",T-22,Strict gaps & missing playlist tests
+M6,"Acceptance, Faults, Performance",T-23,Loop timing & I²C/audio perf
+M6,"Acceptance, Faults, Performance",T-26,Golden SD + scripted E2E tests
+M6,"Acceptance, Faults, Performance",T-62,Golden SD content for prompts & tests
+M6,"Acceptance, Faults, Performance",T-63,Error codes & structured logs
+M6,"Acceptance, Faults, Performance",T-27,Desktop strict-mode validator
+M6,"Acceptance, Faults, Performance",T-28,Audio underrun stress
+M6,"Acceptance, Faults, Performance",T-29,Priority persistence & override tests
+Epic,Data Mode Infra,T-30,Protocol framing (binary + CRC + seq window)
+Epic,Data Mode Infra,T-31,Transport abstraction (Serial now; WS/TCP later)
+Epic,Data Mode Infra,T-32,Auth + session handshake (token + nonce)
+Epic,Data Mode Infra,T-33,Flow control & backpressure (adaptive chunking)
+Epic,Data Mode Infra,T-34,Resumable upload (offset resume)
+Epic,Data Mode Infra,T-35,Transaction journal & crash recovery
+Epic,Data Mode Infra,T-36,Atomic commit + verify (SHA/CRC)
+Epic,Data Mode Infra,T-37,Rollback command
+Epic,Data Mode Infra,T-38,Path safety + quota checks
+Epic,Data Mode Infra,T-39,"Peripherals control API (volume, LED, I²C scan, SD free, read buttons)"
+Epic,Data Mode Infra,T-40,"Health & telemetry (GET_INFO, STREAM_LOGS)"
+Epic,Data Mode Infra,T-41,Watchdogs & timeouts + safe escape
+Epic,Data Mode Infra,T-42,Desktop robust updater client
+Epic,Data Mode Infra,T-43,Desktop multi-transport support
+Epic,Data Mode Infra,T-44,Desktop token storage (OS keychain)
+Epic,Data Mode Infra,T-45,Desktop diagnostics suite
+Epic,Data Mode Infra,T-46,Protocol versioning & compatibility
+Epic,Data Mode Infra,T-47,Security hardening pass
+Epic,Data Mode Infra,T-48,Soak & fault tests
+Epic,Data Mode Infra,T-49,Protocol docs & reference CLI
+M7,Docs & Release,T-24,Operator & Developer docs
+M7,Docs & Release,T-25,"Release packaging (firmware HEX, starter SD pack, installer)"
