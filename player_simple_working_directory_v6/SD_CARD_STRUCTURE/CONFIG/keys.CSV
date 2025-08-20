@@ -1,0 +1,36 @@
+# Button mapping configuration based on calibration session
+# Maps logical keys to their descriptions and hardware assignments
+KEY,DESCRIPTION,INPUT
+A,Letter A,pcf0:03
+B,Letter B,pcf2:08
+C,Letter C,pcf0:06
+D,Letter D,pcf1:14
+E,Letter E,pcf1:08
+F,Letter F,pcf1:02
+G,Letter G,pcf1:01
+H,Letter H,pcf2:09
+I,Letter I,pcf0:08
+J,Letter J,pcf0:09
+K,Letter K,pcf0:02
+L,Letter L,pcf1:07
+M,Letter M,pcf1:03
+N,Letter N,pcf1:00
+O,Letter O,pcf2:13
+P,Letter P,pcf0:05
+Q,Letter Q,pcf0:10
+R,Letter R,pcf0:07
+S,Letter S,pcf1:13
+T,Letter T,pcf1:06
+U,Letter U,pcf1:05
+V,Letter V,pcf0:13
+W,Letter W,pcf0:11
+X,Letter X,pcf0:14
+Y,Letter Y,pcf1:15
+Z,Letter Z,pcf1:12
+SHIFT,Shift button,pcf0:01
+PERIOD,Period button,pcf0:15
+SPACE,Space button,pcf1:11
+YES,Yes button,pcf0:00
+NO,No button,pcf1:09
+WATER,Water button,pcf1:04
+HELLO_HOW_ARE_YOU,Shift instructions,pcf2:9
