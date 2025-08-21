@@ -30,6 +30,12 @@ ENV/
 env.bak/
 venv.bak/
 
+# API Keys and secrets
+*.key
+.env.local
+.env.production
+secrets.json
+
 # IDE
 .vscode/
 .idea/

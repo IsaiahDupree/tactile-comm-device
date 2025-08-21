@@ -1,0 +1,1 @@
+rst file. ... You can also add files without numbering; the device will still cycle through them in the order it finds them. ... After copying files, remove the SD card safely, put it back into the device, and press the reset

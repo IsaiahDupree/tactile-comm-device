@@ -1,0 +1,1 @@
+e named in order, starting with 001.mp3, 002.mp3, and so on. ... When you press a button multiple times, the device will cycle through those files. ... If there are three files and you press four times, it loops back to the fi

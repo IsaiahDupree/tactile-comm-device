@@ -141,7 +141,7 @@ struct AudioFileInfo {
 // New flexible audio sourcing system
 class AudioSourceManager {
 public:
-  // Find audio file for a key and press count
+  // Find audio file for a key and press count with looping support
   static bool findAudioFile(const char* key, uint8_t pressCount, AudioSource preferredSource, AudioFileInfo* result) {
     result->exists = false;
     result->path[0] = '\0';
@@ -166,20 +166,31 @@ public:
       Serial.print(F("[AUDIO_SEARCH] Trying source: "));
       Serial.println(sourceDir);
       
+      // First, count how many audio files exist in this directory
+      uint8_t maxFiles = countAudioFilesInDir(sourceDir, key);
+      if (maxFiles == 0) {
+        Serial.println(F("[AUDIO_SEARCH] ✗ No audio files found in directory"));
+        continue; // Try next source
+      }
+      
+      // Calculate effective press count with looping
+      uint8_t effectivePressCount = ((pressCount - 1) % maxFiles) + 1;
+      if (effectivePressCount != pressCount) {
+        Serial.print(F("[LOOP] Press #"));
+        Serial.print(pressCount);
+        Serial.print(F(" wrapped to #"));
+        Serial.print(effectivePressCount);
+        Serial.print(F(" ("));
+        Serial.print(maxFiles);
+        Serial.println(F(" files available)"));
+      }
+      
       // Try numbered file first (001.mp3, 002.mp3, etc.)
       char numberedPath[MAX_PATH_LEN];
-      snprintf(numberedPath, sizeof(numberedPath), "/audio/%s/%s/%03u.mp3", sourceDir, key, pressCount);
+      snprintf(numberedPath, sizeof(numberedPath), "/audio/%s/%s/%03u.mp3", sourceDir, key, effectivePressCount);
       
       Serial.print(F("[AUDIO_SEARCH] Checking path: "));
       Serial.println(numberedPath);
-      
-      // Enhanced debugging - check if directory exists first
-      char dirPath[MAX_PATH_LEN];
-      snprintf(dirPath, sizeof(dirPath), "/audio/%s/%s", sourceDir, key);
-      Serial.print(F("[DEBUG] Directory check: "));
-      Serial.print(dirPath);
-      Serial.print(F(" exists="));
-      Serial.println(SD.exists(dirPath) ? F("YES") : F("NO"));
       
       if (SD.exists(numberedPath)) {
         Serial.println(F("[AUDIO_SEARCH] ✓ Found numbered file!"));
@@ -192,32 +203,20 @@ public:
         loadDescription(result);
         return true;
       } else {
-        Serial.println(F("[AUDIO_SEARCH] ✗ Numbered file not found"));
+        Serial.println(F("[AUDIO_SEARCH] ✗ Numbered file not found, trying directory scan"));
         
-        // Additional debugging - try to open the file directly
-        File testFile = SD.open(numberedPath);
-        if (testFile) {
-          Serial.print(F("[DEBUG] File opened successfully, size: "));
-          Serial.println(testFile.size());
-          testFile.close();
+        // Try to find any audio file in the directory for this effective press count
+        if (findNthAudioInDir(sourceDir, key, effectivePressCount, result)) {
+          Serial.println(F("[AUDIO_SEARCH] ✓ Found via directory scan!"));
+          result->source = currentSource;
+          return true;
         } else {
-          Serial.println(F("[DEBUG] File.open() also failed"));
+          Serial.println(F("[AUDIO_SEARCH] ✗ Directory scan failed"));
         }
-      }
-      
-      // Try to find any audio file in the directory for this press count
-      Serial.print(F("[AUDIO_SEARCH] Trying directory scan for press #"));
-      Serial.println(pressCount);
-      if (findNthAudioInDir(sourceDir, key, pressCount, result)) {
-        Serial.println(F("[AUDIO_SEARCH] ✓ Found via directory scan!"));
-        result->source = currentSource;
-        return true;
-      } else {
-        Serial.println(F("[AUDIO_SEARCH] ✗ Directory scan failed"));
       }
     }
     
-    Serial.println(F("[AUDIO_SEARCH] ✗ No audio file found for this key/press combination"));
+    Serial.println(F("[AUDIO_SEARCH] ✗ No audio file found for this key"));
     return false;
   }
   
@@ -239,6 +238,31 @@ public:
   }
   
 private:
+  // Count total audio files in a directory for looping support
+  static uint8_t countAudioFilesInDir(const char* sourceDir, const char* key) {
+    char dirPath[MAX_PATH_LEN];
+    snprintf(dirPath, sizeof(dirPath), "/audio/%s/%s", sourceDir, key);
+    
+    File dir = SD.open(dirPath);
+    if (!dir) {
+      return 0;
+    }
+    
+    uint8_t count = 0;
+    while (true) {
+      File f = dir.openNextFile();
+      if (!f) break;
+      
+      if (!f.isDirectory() && hasAudioExt(f.name())) {
+        count++;
+      }
+      f.close();
+    }
+    
+    dir.close();
+    return count;
+  }
+
   // Load description from corresponding .txt file
   static void loadDescription(AudioFileInfo* info) {
     char txtPath[MAX_PATH_LEN];

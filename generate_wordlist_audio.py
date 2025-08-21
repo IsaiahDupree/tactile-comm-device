@@ -10,8 +10,11 @@ from pathlib import Path
 import time
 import sys
 
-# Set API key from .env file content directly
-os.environ['ELEVENLABS_API_KEY'] = 'sk_a1f0b666e5d55d5d504adea14168dfd01488f1feed22a710'
+# Get API key from environment
+if not os.getenv('ELEVENLABS_API_KEY'):
+    print("Error: ELEVENLABS_API_KEY environment variable not set")
+    print("Set it with: export ELEVENLABS_API_KEY='your_key_here'")
+    sys.exit(1)
 
 try:
     from generate_audio import generate_audio, DEFAULT_VOICE_ID

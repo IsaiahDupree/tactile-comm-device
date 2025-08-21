@@ -1,0 +1,1 @@
+SD card instructions. ... To add new words or sounds, place audio files inside the SD card folders. ... Human recordings go in /audio/human/[LETTER]. ... Generated voices go in /audio/generated/[LETTER]. ... Each file should b

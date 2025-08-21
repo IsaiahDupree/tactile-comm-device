@@ -1,0 +1,1 @@
+button. ... Now, pressing the matching letter button will speak your new sound. ... Use the Period button, pressed four times, to switch between Human First and Generated First mode, which changes which folder is played first.

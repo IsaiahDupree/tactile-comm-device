@@ -7,8 +7,12 @@ import requests
 import os
 from pathlib import Path
 
-# Set API key directly
-API_KEY = "sk_e349c46da16f713a586a3848e96bda3a0f40b1b3f709b7c1"
+# Get API key from environment
+API_KEY = os.getenv('ELEVENLABS_API_KEY')
+if not API_KEY:
+    print("Error: ELEVENLABS_API_KEY environment variable not set")
+    print("Set it with: export ELEVENLABS_API_KEY='your_key_here'")
+    exit(1)
 BASE_URL = "https://api.elevenlabs.io/v1"
 DEFAULT_VOICE_ID = "RILOU7YmBhvwJGDGjNmP"
 

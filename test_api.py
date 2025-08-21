@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 import requests
 import json
+import os
 
 # Test ElevenLabs API
-api_key = "sk_c167a8fb150750ebb1cb825a8e4ddfbfd48fc8b9125d6f49"
+api_key = os.getenv('ELEVENLABS_API_KEY')
+if not api_key:
+    print("Error: ELEVENLABS_API_KEY environment variable not set")
+    print("Set it with: export ELEVENLABS_API_KEY='your_key_here'")
+    exit(1)
 voice_id = "21m00Tcm4TlvDq8ikWAM"
 url = f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}"
 

@@ -30,7 +30,15 @@ python generate_audio.py --letter A --voice VOICE_ID --count 5
 
 ### API Key
 
-The script uses the Eleven Labs API key: `sk_c25a828d5ede8743dd5c78b4ffbddd23c5777f4877818c30`
+Set your ElevenLabs API key as an environment variable:
+```bash
+export ELEVENLABS_API_KEY="your_api_key_here"
+```
+
+Or create a `.env` file in the project root:
+```
+ELEVENLABS_API_KEY=your_api_key_here
+```
 
 ## Project Structure
 

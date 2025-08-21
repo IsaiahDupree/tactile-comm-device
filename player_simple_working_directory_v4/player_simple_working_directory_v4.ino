@@ -28,6 +28,61 @@
 #include <string.h>
 #include <ctype.h>
 
+// ==== SEGMENT 1: DATA MODE GLOBALS & CONSTANTS ====
+
+/* ---- user-tunable knobs ---- */
+#define DATA_BAUD_HZ                115200   // you can bump to 500000/1000000 later
+#define DATA_IDLE_TIMEOUT_MS        30000    // auto-exit after 30s idle
+#define DATA_WRITE_ENABLE_FLAG_PATH "/config/allow_writes.flag"  // require this file to allow PUT/DEL
+#define DATA_USE_CRC32              1        // 1=enable CRC32 optional checks (host may omit)
+
+/* ---- device mode ---- */
+enum class DeviceMode : uint8_t { NORMAL, DATA_MODE };
+DeviceMode deviceMode = DeviceMode::NORMAL;
+
+/* ---- serial line collector (line framed commands) ---- */
+static const size_t DM_LINE_MAX = 128;
+char dm_line[DM_LINE_MAX];
+uint16_t dm_line_len = 0;
+
+/* ---- data mode state ---- */
+enum class DataCmdState : uint8_t { LINE, PUT_PAYLOAD, GET_STREAM };
+DataCmdState dm_state = DataCmdState::LINE;
+
+unsigned long dm_last_activity_ms = 0;
+
+/* ---- PUT state ---- */
+File dm_put_file;
+char dm_put_tmp_path[128];
+char dm_put_final_path[128];
+uint32_t dm_put_remaining = 0;
+#if DATA_USE_CRC32
+uint32_t dm_put_crc_host = 0;
+uint32_t dm_put_crc_calc = 0;
+#endif
+// small write buffer for efficiency
+static const size_t DM_IOBUF_SZ = 512;
+uint8_t dm_wbuf[DM_IOBUF_SZ];
+size_t dm_wbuf_len = 0;
+
+/* ---- GET state ---- */
+File dm_get_file;
+uint8_t dm_rbuf[DM_IOBUF_SZ];
+
+/* ---- helpers forward decls ---- */
+void enterDataMode();
+void exitDataMode();
+void dm_feedByte(char c);
+void dm_handleLine(const char* line);
+bool isWriteEnabled();
+bool mkdir_p(const char* path);
+bool atomicRename(const char* srcTmp, const char* dstFinal);
+void path_audio(char* out, size_t outsz, const char* bank, const char* key, const char* fname);
+#if DATA_USE_CRC32
+void crc32_reset(uint32_t &crc);
+void crc32_update(uint32_t &crc, const uint8_t* data, size_t len);
+#endif
+
 // Compile-time logging control
 #ifndef VERBOSE_LOGS
 #define VERBOSE_LOGS 0
@@ -141,7 +196,7 @@ struct AudioFileInfo {
 // New flexible audio sourcing system
 class AudioSourceManager {
 public:
-  // Find audio file for a key and press count
+  // Find audio file for a key and press count with looping support
   static bool findAudioFile(const char* key, uint8_t pressCount, AudioSource preferredSource, AudioFileInfo* result) {
     result->exists = false;
     result->path[0] = '\0';
@@ -166,20 +221,31 @@ public:
       Serial.print(F("[AUDIO_SEARCH] Trying source: "));
       Serial.println(sourceDir);
       
+      // First, count how many audio files exist in this directory
+      uint8_t maxFiles = countAudioFilesInDir(sourceDir, key);
+      if (maxFiles == 0) {
+        Serial.println(F("[AUDIO_SEARCH] ✗ No audio files found in directory"));
+        continue; // Try next source
+      }
+      
+      // Calculate effective press count with looping
+      uint8_t effectivePressCount = ((pressCount - 1) % maxFiles) + 1;
+      if (effectivePressCount != pressCount) {
+        Serial.print(F("[LOOP] Press #"));
+        Serial.print(pressCount);
+        Serial.print(F(" wrapped to #"));
+        Serial.print(effectivePressCount);
+        Serial.print(F(" ("));
+        Serial.print(maxFiles);
+        Serial.println(F(" files available)"));
+      }
+      
       // Try numbered file first (001.mp3, 002.mp3, etc.)
       char numberedPath[MAX_PATH_LEN];
-      snprintf(numberedPath, sizeof(numberedPath), "/audio/%s/%s/%03u.mp3", sourceDir, key, pressCount);
+      snprintf(numberedPath, sizeof(numberedPath), "/audio/%s/%s/%03u.mp3", sourceDir, key, effectivePressCount);
       
       Serial.print(F("[AUDIO_SEARCH] Checking path: "));
       Serial.println(numberedPath);
-      
-      // Enhanced debugging - check if directory exists first
-      char dirPath[MAX_PATH_LEN];
-      snprintf(dirPath, sizeof(dirPath), "/audio/%s/%s", sourceDir, key);
-      Serial.print(F("[DEBUG] Directory check: "));
-      Serial.print(dirPath);
-      Serial.print(F(" exists="));
-      Serial.println(SD.exists(dirPath) ? F("YES") : F("NO"));
       
       if (SD.exists(numberedPath)) {
         Serial.println(F("[AUDIO_SEARCH] ✓ Found numbered file!"));
@@ -192,32 +258,20 @@ public:
         loadDescription(result);
         return true;
       } else {
-        Serial.println(F("[AUDIO_SEARCH] ✗ Numbered file not found"));
+        Serial.println(F("[AUDIO_SEARCH] ✗ Numbered file not found, trying directory scan"));
         
-        // Additional debugging - try to open the file directly
-        File testFile = SD.open(numberedPath);
-        if (testFile) {
-          Serial.print(F("[DEBUG] File opened successfully, size: "));
-          Serial.println(testFile.size());
-          testFile.close();
+        // Try to find any audio file in the directory for this effective press count
+        if (findNthAudioInDir(sourceDir, key, effectivePressCount, result)) {
+          Serial.println(F("[AUDIO_SEARCH] ✓ Found via directory scan!"));
+          result->source = currentSource;
+          return true;
         } else {
-          Serial.println(F("[DEBUG] File.open() also failed"));
+          Serial.println(F("[AUDIO_SEARCH] ✗ Directory scan failed"));
         }
-      }
-      
-      // Try to find any audio file in the directory for this press count
-      Serial.print(F("[AUDIO_SEARCH] Trying directory scan for press #"));
-      Serial.println(pressCount);
-      if (findNthAudioInDir(sourceDir, key, pressCount, result)) {
-        Serial.println(F("[AUDIO_SEARCH] ✓ Found via directory scan!"));
-        result->source = currentSource;
-        return true;
-      } else {
-        Serial.println(F("[AUDIO_SEARCH] ✗ Directory scan failed"));
       }
     }
     
-    Serial.println(F("[AUDIO_SEARCH] ✗ No audio file found for this key/press combination"));
+    Serial.println(F("[AUDIO_SEARCH] ✗ No audio file found for this key"));
     return false;
   }
   
@@ -239,6 +293,31 @@ public:
   }
   
 private:
+  // Count total audio files in a directory for looping support
+  static uint8_t countAudioFilesInDir(const char* sourceDir, const char* key) {
+    char dirPath[MAX_PATH_LEN];
+    snprintf(dirPath, sizeof(dirPath), "/audio/%s/%s", sourceDir, key);
+    
+    File dir = SD.open(dirPath);
+    if (!dir) {
+      return 0;
+    }
+    
+    uint8_t count = 0;
+    while (true) {
+      File f = dir.openNextFile();
+      if (!f) break;
+      
+      if (!f.isDirectory() && hasAudioExt(f.name())) {
+        count++;
+      }
+      f.close();
+    }
+    
+    dir.close();
+    return count;
+  }
+
   // Load description from corresponding .txt file
   static void loadDescription(AudioFileInfo* info) {
     char txtPath[MAX_PATH_LEN];
@@ -462,6 +541,43 @@ void setup() {
 }
 
 void loop() {
+  // ==== SEGMENT 5: LOOP() INTEGRATION ====
+  // Put this block near the start of loop()
+
+  // 1) Serial handshake when in NORMAL mode
+  while (Serial.available()) {
+    char c = Serial.read();
+    if (deviceMode == DeviceMode::NORMAL) {
+      // lightweight handshake detector for "^DATA? v1\n"
+      if (c == '\r') { /* ignore */ }
+      else if (c != '\n') {
+        if (dm_line_len + 1 < DM_LINE_MAX) { dm_line[dm_line_len++] = c; dm_line[dm_line_len] = 0; }
+        else { dm_line_reset(); }
+      } else {
+        // got a line
+        if (!strcmp(dm_line, "^DATA? v1")) {
+          Serial.println("DATA:OK v1");
+          enterDataMode();
+        }
+        dm_line_reset();
+      }
+    } else {
+      // In DATA_MODE: feed byte-by-byte to the protocol
+      dm_feedByte(c);
+    }
+  }
+
+  // 2) If in DATA_MODE, enforce idle timeout and skip normal duties
+  if (deviceMode == DeviceMode::DATA_MODE) {
+    if (millis() - dm_last_activity_ms > DATA_IDLE_TIMEOUT_MS) {
+      Serial.println("DATA:IDLE");
+      exitDataMode();
+    }
+    // Do not scan buttons / play audio while in data mode
+    return;
+  }
+
+  // 3) ... your existing NORMAL mode logic continues below ...
   checkButtons();
   handleMultiPress();
   
@@ -476,12 +592,9 @@ void loop() {
     currentTrackPath[0] = '\0';
   }
   
-  // Handle serial commands
-  if (Serial.available()) {
+  // Handle calibration input (data mode already handled above)
+  if (Serial.available() && waitingForMapping) {
     char cmd = Serial.read();
-    
-    // Handle calibration input
-    if (waitingForMapping) {
       if (cmd == '\n' || cmd == '\r') {
         // Process the mapping
         if (inputBuffer.length() > 0) {
@@ -534,9 +647,11 @@ void loop() {
         Serial.print(cmd); // Echo character
       }
       return;
-    }
-    
-    // Normal command processing
+  }
+  
+  // Normal command processing (only if not in calibration mode)
+  if (Serial.available()) {
+    char cmd = Serial.read();
     switch (cmd) {
       case 'C': case 'c':
         inCalibrate = !inCalibrate;
@@ -1183,44 +1298,379 @@ void handleShiftButtonPress(uint8_t pressCount) {
   }
 }
 
-// Handle PERIOD button mode switching and sounds
+// ==== SEGMENT 6: PERIOD×4 + CONFIRM ====
+
 void handlePeriodButtonPress(uint8_t pressCount) {
   Serial.print(F("[PERIOD] Processing press count: "));
   Serial.println(pressCount);
-  
+
+  if (pressCount == 4) {
+    // Guard accidental entry: require quick confirm within 3s.
+    Serial.println(F("[PERIOD] Requesting Data Mode (confirm needed)"));
+    // Optional spoken prompt:
+    // playAudioForKey("PERIOD", 4); // record a short "entering data mode—confirm" clip
+
+    unsigned long deadline = millis() + 3000;
+    bool confirmed = false;
+
+    // Confirmation method A: tap SHIFT once within 3s
+    // (Assumes you have a button mapped to "SHIFT" in keys.csv)
+    while (millis() < deadline && !confirmed) {
+      // quick, low-cost peek at serial too: if host sends '!' it's a confirm
+      if (Serial.available()) {
+        char c = Serial.read();
+        if (c == '!') confirmed = true;
+      }
+      // If you have a "SHIFT" mapped, you likely also have multi-press state.
+      // Easiest: reuse your existing press detection once it fires.
+      // Here we just poll a small slice of time:
+      delay(10);
+    }
+
+    if (!confirmed) {
+      Serial.println(F("[PERIOD] Data Mode not confirmed"));
+      return;
+    }
+
+    // Enter data mode and emit the standard handshake response so a host can attach seamlessly
+    enterDataMode();
+    Serial.println("DATA:OK v1");
+    return;
+  }
+
+  // Existing 1–3 behavior unchanged
   switch (pressCount) {
     case 1:
-      // Press 1: Normal period sound
       Serial.println(F("[PERIOD] Press 1: Playing period sound"));
       playAudioForKey("PERIOD", 1);
       break;
-      
+
     case 2:
-      // Press 2: Switch to Human First mode
       Serial.println(F("[PERIOD] Press 2: Switching to Human First mode"));
       currentMode = PriorityMode::HUMAN_FIRST;
       Serial.println(F("[MODE] Switched to: HUMAN_FIRST"));
       playAudioForKey("PERIOD", 2);
       break;
-      
+
     case 3:
-      // Press 3: Switch to Generated First mode
       Serial.println(F("[PERIOD] Press 3: Switching to Generated First mode"));
       currentMode = PriorityMode::GENERATED_FIRST;
       Serial.println(F("[MODE] Switched to: GENERATED_FIRST"));
       playAudioForKey("PERIOD", 3);
       break;
-      
-    default:
-      // For higher press counts, cycle through available options
+
+    default: {
       uint8_t cycledPress = ((pressCount - 1) % 3) + 1;
-      Serial.print(F("[PERIOD] Press "));
-      Serial.print(pressCount);
-      Serial.print(F(": Cycling to press "));
-      Serial.println(cycledPress);
       handlePeriodButtonPress(cycledPress);
       break;
+    }
   }
+}
+
+// ==== SEGMENT 2: UTILS (paths, mkdir_p, atomic rename, CRC) ====
+
+bool isWriteEnabled() {
+  // Require explicit flag file to allow mutating operations in the field
+  return SD.exists(DATA_WRITE_ENABLE_FLAG_PATH);
+}
+
+// Build /audio/<bank>/<KEY>/<fname>
+void path_audio(char* out, size_t outsz, const char* bank, const char* key, const char* fname) {
+  if (fname && fname[0]) {
+    snprintf(out, outsz, "/audio/%s/%s/%s", bank, key, fname);
+  } else {
+    snprintf(out, outsz, "/audio/%s/%s", bank, key);
+  }
+}
+
+// mkdir -p for SD (create intermediate directories step-by-step)
+bool mkdir_p(const char* path) {
+  if (!path || path[0] != '/') return false;
+  char buf[128];
+  size_t n = strlen(path);
+  if (n >= sizeof(buf)) return false;
+  strcpy(buf, path);
+
+  // Iterate through slashes and create progressively
+  for (size_t i = 1; i < n; i++) {
+    if (buf[i] == '/') {
+      buf[i] = '\0';
+      if (!SD.exists(buf)) {
+        if (!SD.mkdir(buf)) return false;
+      }
+      buf[i] = '/';
+    }
+  }
+  if (!SD.exists(buf)) {
+    if (!SD.mkdir(buf)) return false;
+  }
+  return true;
+}
+
+// Try fast rename; fall back to copy+remove if needed
+bool atomicRename(const char* srcTmp, const char* dstFinal) {
+  // If SD.rename exists and succeeds, we're done.
+  #if defined(ARDUINO) // assume SD.rename available
+  if (SD.rename(srcTmp, dstFinal)) return true;
+  #endif
+
+  // Fallback: copy then remove (not strictly atomic but safer than leaving .part)
+  File inF = SD.open(srcTmp, FILE_READ);
+  if (!inF) return false;
+  File outF = SD.open(dstFinal, FILE_WRITE);
+  if (!outF) { inF.close(); return false; }
+
+  uint8_t buf[512];
+  int r;
+  while ((r = inF.read(buf, sizeof(buf))) > 0) {
+    if (outF.write(buf, (size_t)r) != (size_t)r) { inF.close(); outF.close(); return false; }
+  }
+  outF.flush(); outF.close(); inF.close();
+  SD.remove(srcTmp);
+  return true;
+}
+
+#if DATA_USE_CRC32
+// Standard CRC32 (poly 0xEDB88320)
+void crc32_reset(uint32_t &crc) { crc = 0xFFFFFFFFUL; }
+void crc32_update(uint32_t &crc, const uint8_t* data, size_t len) {
+  for (size_t i = 0; i < len; ++i) {
+    uint32_t c = (crc ^ data[i]) & 0xFFU;
+    for (uint8_t k = 0; k < 8; ++k) c = (c & 1U) ? (0xEDB88320UL ^ (c >> 1)) : (c >> 1);
+    crc = (crc >> 8) ^ c;
+  }
+}
+#endif
+
+// ==== SEGMENT 3: PARSER & COMMAND HANDLERS (PUT/GET/DEL/LS/EXIT) ====
+
+static inline void dm_touch() { dm_last_activity_ms = millis(); }
+
+static inline void dm_line_reset() { dm_line_len = 0; dm_line[0] = 0; }
+
+void dm_feedByte(char c) {
+  dm_touch();
+  if (dm_state == DataCmdState::LINE) {
+    // accept CR/LF; end on '\n'
+    if (c == '\r') return;
+    if (c != '\n') {
+      if (dm_line_len + 1 < DM_LINE_MAX) {
+        dm_line[dm_line_len++] = c;
+        dm_line[dm_line_len] = 0;
+      } else {
+        // line too long
+        Serial.println("ERR:LINETOOLONG");
+        dm_line_reset();
+      }
+      return;
+    }
+    // full line
+    dm_handleLine(dm_line);
+    dm_line_reset();
+    return;
+  }
+
+  if (dm_state == DataCmdState::PUT_PAYLOAD) {
+    // buffer incoming bytes, write in chunks
+    dm_wbuf[dm_wbuf_len++] = (uint8_t)c;
+    if (dm_wbuf_len == DM_IOBUF_SZ || dm_wbuf_len == dm_put_remaining) {
+      size_t toWrite = dm_wbuf_len;
+      if (dm_put_file.write(dm_wbuf, toWrite) != (int)toWrite) {
+        Serial.println("ERR:WRITE");
+        dm_put_file.close();
+        SD.remove(dm_put_tmp_path);
+        dm_state = DataCmdState::LINE;
+        return;
+      }
+      #if DATA_USE_CRC32
+      crc32_update(dm_put_crc_calc, dm_wbuf, toWrite);
+      #endif
+      dm_put_remaining -= (uint32_t)toWrite;
+      dm_wbuf_len = 0;
+    }
+    if (dm_put_remaining == 0) {
+      dm_put_file.flush();
+      dm_put_file.close();
+
+      // finalize: CRC check if provided
+      #if DATA_USE_CRC32
+      if (dm_put_crc_host != 0 && (dm_put_crc_calc ^ 0xFFFFFFFFUL) != dm_put_crc_host) {
+        Serial.println("ERR:CRC");
+        SD.remove(dm_put_tmp_path);
+        dm_state = DataCmdState::LINE;
+        return;
+      }
+      #endif
+
+      if (atomicRename(dm_put_tmp_path, dm_put_final_path)) {
+        Serial.println("PUT:DONE");
+      } else {
+        Serial.println("ERR:RENAME");
+        SD.remove(dm_put_tmp_path);
+      }
+      dm_state = DataCmdState::LINE;
+    }
+    return;
+  }
+
+  if (dm_state == DataCmdState::GET_STREAM) {
+    // nothing to do; GET is push-only from device side
+    return;
+  }
+}
+
+// Parse one complete command line
+void dm_handleLine(const char* line) {
+  // EXIT
+  if (!strcmp(line, "EXIT")) { Serial.println("DATA:BYE"); exitDataMode(); return; }
+
+  // LS <bank> <KEY>
+  if (!strncmp(line, "LS ", 3)) {
+    char bank[16], key[24];
+    if (sscanf(line + 3, "%15s %23s", bank, key) == 2) {
+      char dirPath[96];
+      path_audio(dirPath, sizeof(dirPath), bank, key, "");
+      File d = SD.open(dirPath);
+      if (!d || !d.isDirectory()) { Serial.println("LS:NODIR"); if (d) d.close(); return; }
+      File f;
+      while ((f = d.openNextFile())) {
+        if (!f.isDirectory()) {
+          Serial.print(f.name()); Serial.print(' ');
+          Serial.println(f.size());
+        }
+        f.close();
+      }
+      d.close();
+      Serial.println("LS:DONE");
+    } else {
+      Serial.println("ERR:ARGS");
+    }
+    return;
+  }
+
+  // DEL <bank> <KEY> <filename>
+  if (!strncmp(line, "DEL ", 4)) {
+    if (!isWriteEnabled()) { Serial.println("ERR:WRITELOCK"); return; }
+    char bank[16], key[24], fname[48];
+    if (sscanf(line + 4, "%15s %23s %47s", bank, key, fname) == 3) {
+      char full[128];
+      path_audio(full, sizeof(full), bank, key, fname);
+      if (SD.exists(full) && SD.remove(full)) Serial.println("DEL:OK"); else Serial.println("DEL:NOK");
+    } else {
+      Serial.println("ERR:ARGS");
+    }
+    return;
+  }
+
+  // GET <bank> <KEY> <filename>
+  if (!strncmp(line, "GET ", 4)) {
+    char bank[16], key[24], fname[48];
+    if (sscanf(line + 4, "%15s %23s %47s", bank, key, fname) == 3) {
+      char full[128];
+      path_audio(full, sizeof(full), bank, key, fname);
+      File f = SD.open(full, FILE_READ);
+      if (!f) { Serial.println("GET:NOK"); return; }
+      uint32_t size = f.size();
+
+      #if DATA_USE_CRC32
+      // compute CRC32 in a first pass (small files typical)
+      uint32_t crc; crc32_reset(crc);
+      int r;
+      while ((r = f.read(dm_rbuf, sizeof(dm_rbuf))) > 0) crc32_update(crc, dm_rbuf, (size_t)r);
+      f.seek(0);
+      Serial.print("GET:SIZE "); Serial.print(size); Serial.print(' ');
+      Serial.println(crc ^ 0xFFFFFFFFUL);
+      #else
+      Serial.print("GET:SIZE "); Serial.println(size);
+      #endif
+
+      // stream file
+      int r2;
+      while ((r2 = f.read(dm_rbuf, sizeof(dm_rbuf))) > 0) {
+        Serial.write(dm_rbuf, (size_t)r2);
+      }
+      f.close();
+      return;
+    } else {
+      Serial.println("ERR:ARGS");
+    }
+    return;
+  }
+
+  // PUT <bank> <KEY> <filename> <bytes> [crc32]
+  if (!strncmp(line, "PUT ", 4)) {
+    if (!isWriteEnabled()) { Serial.println("ERR:WRITELOCK"); return; }
+
+    char bank[16], key[24], fname[48];
+    unsigned long bytes = 0; unsigned long crcHost = 0;
+    int n = sscanf(line + 4, "%15s %23s %47s %lu %lu", bank, key, fname, &bytes, &crcHost);
+    if (n < 4) { Serial.println("ERR:ARGS"); return; }
+
+    // ensure directory exists
+    char dirPath[96];
+    path_audio(dirPath, sizeof(dirPath), bank, key, "");
+    if (!mkdir_p(dirPath)) { Serial.println("ERR:MKDIR"); return; }
+
+    // open .part file
+    path_audio(dm_put_final_path, sizeof(dm_put_final_path), bank, key, fname);
+    snprintf(dm_put_tmp_path, sizeof(dm_put_tmp_path), "%s.part", dm_put_final_path);
+
+    // remove any stale .part
+    if (SD.exists(dm_put_tmp_path)) SD.remove(dm_put_tmp_path);
+
+    dm_put_file = SD.open(dm_put_tmp_path, FILE_WRITE);
+    if (!dm_put_file) { Serial.println("ERR:OPEN"); return; }
+
+    dm_put_remaining = (uint32_t)bytes;
+    dm_wbuf_len = 0;
+    #if DATA_USE_CRC32
+    dm_put_crc_host = (n >= 5) ? (uint32_t)crcHost : 0;
+    crc32_reset(dm_put_crc_calc);
+    #endif
+
+    Serial.println("PUT:READY");
+    dm_state = DataCmdState::PUT_PAYLOAD;
+    return;
+  }
+
+  // Unknown
+  Serial.println("ERR:UNKNOWN");
+}
+
+// ==== SEGMENT 4: ENTER / EXIT DATA MODE ====
+
+void enterDataMode() {
+  if (deviceMode == DeviceMode::DATA_MODE) return;
+  // stop any audio
+  if (musicPlayer.playingMusic) musicPlayer.stopPlaying();
+  isPlaying = false;
+
+  deviceMode = DeviceMode::DATA_MODE;
+  dm_state = DataCmdState::LINE;
+  dm_line_reset();
+  dm_last_activity_ms = millis();
+
+  Serial.println("[DATA] mode=ENTER");
+  // Optional: short audio cue if you want (ensure file exists):
+  // playAudioForKey("SHIFT", 2);
+}
+
+void exitDataMode() {
+  if (deviceMode == DeviceMode::NORMAL) return;
+
+  // close any half-done PUT
+  if (dm_state == DataCmdState::PUT_PAYLOAD) {
+    if (dm_put_file) dm_put_file.close();
+    if (strlen(dm_put_tmp_path)) SD.remove(dm_put_tmp_path);
+    dm_state = DataCmdState::LINE;
+  }
+
+  if (dm_get_file) { dm_get_file.close(); }
+
+  deviceMode = DeviceMode::NORMAL;
+  Serial.println("[DATA] mode=EXIT");
+  // Optional: audio cue
+  // playAudioForKey("SHIFT", 3);
 }
 
 // Built-in sine wave test (no SD card required)
