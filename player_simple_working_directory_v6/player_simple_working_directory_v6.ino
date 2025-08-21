@@ -31,10 +31,23 @@
 // ==== SEGMENT 1: DATA MODE GLOBALS & CONSTANTS ====
 
 /* ---- user-tunable knobs ---- */
-#define DATA_BAUD_HZ                115200   // you can bump to 500000/1000000 later
+#define DATA_BAUD_HZ                115200   // Standard baud rate
 #define DATA_IDLE_TIMEOUT_MS        30000    // auto-exit after 30s idle
 #define DATA_WRITE_ENABLE_FLAG_PATH "/CONFIG/WRITES.FLG"  // require this file to allow PUT/DEL
 #define DATA_USE_CRC32              1        // 1=enable CRC32 optional checks (host may omit)
+
+// Flow control settings
+#ifndef DM_FLOW_BLOCK
+#define DM_FLOW_BLOCK 512     // bytes per credit
+#endif
+
+// === WRITE FLAG BEHAVIOR ===============================
+// Set to 0 → writes always allowed (no /CONFIG/WRITES.FLG check)
+// Set to 1 → require /CONFIG/WRITES.FLG (original behavior)
+#ifndef DATA_REQUIRE_WRITE_FLAG
+#define DATA_REQUIRE_WRITE_FLAG 0
+#endif
+// =======================================================
 
 /* ---- device mode ---- */
 enum class DeviceMode : uint8_t { NORMAL, DATA_MODE };
@@ -42,8 +55,13 @@ DeviceMode deviceMode = DeviceMode::NORMAL;
 
 /* ---- serial line collector (line framed commands) ---- */
 static const size_t DM_LINE_MAX = 128;
-char dm_line[DM_LINE_MAX];
-uint16_t dm_line_len = 0;
+static char dm_line[DM_LINE_MAX];
+static size_t dm_line_len = 0;
+
+// Handshake collection state (NORMAL mode)
+static bool dm_hs_active = false;
+static const unsigned long DM_HS_TIMEOUT_MS = 1500;
+static unsigned long dm_hs_last_ms = 0;
 
 /* ---- data mode state ---- */
 enum class DataCmdState : uint8_t { LINE, PUT_PAYLOAD, GET_STREAM };
@@ -55,6 +73,7 @@ unsigned long dm_last_activity_ms = 0;
 File dm_put_file;
 char dm_put_tmp_path[128];
 char dm_put_final_path[128];
+size_t dm_bytes_since_ack = 0;
 uint32_t dm_put_remaining = 0;
 #if DATA_USE_CRC32
 uint32_t dm_put_crc_host = 0;
@@ -70,6 +89,7 @@ File dm_get_file;
 uint8_t dm_rbuf[DM_IOBUF_SZ];
 
 /* ---- helpers forward decls ---- */
+static inline void dm_line_reset();
 void enterDataMode();
 void exitDataMode();
 void dm_feedByte(char c);
@@ -196,103 +216,125 @@ struct AudioFileInfo {
 // New flexible audio sourcing system
 class AudioSourceManager {
 public:
-  // Find audio file for a key and press count with looping support
+  // Find audio file for a key and press count with cross-bank support
   static bool findAudioFile(const char* key, uint8_t pressCount, AudioSource preferredSource, AudioFileInfo* result) {
     result->exists = false;
     result->path[0] = '\0';
     result->description[0] = '\0';
-    
+
+    const char* humanDir = "HUMAN";
+    const char* genDir   = generatedDir();
+
+    // Count both banks first
+    uint8_t humanCount = countAudioFilesInDir(humanDir, key);
+    uint8_t genCount   = countAudioFilesInDir(genDir,   key);
+
+    const bool prefIsHuman = (preferredSource == AudioSource::HUMAN);
+    const char* prefDir = prefIsHuman ? humanDir : genDir;
+    const char* altDir  = prefIsHuman ? genDir   : humanDir;
+    uint8_t prefCount   = prefIsHuman ? humanCount : genCount;
+    uint8_t altCount    = prefIsHuman ? genCount   : humanCount;
+
     Serial.print(F("[AUDIO_SEARCH] Looking for key '"));
     Serial.print(key);
     Serial.print(F("', press #"));
     Serial.print(pressCount);
     Serial.print(F(", preferred source: "));
-    Serial.println((preferredSource == AudioSource::HUMAN) ? F("HUMAN") : F("GENERATED"));
-    
-    // Try preferred source first, then fallback
-    AudioSource sources[] = {preferredSource, (preferredSource == AudioSource::HUMAN) ? AudioSource::GENERATED : AudioSource::HUMAN};
-    
-    for (int i = 0; i < 2; i++) {
-      AudioSource currentSource = sources[i];
-      if (currentSource == AudioSource::AUTO) continue;
-      
-      const char* sourceDir = (currentSource == AudioSource::HUMAN) ? "HUMAN" : "GENERA~1";
-      
-      Serial.print(F("[AUDIO_SEARCH] Trying source: "));
-      Serial.println(sourceDir);
-      
-      // First, count how many audio files exist in this directory
-      uint8_t maxFiles = countAudioFilesInDir(sourceDir, key);
-      if (maxFiles == 0) {
-        Serial.println(F("[AUDIO_SEARCH] ✗ No audio files found in directory"));
-        continue; // Try next source
-      }
-      
-      // Calculate effective press count with looping
-      uint8_t effectivePressCount = ((pressCount - 1) % maxFiles) + 1;
-      if (effectivePressCount != pressCount) {
-        Serial.print(F("[LOOP] Press #"));
-        Serial.print(pressCount);
-        Serial.print(F(" wrapped to #"));
-        Serial.print(effectivePressCount);
-        Serial.print(F(" ("));
-        Serial.print(maxFiles);
-        Serial.println(F(" files available)"));
-      }
-      
-      // Try numbered file first (001.mp3, 002.mp3, etc.)
-      char numberedPath[MAX_PATH_LEN];
-      snprintf(numberedPath, sizeof(numberedPath), "/AUDIO/%s/%s/%03u.MP3", sourceDir, key, effectivePressCount);
-      
-      Serial.print(F("[AUDIO_SEARCH] Checking path: "));
-      Serial.println(numberedPath);
-      
-      if (SD.exists(numberedPath)) {
-        Serial.println(F("[AUDIO_SEARCH] ✓ Found numbered file!"));
-        strncpy(result->path, numberedPath, sizeof(result->path) - 1);
-        result->path[sizeof(result->path) - 1] = '\0';
-        result->source = currentSource;
-        result->exists = true;
-        
-        // Try to load description from .txt file
-        loadDescription(result);
+    Serial.println(prefIsHuman ? F("HUMAN") : F("GENERATED"));
+
+    // 1) Exact index in preferred bank
+    if (pressCount >= 1 && pressCount <= prefCount) {
+      if (tryIndexInDir(prefDir, key, pressCount, result)) {
+        result->source = prefIsHuman ? AudioSource::HUMAN : AudioSource::GENERATED;
         return true;
-      } else {
-        Serial.println(F("[AUDIO_SEARCH] ✗ Numbered file not found, trying directory scan"));
-        
-        // Try to find any audio file in the directory for this effective press count
-        if (findNthAudioInDir(sourceDir, key, effectivePressCount, result)) {
-          Serial.println(F("[AUDIO_SEARCH] ✓ Found via directory scan!"));
-          result->source = currentSource;
+      }
+    }
+
+    // 2) Exact index in the other bank (so press #4 can hit GENERATED/004 if HUMAN has only 3)
+    if (pressCount >= 1 && pressCount <= altCount) {
+      if (tryIndexInDir(altDir, key, pressCount, result)) {
+        result->source = prefIsHuman ? AudioSource::GENERATED : AudioSource::HUMAN;
+        return true;
+      }
+    }
+
+    // 3) Wrap across the combined total (preferred bank comes first in the ordering)
+    uint16_t total = (uint16_t)prefCount + (uint16_t)altCount;
+    if (total == 0) {
+      Serial.println(F("[AUDIO_SEARCH] ✗ No audio files in either bank"));
+      return false;
+    }
+
+    uint16_t wrapped = ((pressCount - 1) % total) + 1;
+    if (wrapped <= prefCount) {
+      if (tryIndexInDir(prefDir, key, (uint8_t)wrapped, result)) {
+        result->source = prefIsHuman ? AudioSource::HUMAN : AudioSource::GENERATED;
+        return true;
+      }
+    } else {
+      uint8_t altIdx = (uint8_t)(wrapped - prefCount);
+      if (altIdx >= 1 && altIdx <= altCount) {
+        if (tryIndexInDir(altDir, key, altIdx, result)) {
+          result->source = prefIsHuman ? AudioSource::GENERATED : AudioSource::HUMAN;
           return true;
-        } else {
-          Serial.println(F("[AUDIO_SEARCH] ✗ Directory scan failed"));
         }
       }
     }
-    
-    Serial.println(F("[AUDIO_SEARCH] ✗ No audio file found for this key"));
+
+    Serial.println(F("[AUDIO_SEARCH] ✗ No audio file found for this key/index"));
     return false;
   }
   
-  // Get audio source preference based on current mode and special key rules
+  // Keep your existing rules (SHIFT: 1=HUMAN, >=2=GENERATED, PERIOD >=2=GENERATED, else current mode)
   static AudioSource getPreferredSource(const char* key, uint8_t pressCount, PriorityMode currentMode) {
-    // Special handling for SHIFT button
     if (strcmp(key, "SHIFT") == 0) {
-      if (pressCount == 1) return AudioSource::HUMAN;  // Greeting
-      if (pressCount >= 2) return AudioSource::GENERATED;  // Instructions/word list
+      if (pressCount == 1) return AudioSource::HUMAN;
+      if (pressCount >= 2) return AudioSource::GENERATED;
     }
-    
-    // Special handling for PERIOD button
     if (strcmp(key, "PERIOD") == 0) {
-      if (pressCount >= 2) return AudioSource::GENERATED;  // Mode announcements
+      if (pressCount >= 2) return AudioSource::GENERATED;
     }
-    
-    // Default to current mode preference
     return (currentMode == PriorityMode::HUMAN_FIRST) ? AudioSource::HUMAN : AudioSource::GENERATED;
   }
   
 private:
+  static const char* generatedDir() {
+    // Prefer long name if it exists; fallback to 8.3 alias
+    static bool checked = false;
+    static const char* dir = "GENERA~1";
+    if (!checked) {
+      if (SD.exists("/AUDIO/GENERATED")) dir = "GENERATED";
+      checked = true;
+    }
+    return dir;
+  }
+
+  static bool tryIndexInDir(const char* sourceDir, const char* key, uint8_t index, AudioFileInfo* result) {
+    // Try numbered NNN.MP3 first
+    char numberedPath[MAX_PATH_LEN];
+    snprintf(numberedPath, sizeof(numberedPath), "/AUDIO/%s/%s/%03u.MP3", sourceDir, key, index);
+
+    Serial.print(F("[AUDIO_SEARCH] Checking path: "));
+    Serial.println(numberedPath);
+
+    if (SD.exists(numberedPath)) {
+      Serial.println(F("[AUDIO_SEARCH] ✓ Found numbered file!"));
+      strncpy(result->path, numberedPath, sizeof(result->path) - 1);
+      result->path[sizeof(result->path) - 1] = '\0';
+      result->exists = true;
+      loadDescription(result);
+      return true;
+    }
+
+    // Otherwise, pick the Nth audio file present (creation order)
+    if (findNthAudioInDir(sourceDir, key, index, result)) {
+      Serial.println(F("[AUDIO_SEARCH] ✓ Found via directory scan!"));
+      return true;
+    }
+    Serial.println(F("[AUDIO_SEARCH] ✗ Not found in this source/index"));
+    return false;
+  }
+
   // Count total audio files in a directory for looping support
   static uint8_t countAudioFilesInDir(const char* sourceDir, const char* key) {
     char dirPath[MAX_PATH_LEN];
@@ -460,9 +502,10 @@ void printMenu();
 void playSineTest();
 void printWordMap();
 bool findAudioForKey(const char* key, uint8_t pressCount, AudioFileInfo* result);
+void saveCalibrationToSD();
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(DATA_BAUD_HZ);
   while (!Serial) delay(10);
   
   Serial.println(F("=== Tactile Communication Device - New SD Structure ==="));
@@ -541,43 +584,63 @@ void setup() {
 }
 
 void loop() {
-  // ==== SEGMENT 5: LOOP() INTEGRATION ====
-  // Put this block near the start of loop()
+  // ---- HANDSHAKE SNIFFER (NORMAL mode only) ----
+  if (deviceMode == DeviceMode::NORMAL) {
+    // If not already collecting, only start when we see '^'
+    if (!dm_hs_active && Serial.available() && Serial.peek() == '^') {
+      dm_hs_active = true;
+      dm_line_reset();
+      dm_hs_last_ms = millis();
+    }
 
-  // 1) Serial handshake when in NORMAL mode
-  while (Serial.available()) {
-    char c = Serial.read();
-    if (deviceMode == DeviceMode::NORMAL) {
-      // lightweight handshake detector for "^DATA? v1\n"
-      if (c == '\r') { /* ignore */ }
-      else if (c != '\n') {
-        if (dm_line_len + 1 < DM_LINE_MAX) { dm_line[dm_line_len++] = c; dm_line[dm_line_len] = 0; }
-        else { dm_line_reset(); }
+    // If collecting, consume every incoming byte until '\n' or timeout
+    while (dm_hs_active && Serial.available()) {
+      char c = Serial.read();
+      dm_hs_last_ms = millis();
+      if (c == '\r') continue;
+      if (c != '\n') {
+        if (dm_line_len + 1 < DM_LINE_MAX) {
+          dm_line[dm_line_len++] = c;
+          dm_line[dm_line_len] = 0;
+        } else {
+          // too long → abort collection
+          dm_line_reset();
+          dm_hs_active = false;
+        }
       } else {
-        // got a line
-        if (!strcmp(dm_line, "^DATA? v1")) {
+        // Got full line that started with '^'
+        bool ok =
+          (!strcmp(dm_line, "^DATA? v1")) ||
+          (!strncasecmp(dm_line, "^DATA? v", 8));   // accept ^DATA? vX
+        dm_line_reset();
+        dm_hs_active = false;
+
+        if (ok) {
           Serial.println("DATA:OK v1");
           enterDataMode();
+          Serial.println("[DATA] mode=ENTER");  // informational; host should ignore
         }
-        dm_line_reset();
       }
-    } else {
-      // In DATA_MODE: feed byte-by-byte to the protocol
-      dm_feedByte(c);
+    }
+
+    // Timeout: abandon partial handshake and let menu resume
+    if (dm_hs_active && (millis() - dm_hs_last_ms > DM_HS_TIMEOUT_MS)) {
+      dm_line_reset();
+      dm_hs_active = false;
     }
   }
 
-  // 2) If in DATA_MODE, enforce idle timeout and skip normal duties
+  // If we entered DATA_MODE, process protocol and pause normal UI
   if (deviceMode == DeviceMode::DATA_MODE) {
+    while (Serial.available()) dm_feedByte(Serial.read());
     if (millis() - dm_last_activity_ms > DATA_IDLE_TIMEOUT_MS) {
       Serial.println("DATA:IDLE");
       exitDataMode();
     }
-    // Do not scan buttons / play audio while in data mode
-    return;
+    return;  // do NOT fall through to menu/keyboard
   }
 
-  // 3) ... your existing NORMAL mode logic continues below ...
+  // Normal mode logic continues below
   checkButtons();
   handleMultiPress();
   
@@ -592,8 +655,8 @@ void loop() {
     currentTrackPath[0] = '\0';
   }
   
-  // Handle calibration input (data mode already handled above)
-  if (Serial.available() && waitingForMapping) {
+  // Handle calibration input (only in NORMAL mode, data mode already handled above)
+  if (deviceMode == DeviceMode::NORMAL && Serial.available() && waitingForMapping) {
     char cmd = Serial.read();
       if (cmd == '\n' || cmd == '\r') {
         // Process the mapping
@@ -671,9 +734,6 @@ void loop() {
         Serial.print(F("Priority mode: "));
         Serial.println((currentMode == PriorityMode::HUMAN_FIRST) ? F("HUMAN_FIRST") : F("GENERATED_FIRST"));
         break;
-      case 'S': case 's':
-        printStatus();
-        break;
       case 'H': case 'h':
         printMenu();
         break;
@@ -695,6 +755,13 @@ void loop() {
         waitingForMapping = false;
         inputBuffer = "";
         Serial.println(F("Calibration mode: OFF"));
+        break;
+      case 'S': case 's':
+        if (inCalibrate) {
+          saveCalibrationToSD();
+        } else {
+          printStatus();
+        }
         break;
       case 'T': case 't':
         playSineTest();
@@ -1254,7 +1321,7 @@ void printMenu() {
   Serial.println(F("  E - Exit calibration mode"));
   Serial.println(F("  L - List SD card contents for debugging"));
   Serial.println(F("  M - Toggle priority mode (Human/Generated first)"));
-  Serial.println(F("  S - Show status"));
+  Serial.println(F("  S - Show status (or Save calibration if in calibration mode)"));
   Serial.println(F("  R - Reload configuration"));
   Serial.println(F("  T - Play sine test tone"));
   Serial.println(F("  H - Show this menu"));
@@ -1265,36 +1332,17 @@ void printMenu() {
 void handleShiftButtonPress(uint8_t pressCount) {
   Serial.print(F("[SHIFT] Processing press count: "));
   Serial.println(pressCount);
-  
-  switch (pressCount) {
-    case 1:
-      // Press 1: Human greeting ("Hello How are You")
-      Serial.println(F("[SHIFT] Press 1: Playing human greeting"));
-      playAudioForKey("SHIFT", 1);
-      break;
-      
-    case 2:
-      // Press 2: Instructions (generated)
-      Serial.println(F("[SHIFT] Press 2: Playing instructions"));
-      playAudioForKey("SHIFT", 2);
-      break;
-      
-    case 3:
-      // Press 3: Word list (generated)
-      Serial.println(F("[SHIFT] Press 3: Playing word list"));
-      playAudioForKey("SHIFT", 3);
-      break;
-      
-    default:
-      // For higher press counts, cycle through available options
-      uint8_t cycledPress = ((pressCount - 1) % 3) + 1;
-      Serial.print(F("[SHIFT] Press "));
-      Serial.print(pressCount);
-      Serial.print(F(": Cycling to press "));
-      Serial.println(cycledPress);
-      handleShiftButtonPress(cycledPress);
-      break;
+
+  if (pressCount == 1) {
+    Serial.println(F("[SHIFT] Press 1: Playing human greeting"));
+  } else {
+    Serial.print(F("[SHIFT] Press "));
+    Serial.print(pressCount);
+    Serial.println(F(": Using generated bank if available"));
   }
+
+  // Let the unified AudioSourceManager logic pick the correct bank and index:
+  playAudioForKey("SHIFT", pressCount);
 }
 
 // ==== SEGMENT 6: PERIOD×4 + CONFIRM ====
@@ -1369,6 +1417,12 @@ void handlePeriodButtonPress(uint8_t pressCount) {
 // ==== SEGMENT 2: UTILS (paths, mkdir_p, atomic rename, CRC) ====
 
 bool isWriteEnabled() {
+#if DATA_REQUIRE_WRITE_FLAG
+  return SD.exists(DATA_WRITE_ENABLE_FLAG_PATH);
+#else
+  // Open mode: allow writes unconditionally
+  return true;
+#endif
 }
 
 // Build /audio/<bank>/<KEY>/<fname>
@@ -1482,7 +1536,17 @@ void dm_feedByte(char c) {
         dm_put_file.close();
         SD.remove(dm_put_tmp_path);
         dm_state = DataCmdState::LINE;
+        dm_bytes_since_ack = 0;
         return;
+      }
+      yield();
+      
+      // Flow control: send ACK after each block
+      dm_bytes_since_ack += toWrite;
+      while (dm_bytes_since_ack >= DM_FLOW_BLOCK) {
+        Serial.write('>');
+        Serial.flush();
+        dm_bytes_since_ack -= DM_FLOW_BLOCK;
       }
       #if DATA_USE_CRC32
       crc32_update(dm_put_crc_calc, dm_wbuf, toWrite);
@@ -1506,10 +1570,12 @@ void dm_feedByte(char c) {
 
       if (atomicRename(dm_put_tmp_path, dm_put_final_path)) {
         Serial.println("PUT:DONE");
+        delay(2);  // brief delay so final line isn't coalesced
       } else {
         Serial.println("ERR:RENAME");
         SD.remove(dm_put_tmp_path);
       }
+      dm_bytes_since_ack = 0;
       dm_state = DataCmdState::LINE;
     }
     return;
@@ -1528,6 +1594,17 @@ void dm_handleLine(const char* line) {
 
   // FLAG ON  | FLAG OFF  -> create/remove /config/allow_writes.flag
   if (!strncmp(line, "FLAG ", 5)) {
+#if !DATA_REQUIRE_WRITE_FLAG
+    // Open mode: accept but ignore to keep host tools happy
+    const char* arg = line + 5;
+    if (!strcmp(arg, "ON") || !strcmp(arg, "OFF")) {
+      Serial.println("FLAG:IGNORED(OPEN)");
+    } else {
+      Serial.println("FLAG:ERR:ARGS");
+    }
+    return;
+#else
+    // (original FLAG handler stays as-is under FLAG mode)
     const char* arg = line + 5;
     if (!strcmp(arg, "ON")) {
       if (!ensureConfigDir()) { Serial.println("FLAG:ERR:MKDIR"); return; }
@@ -1552,18 +1629,31 @@ void dm_handleLine(const char* line) {
       Serial.println("FLAG:ERR:ARGS");
     }
     return;
+#endif
   }
 
   if (!strcmp(line, "STAT")) {
     uint64_t tot=0, fre=0;
-    if (sd_stats(&tot, &fre)) { Serial.print("STAT "); Serial.print(tot); Serial.print(' '); Serial.println(fre); }
-    else Serial.println("STAT:NOK");
+    if (sd_stats(&tot, &fre)) { 
+      Serial.print("STAT "); 
+      Serial.print(tot); 
+      Serial.print(' '); 
+      Serial.println(fre); 
+      Serial.flush();
+    } else {
+      Serial.println("STAT:NOK");
+      Serial.flush();
+    }
     return;
   }
 
   if (!strcmp(line, "STATUS")) {
     bool writes = isWriteEnabled();
-    Serial.print("STATUS WRITES="); Serial.println(writes ? "ON" : "OFF");
+    Serial.print("STATUS WRITES=");
+    Serial.print(writes ? "ON" : "OFF");
+    Serial.print(" MODE=");
+    Serial.println(DATA_REQUIRE_WRITE_FLAG ? "FLAG" : "OPEN");
+    Serial.flush();
     return;
   }
 
@@ -1578,8 +1668,12 @@ void dm_handleLine(const char* line) {
       File f;
       while ((f = d.openNextFile())) {
         if (!f.isDirectory()) {
-          Serial.print(f.name()); Serial.print(' ');
+          Serial.print("LS:");
+          Serial.print(f.name()); 
+          Serial.print(" ");
           Serial.println(f.size());
+          Serial.flush(); // Ensure data is sent before continuing
+          delay(10);      // Small delay to prevent buffer overflow
         }
         f.close();
       }
@@ -1593,7 +1687,9 @@ void dm_handleLine(const char* line) {
 
   // DEL <bank> <KEY> <filename>
   if (!strncmp(line, "DEL ", 4)) {
+#if DATA_REQUIRE_WRITE_FLAG
     if (!isWriteEnabled()) { Serial.println("ERR:WRITELOCK"); return; }
+#endif
     char bank[16], key[24], fname[48];
     if (sscanf(line + 4, "%15s %23s %47s", bank, key, fname) == 3) {
       char full[128];
@@ -1633,6 +1729,7 @@ void dm_handleLine(const char* line) {
         Serial.write(dm_rbuf, (size_t)r2);
       }
       f.close();
+      Serial.flush();   // guarantee all bytes are out
       return;
     } else {
       Serial.println("ERR:ARGS");
@@ -1642,7 +1739,9 @@ void dm_handleLine(const char* line) {
 
   // PUT <bank> <KEY> <filename> <bytes> [crc32]
   if (!strncmp(line, "PUT ", 4)) {
+#if DATA_REQUIRE_WRITE_FLAG
     if (!isWriteEnabled()) { Serial.println("ERR:WRITELOCK"); return; }
+#endif
 
     char bank[16], key[24], fname[48];
     unsigned long bytes = 0; unsigned long crcHost = 0;
@@ -1654,13 +1753,17 @@ void dm_handleLine(const char* line) {
     path_audio(dirPath, sizeof(dirPath), bank, key, "");
     if (!mkdir_p(dirPath)) { Serial.println("ERR:MKDIR"); return; }
 
-    // open .part file
+    // final destination
     path_audio(dm_put_final_path, sizeof(dm_put_final_path), bank, key, fname);
-    snprintf(dm_put_tmp_path, sizeof(dm_put_tmp_path), "%s.part", dm_put_final_path);
 
-    // remove any stale .part
-    if (SD.exists(dm_put_tmp_path)) SD.remove(dm_put_tmp_path);
+    // 8.3-safe temp name UPLD000.TMP..UPLD999.TMP
+    for (int i = 0; i < 1000; ++i) {
+      snprintf(dm_put_tmp_path, sizeof(dm_put_tmp_path), "%s/UPLD%03d.TMP", dirPath, i);
+      if (!SD.exists(dm_put_tmp_path)) break;
+    }
+    if (SD.exists(dm_put_tmp_path)) { Serial.println("ERR:OPEN"); return; } // all taken (unlikely)
 
+    // open temp for write
     dm_put_file = SD.open(dm_put_tmp_path, FILE_WRITE);
     if (!dm_put_file) { Serial.println("ERR:OPEN"); return; }
 
@@ -1671,7 +1774,11 @@ void dm_handleLine(const char* line) {
     crc32_reset(dm_put_crc_calc);
     #endif
 
-    Serial.println("PUT:READY");
+    Serial.print("PUT:READY ");
+    Serial.println(DM_FLOW_BLOCK);
+    Serial.flush();
+    delay(2);
+    dm_bytes_since_ack = 0;
     dm_state = DataCmdState::PUT_PAYLOAD;
     return;
   }
@@ -1705,6 +1812,7 @@ void exitDataMode() {
   if (dm_state == DataCmdState::PUT_PAYLOAD) {
     if (dm_put_file) dm_put_file.close();
     if (strlen(dm_put_tmp_path)) SD.remove(dm_put_tmp_path);
+    dm_bytes_since_ack = 0;
     dm_state = DataCmdState::LINE;
   }
 
@@ -1717,6 +1825,67 @@ void exitDataMode() {
 }
 
 // Built-in sine wave test (no SD card required)
+void saveCalibrationToSD() {
+  Serial.println(F("[SAVE] Saving calibration to SD card..."));
+  
+  // Ensure CONFIG directory exists
+  if (!SD.exists("/CONFIG")) {
+    if (!SD.mkdir("/CONFIG")) {
+      Serial.println(F("[SAVE] ERROR: Could not create /CONFIG directory"));
+      return;
+    }
+  }
+  
+  // Open file for writing
+  File csvFile = SD.open("/CONFIG/KEYS.CSV", FILE_WRITE | O_TRUNC);
+  if (!csvFile) {
+    Serial.println(F("[SAVE] ERROR: Could not open /CONFIG/KEYS.CSV for writing"));
+    return;
+  }
+  
+  // Write CSV header
+  csvFile.println(F("# Button mapping configuration from calibration session"));
+  csvFile.println(F("# Maps logical keys to their descriptions and hardware assignments"));
+  csvFile.println(F("KEY,DESCRIPTION,INPUT"));
+  
+  // Write mapped buttons
+  uint16_t savedMappings = 0;
+  for (uint8_t i = 0; i < TOTAL_BUTTONS; i++) {
+    if (buttonMap[i].used && buttonMap[i].keyIndex >= 0) {
+      const char* keyName = keys[buttonMap[i].keyIndex].key;
+      
+      // Generate hardware input string (pcfX:Y format)
+      char inputStr[16];
+      if (i < TOTAL_EXPANDER_PINS) {
+        uint8_t chipIndex = i / 16;
+        uint8_t pin = i % 16;
+        snprintf(inputStr, sizeof(inputStr), "pcf%d:%d", chipIndex, pin);
+      } else {
+        // Extra pins
+        uint8_t extraIndex = i - TOTAL_EXPANDER_PINS;
+        snprintf(inputStr, sizeof(inputStr), "extra:%d", extraIndex);
+      }
+      
+      // Write CSV line: KEY,DESCRIPTION,INPUT
+      csvFile.print(keyName);
+      csvFile.print(F(","));
+      csvFile.print(F("Letter ")); // Simple description
+      csvFile.print(keyName);
+      csvFile.print(F(","));
+      csvFile.println(inputStr);
+      
+      savedMappings++;
+    }
+  }
+  
+  csvFile.close();
+  
+  Serial.print(F("[SAVE] SUCCESS: Saved "));
+  Serial.print(savedMappings);
+  Serial.println(F(" button mappings to /CONFIG/KEYS.CSV"));
+  Serial.println(F("[SAVE] Restart device to load new configuration"));
+}
+
 void playSineTest() {
   Serial.println(F("[SINE] Starting built-in sine test (250ms)..."));
   

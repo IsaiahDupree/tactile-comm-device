@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Tactile Communication Device - User Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 1in;
+            line-height: 1.6;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            page-break-before: avoid;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 1px solid #bdc3c7;
+            padding-bottom: 5px;
+            margin-top: 30px;
+            page-break-before: avoid;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        p {
+            margin: 10px 0;
+            text-align: justify;
+        }
+        code {
+            background-color: #f8f9fa;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 90%;
+        }
+        pre {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border: 1px solid #e9ecef;
+            font-family: Consolas, 'Courier New', monospace;
+        }
+        ul, ol {
+            margin: 10px 0;
+            padding-left: 30px;
+        }
+        li {
+            margin: 5px 0;
+        }
+        strong {
+            color: #2c3e50;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #bdc3c7;
+            margin: 30px 0;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        @media print {
+            body { margin: 0.5in; }
+            h1, h2, h3 { page-break-after: avoid; }
+        }
+    </style>
+</head>
+<body>
+<h1>Tactile Communication Device - User Guide</h1>
+
+<h2>Table of Contents</h2>
+1. [Device Overview](#device-overview)
+2. [Getting Started](#getting-started)
+3. [Basic Operation](#basic-operation)
+4. [Button Mapping Reference](#button-mapping-reference)
+5. [SD Card Management](#sd-card-management)
+6. [Audio File Organization](#audio-file-organization)
+7. [Software Updates](#software-updates)
+8. [Hardware Maintenance](#hardware-maintenance)
+9. [Troubleshooting](#troubleshooting)
+10. [Complete Word List](#complete-word-list)
+
+<hr>
+
+<h2>Device Overview</h2>
+
+<p>The Tactile Communication Device is an assistive technology tool designed to help users communicate through pre-recorded audio messages. The device features:</p>
+
+<ul>
+<li><strong>26 Letter Buttons (A-Z)</strong>: For spelling and word selection</li>
+<li><strong>Special Function Buttons</strong>: SHIFT, PERIOD, SPACE, YES, NO, WATER</li>
+<li><strong>Multi-Press Support</strong>: Press buttons multiple times for different audio options</li>
+<li><strong>Dual Audio Banks</strong>: Human-recorded and computer-generated speech</li>
+<li><strong>SD Card Storage</strong>: Expandable audio library</li>
+<li><strong>USB Connectivity</strong>: For programming and file management</li>
+</ul>
+
+<hr>
+
+<h2>Getting Started</h2>
+
+<h3>Initial Setup</h3>
+
+<p>1. <strong>Power Connection</strong>: Connect the device via USB cable to power source
+2. <strong>SD Card</strong>: Ensure SD card is properly inserted (contains audio files and configuration)
+3. <strong>Serial Monitor</strong>: Open Arduino IDE Serial Monitor at 115200 baud to see device status
+4. <strong>Audio Output</strong>: Connect speakers or headphones to audio jack</p>
+
+<h3>First Boot</h3>
+
+<p>When powered on, the device will:
+1. <strong>5-second initialization delay</strong> - Device is loading and configuring
+2. <strong>Startup beep</strong> - Confirms successful boot
+3. Display status messages:
+``<code>
+=== Tactile Communication Device - New SD Structure ===
+[CONFIG] Loading button mappings from /CONFIG/KEYS.CSV
+[CONFIG] Loaded X button mappings
+[AUDIO] Ready for communication
+</code>`<code></p>
+
+<strong>Note</strong>: Wait for the startup beep before using the device buttons.
+
+<hr>
+
+<h2>Basic Operation</h2>
+
+<h3>Single Button Press</h3>
+<ul>
+<li>Press any letter button (A-Z) to play the first audio file for that letter</li>
+<li>Press special buttons (YES, NO, WATER) for immediate responses</li>
+</ul>
+
+<h3>Multi-Press Feature</h3>
+<ul>
+<li>Press the same button multiple times within 1 second for different audio options</li>
+<li>Example: Press "A" twice quickly to access the second audio file for letter A</li>
+</ul>
+
+<h3>SHIFT Button Functions</h3>
+<ul>
+<li><strong>Press 1x</strong>: Human greeting ("Hello, how are you?")</li>
+<li><strong>Press 2x</strong>: Device instructions (computer-generated)</li>
+<li><strong>Press 3x</strong>: Complete word list and button mapping (computer-generated)</li>
+<li><strong>Press 4x+</strong>: Additional instructional content if available</li>
+</ul>
+
+<h3>PERIOD Button Functions</h3>
+<ul>
+<li><strong>Press 1x</strong>: Period punctuation sound</li>
+<li><strong>Press 2x</strong>: Switch to Human-First mode (prioritizes human-recorded audio)</li>
+<li><strong>Press 3x</strong>: Switch to Generated-First mode (prioritizes computer-generated audio)</li>
+<li><strong>Press 4x</strong>: Enter calibration mode (advanced users only)</li>
+</ul>
+
+<hr>
+
+<h2>Button Mapping Reference</h2>
+
+<h3>Letters A-Z</h3>
+Each letter button corresponds to its respective letter and associated words/phrases.
+
+<h3>Special Buttons</h3>
+| Button | Function | Location |
+|--------|----------|----------|
+| SHIFT | Instructions/Greetings | Top row |
+| YES | Affirmative response | Top row |
+| NO | Negative response | Top row |
+| WATER | Request for water | Top row |
+| PERIOD | Punctuation/Mode switching | Bottom area |
+| SPACE | Word spacing | Bottom area |
+
+<h3>Hardware Button Layout</h3>
+</code>`<code>
+[SHIFT] [YES] [NO] [WATER]
+
+<p>[A] [B] [C] [D] [E] [F] [G]
+[H] [I] [J] [K] [L] [M] [N]
+[O] [P] [Q] [R] [S] [T] [U]
+[V] [W] [X] [Y] [Z]</p>
+
+<p>[SPACE] [PERIOD]
+</code>`<code></p>
+
+<hr>
+
+<h2>SD Card Management</h2>
+
+<h3>Accessing the SD Card</h3>
+
+<strong>SD Card Access Method:</strong>
+1. Power off the device
+2. Gently remove SD card from slot
+3. Insert into computer's SD card reader
+4. Make changes to files
+5. Safely eject and reinsert into device
+
+<h3>SD Card Structure</h3>
+</code>`<code>
+SD_CARD/
+├── CONFIG/
+│   └── KEYS.CSV          # Button mapping configuration
+├── AUDIO/
+│   ├── HUMAN/            # Human-recorded audio files
+│   │   ├── A/            # Letter A audio files
+│   │   ├── B/            # Letter B audio files
+│   │   ├── ...           # (All letters A-Z)
+│   │   ├── SHIFT/        # SHIFT button audio
+│   │   ├── YES/          # YES button audio
+│   │   ├── NO/           # NO button audio
+│   │   ├── WATER/        # WATER button audio
+│   │   └── PERIOD/       # PERIOD button audio
+│   └── GENERA~1/         # Computer-generated audio files
+│       ├── A/            # Letter A generated audio
+│       ├── B/            # Letter B generated audio
+│       ├── ...           # (All letters A-Z)
+│       └── SHIFT/        # SHIFT instructions/word list
+</code>`<code>
+
+<hr>
+
+<h2>Audio File Organization</h2>
+
+<h3>File Naming Convention</h3>
+<ul>
+<li><strong>Audio Files</strong>: </code>001.MP3<code>, </code>002.MP3<code>, </code>003.MP3<code>, etc.</li>
+<li><strong>Description Files</strong>: </code>001.TXT<code>, </code>002.TXT<code>, </code>003.TXT<code>, etc.</li>
+<li><strong>Playlist Files</strong>: </code>PLAYLIST.M3U<code> (auto-generated)</li>
+</ul>
+
+<h3>Adding New Audio Files</h3>
+
+<p>1. <strong>Record Audio</strong>: Create MP3 files (recommended: 22kHz, mono, 64kbps)
+2. <strong>Name Files</strong>: Use sequential numbers (001.MP3, 002.MP3, etc.)
+3. <strong>Create Descriptions</strong>: Add matching .TXT files with content descriptions
+4. <strong>Choose Bank</strong>: Place in either HUMAN/ or GENERA~1/ directory
+5. <strong>Select Letter</strong>: Place in appropriate letter subdirectory (A/, B/, etc.)</p>
+
+<h3>Example File Structure for Letter "A"</h3>
+</code>`<code>
+AUDIO/HUMAN/A/
+├── 001.MP3              # "Apple"
+├── 001.TXT              # "Apple - red fruit"
+├── 002.MP3              # "Ambulance"
+├── 002.TXT              # "Ambulance - emergency vehicle"
+└── PLAYLIST.M3U         # Auto-generated playlist
+</code>`<code>
+
+<hr>
+
+<h2>Software Updates</h2>
+
+<h3>Prerequisites</h3>
+<ul>
+<li>Arduino IDE installed on computer</li>
+<li>USB cable for device connection</li>
+<li>Complete project folder downloaded to your computer</li>
+<li>Device firmware files (.ino)</li>
+</ul>
+
+<h3>Download and Setup Project</h3>
+
+<p>1. <strong>Download Project Folder</strong>
+<ul>
+<li>Download the complete project folder (e.g., </code>player_simple_working_directory_v6<code>)</li>
+<li>Extract/save to a location like: </code>C:\Users\[YourName]\Documents\Arduino\player_simple_working_directory_v6<code></li>
+<li><strong>Important</strong>: The folder must contain all files including the .ino file and supporting libraries</li>
+</ul></p>
+
+<p>2. <strong>Verify Project Structure</strong>
+<ul>
+<li>Ensure the folder contains:</li>
+<li></code>player_simple_working_directory_v6.ino<code> (main firmware file)</li>
+<li>Supporting library folders (e.g., </code>Adafruit_BusIO<code>, </code>SdFat-2.2.3<code>)</li>
+<li></code>SD_CARD_STRUCTURE<code> folder with sample files</li>
+<li>Python upload scripts</li>
+</ul></p>
+
+<h3>Update Process</h3>
+
+<p>1. <strong>Connect Device</strong>
+<ul>
+<li>Connect via USB cable</li>
+<li>Note the COM port (e.g., COM5)</li>
+</ul></p>
+
+<p>2. <strong>Open Arduino IDE</strong>
+<ul>
+<li>Launch Arduino IDE</li>
+<li>Navigate to your project folder</li>
+<li>Open the firmware file: </code>player_simple_working_directory_v6.ino<code></li>
+<li><strong>Critical</strong>: The .ino file must be opened from within its project folder</li>
+</ul></p>
+
+<p>3. <strong>Configure Arduino IDE</strong>
+<ul>
+<li>Select Board: "Arduino UNO R4 WiFi" (or your specific model)</li>
+<li>Select Port: Choose the correct COM port</li>
+<li>Set Baud Rate: 115200</li>
+</ul></p>
+
+<p>4. <strong>Upload Firmware</strong>
+<ul>
+<li>Click "Upload" button (arrow icon)</li>
+<li>Wait for "Done uploading" message</li>
+<li>Device will automatically restart</li>
+</ul></p>
+
+<p>5. <strong>Verify Update</strong>
+<ul>
+<li>Open Serial Monitor (115200 baud)</li>
+<li>Look for startup messages confirming successful boot</li>
+</ul></p>
+
+<h3>Backup Before Updates</h3>
+<ul>
+<li>Always backup your SD card files before firmware updates</li>
+<li>Note current button configuration in case reset is needed</li>
+</ul>
+
+<hr>
+
+<h2>Hardware Maintenance</h2>
+
+<h3>Opening the Device</h3>
+
+<strong>Tools Required:</strong>
+<ul>
+<li>M3 hex screwdriver (Allen key)</li>
+<li>Anti-static wrist strap (recommended)</li>
+</ul>
+
+<strong>Steps:</strong>
+1. <strong>Power Off</strong>: Disconnect USB cable and ensure device is off
+2. <strong>Remove Screws</strong>: Use M3 hex screwdriver to remove case screws
+3. <strong>Lift Top</strong>: Carefully lift the top cover
+4. <strong>Access Components</strong>: SD card slot, Arduino board, and wiring are now accessible
+
+<h3>SD Card Replacement</h3>
+1. Open device case (see above)
+2. Gently push SD card to eject from slot
+3. Insert new SD card with proper file structure
+4. Reassemble device
+
+<h3>Cleaning</h3>
+<ul>
+<li><strong>Buttons</strong>: Use alcohol wipes on button surfaces</li>
+<li><strong>Case</strong>: Clean with damp cloth, avoid water near openings</li>
+<li><strong>Contacts</strong>: Use compressed air for dust removal</li>
+</ul>
+
+<h3>Reassembly</h3>
+1. Ensure all cables are properly connected
+2. Check SD card is fully inserted
+3. Replace top cover carefully
+4. Reinstall M3 screws (don't overtighten)
+5. Test device before returning to service
+
+<hr>
+
+<h2>Troubleshooting</h2>
+
+<h3>Common Issues</h3>
+
+<strong>Device Won't Turn On</strong>
+<ul>
+<li>Check USB cable connection</li>
+<li>Try different USB port or power adapter</li>
+<li>Verify cable integrity</li>
+</ul>
+
+<strong>No Audio Output</strong>
+<ul>
+<li>Check speaker/headphone connection</li>
+<li>Verify audio files exist on SD card</li>
+<li>Test with known working audio files</li>
+</ul>
+
+<strong>Buttons Not Responding</strong>
+<ul>
+<li>Check Serial Monitor for button press detection</li>
+<li>Verify button mapping in KEYS.CSV</li>
+<li>Consider recalibration if needed</li>
+</ul>
+
+<strong>SD Card Not Recognized</strong>
+<ul>
+<li>Ensure SD card is properly inserted</li>
+<li>Check SD card format (FAT32 recommended)</li>
+<li>Try different SD card</li>
+</ul>
+
+<strong>Garbled Audio</strong>
+<ul>
+<li>Check audio file format (MP3 recommended)</li>
+<li>Verify file isn't corrupted</li>
+<li>Check sample rate and bitrate</li>
+</ul>
+
+<h3>Serial Commands for Diagnostics</h3>
+
+<p>Connect via Serial Monitor (115200 baud) and use these commands:</p>
+
+<ul>
+<li></code>S<code> - Show device status</li>
+<li></code>L<code> - List SD card contents</li>
+<li></code>M<code> - Toggle audio mode (Human/Generated priority)</li>
+<li></code>C<code> - Enter calibration mode</li>
+<li></code>H` - Show help menu</li>
+</ul>
+
+<hr>
+
+<h2>Complete Word List</h2>
+
+<h3>SHIFT Button Audio Content</h3>
+
+<strong>Press 1x - Human Greeting</strong>
+<ul>
+<li>"Hello, how are you? I'm using this device to communicate with you."</li>
+</ul>
+
+<strong>Press 2x - Comprehensive Guide</strong>
+<ul>
+<li>A comprehensive guide for users to understand how to use the device and interpret button presses</li>
+</ul>
+
+<strong>Press 3x - Complete Button Mapping</strong>
+<ul>
+<li>Full audio description of all button functions and available words</li>
+</ul>
+
+<h3>Complete Button Mapping Reference</h3>
+
+<p>Each letter contains multiple audio options accessible through multi-press:</p>
+
+<strong>Letter A</strong> (Hardware: pcf0:03)
+<ul>
+<li>Press 1x: "Apple"</li>
+<li>Press 2x: "Ambulance"</li>
+<li>Press 3x: "Attention"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter B</strong> (Hardware: pcf2:08)
+<ul>
+<li>Press 1x: "Bathroom"</li>
+<li>Press 2x: "Bed"</li>
+<li>Press 3x: "Blanket"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter C</strong> (Hardware: pcf0:06)
+<ul>
+<li>Press 1x: "Call"</li>
+<li>Press 2x: "Cold"</li>
+<li>Press 3x: "Comfortable"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter D</strong> (Hardware: pcf1:14)
+<ul>
+<li>Press 1x: "Doctor"</li>
+<li>Press 2x: "Drink"</li>
+<li>Press 3x: "Done"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter E</strong> (Hardware: pcf1:08)
+<ul>
+<li>Press 1x: "Emergency"</li>
+<li>Press 2x: "Eat"</li>
+<li>Press 3x: "Excuse me"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter F</strong> (Hardware: pcf1:02)
+<ul>
+<li>Press 1x: "Food"</li>
+<li>Press 2x: "Family"</li>
+<li>Press 3x: "Finished"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter G</strong> (Hardware: pcf1:01)
+<ul>
+<li>Press 1x: "Good"</li>
+<li>Press 2x: "Go"</li>
+<li>Press 3x: "Get"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter H</strong> (Hardware: pcf2:09)
+<ul>
+<li>Press 1x: "Help"</li>
+<li>Press 2x: "Hot"</li>
+<li>Press 3x: "Hurt"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter I</strong> (Hardware: pcf0:08)
+<ul>
+<li>Press 1x: "I"</li>
+<li>Press 2x: "Ice"</li>
+<li>Press 3x: "Important"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter J</strong> (Hardware: pcf0:09)
+<ul>
+<li>Press 1x: "Just"</li>
+<li>Press 2x: "Juice"</li>
+<li>Press 3x: "Jump"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter K</strong> (Hardware: pcf0:02)
+<ul>
+<li>Press 1x: "Keep"</li>
+<li>Press 2x: "Know"</li>
+<li>Press 3x: "Kind"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter L</strong> (Hardware: pcf1:07)
+<ul>
+<li>Press 1x: "Light"</li>
+<li>Press 2x: "Look"</li>
+<li>Press 3x: "Listen"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter M</strong> (Hardware: pcf1:03)
+<ul>
+<li>Press 1x: "Medicine"</li>
+<li>Press 2x: "More"</li>
+<li>Press 3x: "Move"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter N</strong> (Hardware: pcf1:00)
+<ul>
+<li>Press 1x: "Nurse"</li>
+<li>Press 2x: "Need"</li>
+<li>Press 3x: "Now"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter O</strong> (Hardware: pcf2:13)
+<ul>
+<li>Press 1x: "Okay"</li>
+<li>Press 2x: "Open"</li>
+<li>Press 3x: "Out"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter P</strong> (Hardware: pcf0:05)
+<ul>
+<li>Press 1x: "Pain"</li>
+<li>Press 2x: "Please"</li>
+<li>Press 3x: "Pillow"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter Q</strong> (Hardware: pcf0:10)
+<ul>
+<li>Press 1x: "Question"</li>
+<li>Press 2x: "Quiet"</li>
+<li>Press 3x: "Quick"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter R</strong> (Hardware: pcf0:07)
+<ul>
+<li>Press 1x: "Rest"</li>
+<li>Press 2x: "Room"</li>
+<li>Press 3x: "Ready"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter S</strong> (Hardware: pcf1:13)
+<ul>
+<li>Press 1x: "Stop"</li>
+<li>Press 2x: "Sleep"</li>
+<li>Press 3x: "Sit"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter T</strong> (Hardware: pcf1:06)
+<ul>
+<li>Press 1x: "Thank you"</li>
+<li>Press 2x: "Time"</li>
+<li>Press 3x: "Toilet"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter U</strong> (Hardware: pcf1:05)
+<ul>
+<li>Press 1x: "Urgent"</li>
+<li>Press 2x: "Up"</li>
+<li>Press 3x: "Understand"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter V</strong> (Hardware: pcf0:13)
+<ul>
+<li>Press 1x: "Very"</li>
+<li>Press 2x: "Visit"</li>
+<li>Press 3x: "Voice"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter W</strong> (Hardware: pcf0:11)
+<ul>
+<li>Press 1x: "Water"</li>
+<li>Press 2x: "Wait"</li>
+<li>Press 3x: "Want"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter X</strong> (Hardware: pcf0:14)
+<ul>
+<li>Press 1x: "X-ray"</li>
+<li>Press 2x: "Exit"</li>
+<li>Press 3x: "Extra"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter Y</strong> (Hardware: pcf1:15)
+<ul>
+<li>Press 1x: "Yes"</li>
+<li>Press 2x: "You"</li>
+<li>Press 3x: "Yesterday"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<strong>Letter Z</strong> (Hardware: pcf1:12)
+<ul>
+<li>Press 1x: "Zero"</li>
+<li>Press 2x: "Zone"</li>
+<li>Press 3x: "Zip"</li>
+<li>Press 4x+: Additional options if available</li>
+</ul>
+
+<h3>Special Function Buttons</h3>
+
+<strong>SHIFT Button</strong> (Hardware: pcf0:01)
+<ul>
+<li>Press 1x: "Hello, how are you? I'm using this device to communicate with you."</li>
+<li>Press 2x: Device instructions and usage guide</li>
+<li>Press 3x: Complete button mapping and word list</li>
+<li>Press 4x+: Additional instructional content</li>
+</ul>
+
+<strong>YES Button</strong> (Hardware: pcf0:00)
+<ul>
+<li>Press 1x: "Yes"</li>
+<li>Press 2x: "Okay"</li>
+<li>Press 3x: "Correct"</li>
+<li>Press 4x: "I agree"</li>
+</ul>
+
+<strong>NO Button</strong> (Hardware: pcf1:09)
+<ul>
+<li>Press 1x: "No"</li>
+<li>Press 2x: "Stop"</li>
+<li>Press 3x: "Incorrect"</li>
+<li>Press 4x: "I disagree"</li>
+</ul>
+
+<strong>WATER Button</strong> (Hardware: pcf1:04)
+<ul>
+<li>Press 1x: "Water please"</li>
+<li>Press 2x: "I'm thirsty"</li>
+<li>Press 3x: "Drink"</li>
+<li>Press 4x+: Additional drink-related phrases</li>
+</ul>
+
+<strong>SPACE Button</strong> (Hardware: pcf1:11)
+<ul>
+<li>Press 1x: Word spacing sound</li>
+<li>Press 2x+: Additional spacing options</li>
+</ul>
+
+<strong>PERIOD Button</strong> (Hardware: pcf0:15)
+<ul>
+<li>Press 1x: Period punctuation sound</li>
+<li>Press 2x: Switch to Human-First mode</li>
+<li>Press 3x: Switch to Generated-First mode</li>
+<li>Press 4x: Enter calibration mode (advanced users)</li>
+</ul>
+
+<h3>Quick Reference - Emergency Communications</h3>
+
+<strong>Immediate Emergency Access:</strong>
+<ul>
+<li><strong>U (Press 1x)</strong>: "Urgent" - Immediate attention needed</li>
+<li><strong>H (Press 1x)</strong>: "Help" - Request assistance</li>
+<li><strong>P (Press 1x)</strong>: "Pain" - Indicate discomfort</li>
+<li><strong>E (Press 1x)</strong>: "Emergency" - Critical situation</li>
+<li><strong>D (Press 1x)</strong>: "Doctor" - Request medical professional</li>
+<li><strong>N (Press 1x)</strong>: "Nurse" - Request nursing assistance</li>
+</ul>
+
+<strong>Common Needs:</strong>
+<ul>
+<li><strong>W (Press 1x)</strong>: "Water" - Request hydration</li>
+<li><strong>T (Press 3x)</strong>: "Toilet" - Bathroom needs</li>
+<li><strong>M (Press 1x)</strong>: "Medicine" - Medication request</li>
+<li><strong>B (Press 1x)</strong>: "Bathroom" - Restroom needs</li>
+<li><strong>F (Press 1x)</strong>: "Food" - Nutrition request</li>
+</ul>
+
+<hr>
+
+<h2>Support and Maintenance Schedule</h2>
+
+<h3>Daily Checks</h3>
+<ul>
+<li>Verify device powers on properly</li>
+<li>Test basic button functionality</li>
+<li>Check audio output quality</li>
+</ul>
+
+<h3>Weekly Maintenance</h3>
+<ul>
+<li>Clean button surfaces</li>
+<li>Check SD card security</li>
+<li>Verify all audio files play correctly</li>
+</ul>
+
+<h3>Monthly Review</h3>
+<ul>
+<li>Update audio content as needed</li>
+<li>Review button mapping effectiveness</li>
+<li>Check for firmware updates</li>
+</ul>
+
+<h3>Contact Information</h3>
+For technical support or questions about device operation, consult with your device administrator or technical support team familiar with Arduino-based assistive technology.
+
+<hr>
+
+<em>Document Version: 1.0</em>  
+<em>Last Updated: January 2025</em>  
+<em>Compatible with: Tactile Communication Device v6</em>
+</body>
+</html>

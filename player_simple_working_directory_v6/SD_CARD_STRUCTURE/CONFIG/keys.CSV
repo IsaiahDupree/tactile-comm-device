@@ -8,7 +8,7 @@ D,Letter D,pcf1:14
 E,Letter E,pcf1:08
 F,Letter F,pcf1:02
 G,Letter G,pcf1:01
-H,Letter H,pcf2:09
+H,Letter H,pcf2:9
 I,Letter I,pcf0:08
 J,Letter J,pcf0:09
 K,Letter K,pcf0:02
@@ -33,4 +33,3 @@ SPACE,Space button,pcf1:11
 YES,Yes button,pcf0:00
 NO,No button,pcf1:09
 WATER,Water button,pcf1:04
-HELLO_HOW_ARE_YOU,Shift instructions,pcf2:9

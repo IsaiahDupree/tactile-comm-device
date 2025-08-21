@@ -101,14 +101,15 @@ def cmd_ls(ser: serial.Serial, bank: str, key: str) -> List[Tuple[str,int]]:
         if line == "LS:DONE":
             break
         if line == "LS:NODIR":
-            print("[!] directory not found on SD")
-            return []
-        # format: "<name> <size>"
-        try:
-            name, size = line.rsplit(" ", 1)
-            items.append((name, int(size)))
-        except Exception:
-            print(f"[device] {line}")
+            raise RuntimeError(f"Directory not found: /audio/{bank}/{key}")
+        if line.startswith("LS:"):
+            parts = line[3:].split()
+            if len(parts) >= 2:
+                fname, size_str = parts[0], parts[1]
+                items.append((fname, int(size_str)))
+        else:
+            # Ignore non-LS lines (like "[DATA] mode=ENTER")
+            continue
     return items
 
 def cmd_del(ser: serial.Serial, bank: str, key: str, fname: str):
@@ -131,17 +132,23 @@ def cmd_exit(ser: serial.Serial):
     if line:
         print(f"[device] {line}")
 
-def cmd_put(ser: serial.Serial, bank: str, key: str, fname: str, local_path: str, use_crc: bool = True, empty_file: bool = False, on_progress=None):
-    if empty_file:
-        size = 0
-        crc = 0 if use_crc else None
-    else:
-        if not os.path.isfile(local_path):
-            print(f"[err] file not found: {local_path}")
-            sys.exit(2)
-        size = os.path.getsize(local_path)
-        crc = crc32_file(local_path) if use_crc else None
-
+def cmd_put(ser, bank, key, fname, path, use_crc=True, on_progress=None):
+    """Upload a local file to the device"""
+    
+    if not os.path.exists(path):
+        print(f"[error] Local file not found: {path}")
+        return False
+    
+    size = os.path.getsize(path)
+    crc = 0
+    if use_crc:
+        crc = crc32_file(path)
+    
+    # Ensure 8.3 compatibility: uppercase filename extension
+    name, ext = os.path.splitext(fname)
+    if ext:
+        fname = name + ext.upper()
+    
     # announce
     if use_crc:
         send_line(ser, f"PUT {bank} {key} {fname} {size} {crc}")
@@ -354,23 +361,23 @@ def main():
 
     def add_common(p):
         p.add_argument("-p","--port", required=True, help="serial port (e.g., COM6 or /dev/ttyACM0)")
-        p.add_argument("-b","--baud", type=int, default=115200, help="baud rate (default 115200)")
+        p.add_argument("-b","--baud", type=int, default=9600, help="baud rate (default 9600)")
         p.add_argument("--no-handshake", action="store_true", help="skip ^DATA? v1 handshake (if already in data mode)")
 
     pa_ls = sub.add_parser("ls", help="list files in /audio/<bank>/<KEY>")
     add_common(pa_ls)
-    pa_ls.add_argument("bank", choices=["human","generated","GENERA~1"])
+    pa_ls.add_argument("bank", choices=["HUMAN","GENERA~1"])
     pa_ls.add_argument("key", help="KEY folder (e.g., A, SHIFT, PERIOD)")
 
     pa_del = sub.add_parser("del", help="delete a file on the device")
     add_common(pa_del)
-    pa_del.add_argument("bank", choices=["human","generated","GENERA~1"])
+    pa_del.add_argument("bank", choices=["HUMAN","GENERA~1"])
     pa_del.add_argument("key")
     pa_del.add_argument("fname")
 
     pa_put = sub.add_parser("put", help="upload a local file to the device")
     add_common(pa_put)
-    pa_put.add_argument("bank", choices=["human","generated","GENERA~1"])
+    pa_put.add_argument("bank", choices=["HUMAN","GENERA~1"])
     pa_put.add_argument("key")
     pa_put.add_argument("fname", help="destination filename on device (e.g., 001.mp3)")
     pa_put.add_argument("path", help="local file path")
@@ -378,7 +385,7 @@ def main():
 
     pa_get = sub.add_parser("get", help="download a file from the device")
     add_common(pa_get)
-    pa_get.add_argument("bank", choices=["human","generated","GENERA~1"])
+    pa_get.add_argument("bank", choices=["HUMAN","GENERA~1"])
     pa_get.add_argument("key")
     pa_get.add_argument("fname")
     pa_get.add_argument("out", help="local output path")
@@ -389,7 +396,7 @@ def main():
     # ==== SEGMENT 2: data_cli argparse for sync ====
     pa_sync_seq = sub.add_parser("sync-seq", help="sync folder → 001.ext, 002.ext... if size differs/missing")
     add_common(pa_sync_seq)
-    pa_sync_seq.add_argument("bank", choices=["human","generated","GENERA~1"])
+    pa_sync_seq.add_argument("bank", choices=["HUMAN","GENERA~1"])
     pa_sync_seq.add_argument("key")
     pa_sync_seq.add_argument("folder")
     pa_sync_seq.add_argument("--ext", default="mp3")
@@ -398,7 +405,7 @@ def main():
 
     pa_sync_pre = sub.add_parser("sync-preserve", help="sync folder preserving filenames if size differs/missing")
     add_common(pa_sync_pre)
-    pa_sync_pre.add_argument("bank", choices=["human","generated","GENERA~1"])
+    pa_sync_pre.add_argument("bank", choices=["HUMAN","GENERA~1"])
     pa_sync_pre.add_argument("key")
     pa_sync_pre.add_argument("folder")
     pa_sync_pre.add_argument("--ext", default="mp3")

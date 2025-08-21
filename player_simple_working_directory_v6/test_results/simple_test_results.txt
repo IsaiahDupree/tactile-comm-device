@@ -1,0 +1,6 @@
+SIMPLE TEST RESULTS
+==================================================
+Test run at: 2025-08-20 23:12:31
+Serial port: COM5
+
+IMPORT_ERROR: attempted relative import with no known parent package
