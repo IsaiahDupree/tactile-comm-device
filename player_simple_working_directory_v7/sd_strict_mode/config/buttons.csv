@@ -1,0 +1,44 @@
+# Strict mode button mapping: Physical input -> Logical key
+# INPUT format: pcf<N>:<P> (PCF8575 #N, pin P) or gpio:<PIN>
+# KEY format: A-Z, 0-9, underscore only
+# Based on calibration session - maps hardware indices to logical keys
+INPUT,KEY
+pcf0:00,YES
+pcf0:01,SHIFT
+pcf0:02,K
+pcf0:03,A
+pcf0:05,P
+pcf0:06,C
+pcf0:07,R
+pcf0:08,I
+pcf0:09,J
+pcf0:10,Q
+pcf0:11,W
+pcf0:13,V
+pcf0:14,X
+pcf0:15,PERIOD
+pcf1:00,N
+pcf1:01,G
+pcf1:02,F
+pcf1:03,M
+pcf1:04,WATER
+pcf1:05,U
+pcf1:06,T
+pcf1:07,L
+pcf1:08,E
+pcf1:09,NO
+pcf1:11,SPACE
+pcf1:12,Z
+pcf1:13,S
+# Additional keys from calibration
+# pcf1:14,D
+# pcf1:15,Y
+# pcf2:01,O
+# pcf2:02,B
+# pcf2:03,H
+# GPIO pins for extra buttons
+# gpio:A0,BACK
+# gpio:A1,HELP
+# gpio:A2,VOLUME_UP
+# gpio:A3,VOLUME_DOWN
+# gpio:A3,VOLUME_DOWN

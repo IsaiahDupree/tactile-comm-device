@@ -1,0 +1,27 @@
+# WiFi Configuration Example
+# Copy this to your SD card as /CONFIG/WIFI.CFG
+
+# OPTION 1: Station Mode (connect to existing WiFi)
+# Uncomment and set these to connect to your existing WiFi network:
+# SSID=YourWiFiNetwork
+# PASS=YourWiFiPassword
+
+# OPTION 2: Access Point Mode (device creates its own WiFi)
+# Leave SSID empty or don't create this file to use SoftAP mode
+# Default AP: SSID="TCD-Device", PASS="tcd12345"
+# Or customize the AP name/password:
+# SSID=MyTactileDevice
+# PASS=mypassword123
+
+# Authentication token for write operations over WiFi (recommended for AP mode)
+# Required since DATA_WIFI_REQUIRE_AUTH=1 by default
+TOKEN=MySecret123
+
+# Lines starting with # are comments and will be ignored
+# 
+# USAGE:
+# - For SoftAP: Leave SSID empty, device creates "TCD-Device" network
+# - Connect phone/laptop to "TCD-Device" (password: tcd12345)
+# - telnet 192.168.4.1 3333
+# - AUTH MySecret123
+# - STATUS, LSP /, TREE /AUDIO 2, etc.

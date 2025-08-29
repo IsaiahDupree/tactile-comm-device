@@ -1,0 +1,51 @@
+PYTEST OUTPUT
+==================================================
+Command: C:\Program Files\Python310\python.exe -m pytest tests/ -v --tb=short
+Return code: 2
+
+STDOUT:
+============================= test session starts =============================
+platform win32 -- Python 3.10.7, pytest-7.2.0, pluggy-1.5.0 -- C:\Program Files\Python310\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.10.7', 'Platform': 'Windows-10-10.0.26100-SP0', 'Packages': {'pytest': '7.2.0', 'pluggy': '1.5.0'}, 'Plugins': {'allure-pytest': '2.11.1', 'anyio': '3.7.0', 'cov': '6.0.0', 'html': '3.2.0', 'metadata': '2.0.4', 'qt': '4.4.0'}}
+PySide6 6.6.1 -- Qt runtime 6.6.1 -- Qt compiled 6.6.1
+rootdir: C:\Users\Cypress\Documents\Coding\Buttons\player_simple_working_directory_v6
+plugins: allure-pytest-2.11.1, anyio-3.7.0, cov-6.0.0, html-3.2.0, metadata-2.0.4, qt-4.4.0
+collecting ... collected 5 items / 3 errors
+
+=================================== ERRORS ====================================
+_____________ ERROR collecting tests/test_01_handshake_status.py ______________
+ImportError while importing test module 'C:\Users\Cypress\Documents\Coding\Buttons\player_simple_working_directory_v6\tests\test_01_handshake_status.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Program Files\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests\test_01_handshake_status.py:3: in <module>
+    from config import SERIAL_PORT, BAUD, READ_TIMEOUT
+E   ImportError: cannot import name 'SERIAL_PORT' from 'config' (unknown location)
+______________ ERROR collecting tests/test_02_put_get_ls_del.py _______________
+ImportError while importing test module 'C:\Users\Cypress\Documents\Coding\Buttons\player_simple_working_directory_v6\tests\test_02_put_get_ls_del.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Program Files\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests\test_02_put_get_ls_del.py:5: in <module>
+    from config import SERIAL_PORT, BAUD, READ_TIMEOUT, BANK, KEY, FILENAME, LOCAL_MP3
+E   ImportError: cannot import name 'SERIAL_PORT' from 'config' (unknown location)
+______________ ERROR collecting tests/test_03_negative_cases.py _______________
+ImportError while importing test module 'C:\Users\Cypress\Documents\Coding\Buttons\player_simple_working_directory_v6\tests\test_03_negative_cases.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Program Files\Python310\lib\importlib\__init__.py:126: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests\test_03_negative_cases.py:6: in <module>
+    from config import SERIAL_PORT, BAUD, READ_TIMEOUT, BANK, KEY
+E   ImportError: cannot import name 'SERIAL_PORT' from 'config' (unknown location)
+=========================== short test summary info ===========================
+ERROR tests/test_01_handshake_status.py
+ERROR tests/test_02_put_get_ls_del.py
+ERROR tests/test_03_negative_cases.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 3 errors during collection !!!!!!!!!!!!!!!!!!!
+============================== 3 errors in 0.41s ==============================
+
+STDERR:

@@ -1,0 +1,74 @@
+folder,track,text,bank
+5,1,Alari [REC],REC
+105,1,A,TTS
+105,2,Apple,TTS
+105,3,Ant,TTS
+105,4,Airplane,TTS
+105,5,Arm,TTS
+105,6,Art,TTS
+105,7,Ask,TTS
+105,8,About,TTS
+105,9,After,TTS
+34,1,B [REC],REC
+134,1,B,TTS
+134,2,Ball,TTS
+134,3,Book,TTS
+134,4,Box,TTS
+134,5,Bed,TTS
+134,6,Big,TTS
+134,7,Blue,TTS
+134,8,Boy,TTS
+134,9,Bus,TTS
+6,1,C [REC],REC
+106,1,C,TTS
+106,2,Cat,TTS
+106,3,Car,TTS
+106,4,Cup,TTS
+106,5,Come,TTS
+106,6,Cold,TTS
+106,7,Call,TTS
+106,8,Can,TTS
+106,9,Chair,TTS
+30,1,D [REC],REC
+130,1,D,TTS
+130,2,Dog,TTS
+130,3,Door,TTS
+130,4,Down,TTS
+130,5,Day,TTS
+130,6,Do,TTS
+130,7,Dad,TTS
+130,8,Drink,TTS
+130,9,Dance,TTS
+24,1,E [REC],REC
+124,1,E,TTS
+124,2,Eat,TTS
+124,3,Eye,TTS
+124,4,Ear,TTS
+124,5,End,TTS
+124,6,Every,TTS
+124,7,Easy,TTS
+124,8,Egg,TTS
+124,9,Eight,TTS
+20,1,Water [REC],REC
+20,2,Thirsty [REC],REC
+20,3,Drink [REC],REC
+20,4,Cold [REC],REC
+20,5,Hot [REC],REC
+120,1,Water,TTS
+120,2,Thirsty,TTS
+120,3,Drink,TTS
+0,1,Yes [REC],REC
+100,1,Yes,TTS
+25,1,No [REC],REC
+125,1,No,TTS
+1,1,Shift [REC],REC
+101,1,Shift,TTS
+27,1,Space [REC],REC
+127,1,Space,TTS
+15,1,Period [REC],REC
+115,1,Period,TTS
+33,1,System Priority Human First,TTS
+33,2,System Priority Computer First,TTS
+33,3,System Mode Changed,TTS
+33,4,Personal voice first,TTS
+33,5,Computer voice first,TTS
